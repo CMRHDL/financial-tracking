@@ -1,0 +1,11 @@
+
+<div class="header">
+  <div class="navbar navbar-default navbar-fixed-top">
+    <ul class="nav navbar-nav">
+      <li ng-repeat="tab in nav.tabs" ng-class="[nav.isTabActive(tab.name)]" ng-click="nav.setActiveTab(tab.name)" >
+        <a ng-href="#/{{tab.name}}"><span class="{{tab.css}}"></span> {{tab.visibleName}}
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<!doctype html>
+<html ng-app="team.app" ng-controller="AllCtrl as all">
+<head>
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../bower_components/angular-ui-grid/ui-grid.css" />
+    <link rel="stylesheet" type="text/css" href="style/style.css" />
+</head>
+<body>
+    <my-nav></my-nav>
+
+    <div ng-view></div>
+
+    <div class="footer">
+        <p><span class="glyphicon glyphicon-heart"></span>Angular</p>
+    </div>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.js"></script>
+    <script src="https://code.angularjs.org/1.4.3/angular-route.js"></script>
+    <script src="http://ui-grid.info/release/ui-grid.js"></script>
+    <script src="app.js"></script>
+    <script src="app.controller.js"></script>
+    <script src="navbar/navbar.directive.js"></script>
+    <script src="navbar/navbar.controller.js"></script>
+	<script src="home/home.controller.js"></script>
+	<script src="input/input.controller.js"></script>
+	<script src="overview/overview.controller.js"></script>
+    <script src="details/details.controller.js"></script>
+	<script src="provider/alldata.service.js"></script>
+
+</body>
+</html>
