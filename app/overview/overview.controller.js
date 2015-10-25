@@ -58,7 +58,6 @@
                 { field: 'gains', name: 'Einnahmen', enableColumnMenu: false, enableSorting: false, width: 100},
                 { field: 'expenses', name: 'Ausgaben', enableColumnMenu: false, enableSorting: false, width: 100},
             ]
-            console.log(vm.delegatesArr);
             vm.delegatesArr.forEach(function(dele){
                 colDefs.push({ field: dele.name, name: dele.name, enableColumnMenu: false, enableSorting: false, width: 120});
             });

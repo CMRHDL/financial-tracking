@@ -69,7 +69,6 @@
                 service.delegatesArr.push({ name: entry, type: 'Ausgabearten' });
                 service.allData.expenses[entry] = [];
             });
-            console.log(service.delegatesArr);
         }
 
     }
