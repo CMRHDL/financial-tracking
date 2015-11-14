@@ -51,21 +51,39 @@
         buildColDefs();
         function buildColDefs() {
             colDefs = [
-                { field: 'date', name: 'Datum', enableColumnMenu: false, enableSorting: false, width: 150},
-                { field: 'description', name: 'Text', enableColumnMenu: false, enableSorting: false, width: 150},
-                { field: 'bankStatemement', name: 'Kto-A', enableColumnMenu: false, enableSorting: false, width: 100},
-                { field: 'refNumber', name: 'Beleg', enableColumnMenu: false, enableSorting: false, width: 100},
-                { field: 'gains', name: 'Einnahmen', enableColumnMenu: false, enableSorting: false, width: 100},
-                { field: 'expenses', name: 'Ausgaben', enableColumnMenu: false, enableSorting: false, width: 100},
+                { field: 'date', name: 'Datum', enableColumnMenu: false, width: 150},
+                { field: 'description', name: 'Text', enableColumnMenu: false, width: 150},
+                { field: 'bankStatemement', name: 'Kto-A', enableColumnMenu: false, width: 100},
+                { field: 'refNumber', name: 'Beleg', enableColumnMenu: false, width: 100},
+                { field: 'gains', name: 'Einnahmen', enableColumnMenu: false, width: 100},
+                { field: 'expenses', name: 'Ausgaben', enableColumnMenu: false, width: 100},
             ]
             vm.delegatesArr.forEach(function(dele){
-                colDefs.push({ field: dele.name, name: dele.name, enableColumnMenu: false, enableSorting: false, width: 120});
+                colDefs.push({ field: dele.name, name: dele.name, enableColumnMenu: false, width: 120});
             });
         }
 
         vm.gridOptions = {
             data: 'vm.data',
             columnDefs: colDefs,
+            enableGridMenu: true,
+            exporterCsvFilename: 'myFile.csv',
+            exporterPdfDefaultStyle: {fontSize: 9},
+            exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
+            exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
+            exporterPdfHeader: { text: "My Header", style: 'headerStyle' },
+            exporterPdfFooter: function ( currentPage, pageCount ) {
+              return { text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle' };
+            },
+            exporterPdfCustomFormatter: function ( docDefinition ) {
+              docDefinition.styles.headerStyle = { fontSize: 22, bold: true };
+              docDefinition.styles.footerStyle = { fontSize: 10, bold: true };
+              return docDefinition;
+            },
+            exporterPdfOrientation: 'portrait',
+            exporterPdfPageSize: 'LETTER',
+            exporterPdfMaxGridWidth: 500,
+            exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
         }
 
         // $scope.$watchCollection(allData.get(), allDataWatch, true);

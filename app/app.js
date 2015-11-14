@@ -1,5 +1,6 @@
 (function() {
 
+    'use strict'
     function config($routeProvider){
       $routeProvider
         .when('/', {
@@ -32,7 +33,7 @@
         });
     }
 
-    angular.module('team.app',['ngRoute', 'ui.grid', 'ui.grid.resizeColumns']);
+    angular.module('team.app',['ngRoute', 'ui.grid', 'ui.grid.resizeColumns', 'ui.grid.exporter', 'ui.bootstrap']);
     angular.module('team.app').config(config);
 
 }());
