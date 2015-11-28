@@ -1,0 +1,25 @@
+<!-- <div style="margin:100px">
+  <form class="form-inline">
+    <div class="form-group">
+      <input type="text" class="form-control" id="exampleInputName2" placeholder="Neue Zuordnung" ng-model="vm.delegateToAdd" style="width:200px">
+    </div>
+    <button type="submit" class="btn btn-default" ng-click="vm.addDelegate(vm.delegateToAdd); vm.delegateToAdd=''">Zuordnung hinzufügen</button><br>
+    Einnahmearten (anklicken zum Selektieren):
+    <h3>
+      <span ng-repeat="delegate in vm.delegates.gains">
+        <span class="label label-success" ng-bind="delegate" ng-click="vm.selectedDelegate = vm.delegatesArr[$index]" href="#" style="cursor:pointer">
+        </span>
+      </span>
+    </h3><br>
+    Ausgabearten (anklicken zum Selektieren):
+    <h3>
+      <span ng-repeat="delegate in vm.delegates.expenses">
+        <span class="label label-danger" ng-bind="delegate" ng-click="vm.selectedDelegate = vm.delegatesArr[$index + vm.delegates.gains.length]" href="#" style="cursor:pointer">
+        </span>
+      </span>
+    </h3>
+  </form>
+</div> -->
+<div style="margin: 100px">
+<settings-attribution></settings-attribution>
+</div>

@@ -17,7 +17,7 @@
             {visibleName: 'Eingabe', name: 'input', css: ''},
             {visibleName: 'Übersicht', name: 'overview', css: ''},
             {visibleName: 'Details', name: 'details', css: ''},
-
+            {visibleName: 'Einstellungen', name: 'settings', css: ''},
         ];
 
         function isTabActive(tab) {

@@ -7,8 +7,6 @@
         var vm = this;
 
         vm.showDatePicker = false;
-
-        vm.addDelegate = addDelegate;
         vm.amount = undefined;
         vm.data = [];
         vm.delegates = allData.getDelegates();
@@ -68,10 +66,6 @@
                     type: vm.selectedDelegate.type === 'Einnahmearten' ? 'Einnahme' : 'Ausgabe',
                 });
             }
-        }
-
-        function addDelegate(delegate) {
-            allData.addDelegate(delegate.indexOf('-') > -1 ? 'expenses' : 'gains', delegate.replace(/-/, ''));
         }
 
         var deleteCell = '<button ng-click="grid.appScope.delete(row)" title="Datensatz entfernen">X</button>';

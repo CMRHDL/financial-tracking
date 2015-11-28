@@ -28,12 +28,17 @@
           controller : 'DetailsCtrl',
           controllerAs : 'vm',
         })
+        .when('/settings', {
+          templateUrl: 'settings/settings.html',
+          controller : 'SettingsCtrl',
+          controllerAs : 'vm',
+        })
         .otherwise({
           redirectTo:'/'
         });
     }
 
-    angular.module('team.app',['ngRoute', 'ui.grid', 'ui.grid.resizeColumns', 'ui.grid.exporter', 'ui.bootstrap']);
+    angular.module('team.app',['ngRoute', 'ui.grid', 'ui.grid.resizeColumns', 'ui.grid.exporter', 'ui.bootstrap', 'ngMessages']);
     angular.module('team.app').config(config);
 
 }());

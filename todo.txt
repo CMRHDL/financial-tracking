@@ -1,0 +1,8 @@
+* Datum Zahl statt ausgeschrieben
+* Zahlen rechtsbündig
+* +/- erzwingen bei Zuordnung hinzufügen
+* Position nur hochzählen, falls wirklich etwas hinzugefügt wurde
+
+
+Fragen:
+* Zuordnung plain oder mit Beschreibung?

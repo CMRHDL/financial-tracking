@@ -7,3 +7,10 @@
   width: 1600px;
   height: 250px; 
 }
+
+.row.my-border {
+  border: 1px solid rgba(86,61,124,.2);
+}
+.row p {
+  margin: 10px 0 10px;
+}
