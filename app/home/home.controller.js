@@ -1,19 +1,19 @@
 (function() {
-    'use strict';
-    angular.module('team.app').controller('HomeCtrl', HomeCtrl);
+  'use strict';
+  angular.module('team.app').controller('HomeCtrl', HomeCtrl);
 
-    //HomeCtrl.$inject = [ '' ];
-    function HomeCtrl() {
-        var vm = this;
+  //HomeCtrl.$inject = [ '' ];
+  function HomeCtrl() {
+    var vm = this;
 
-        // variables
-        vm.var = '';
+    // variables
+    vm.var = '';
 
-        // public functions
-        vm.someFunctionOne = someFunctionOne;
+    // public functions
+    vm.someFunctionOne = someFunctionOne;
 
-        function someFunctionOne() {
-        }
-
+    function someFunctionOne() {
     }
+
+  }
 })();
