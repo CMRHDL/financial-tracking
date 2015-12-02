@@ -1,16 +1,97 @@
+/**
+########################## Bootstrap overrides ##########################
+*/
+.navbar-default .navbar-brand {
+  font-size: 20px;
+  font-weight: bold;
+  border-bottom: 2px solid transparent;
+}
+
+.navbar-default .navbar-brand.active {
+  font-size: 20px;
+  font-weight: bold;
+  color: #000;
+  border-bottom: 2px solid transparent;
+}
+
+.masthead-brand {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.masthead-nav > li {
+  display: inline-block;
+}
+
+.masthead-nav > li + li {
+  margin-left: 20px;
+}
+
+.masthead-nav > li > a {
+  font-size: 20px;
+  font-weight: bold;
+  color: #777; /* IE8 proofing */
+  border-bottom: 2px solid transparent;
+}
+
+.masthead-nav > li > a:hover,
+.masthead-nav > li > a:focus {
+  background-color: transparent;
+  border-bottom-color: #a9a9a9;
+  border-bottom-color: rgba(255,255,255,.25);
+}
+
+.masthead-nav > .active > a,
+.masthead-nav > .active > a:hover,
+.masthead-nav > .active > a:focus {
+  color: #000;
+  border-bottom-color: #000;
+}
+
+@media (min-width: 768px) {
+  .masthead-brand {
+    float: left;
+  }
+  .masthead-nav {
+    float: right;
+  }
+}
+
+/**
+########################## Own ##########################
+*/
+
 .grid {
   width: 900px;
   height: 250px;
 }
 
-.grid.big {
-  width: 1600px;
-  height: 250px; 
-}
-
 .row.my-border {
   border: 1px solid rgba(86,61,124,.2);
 }
+
 .row p {
   margin: 10px 0 10px;
+}
+
+.input-heading {
+  /*text-align: center;*/
+}
+
+.my-medium {
+  min-width: 150px;
+}
+
+.grid-number-cell {
+  padding: 5px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  white-space: nowrap;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  height: 100%;
+  text-align: right;
 }

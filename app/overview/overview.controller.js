@@ -54,12 +54,12 @@
         { field: 'date', name: 'Datum', enableColumnMenu: false, width: 150},
         { field: 'description', name: 'Text', enableColumnMenu: false, width: 150},
         { field: 'bankStatemement', name: 'Kto-A', enableColumnMenu: false, width: 100},
-        { field: 'refNumber', name: 'Beleg', enableColumnMenu: false, width: 100},
-        { field: 'gains', name: 'Einnahmen', enableColumnMenu: false, width: 100},
-        { field: 'expenses', name: 'Ausgaben', enableColumnMenu: false, width: 100},
+        { field: 'refNumber', name: 'Beleg', enableColumnMenu: false, width: 100, cellTemplate: '<div class="grid-number-cell">{{row.entity[col.field]}}</div>'},
+        { field: 'gains', name: 'Einnahmen', enableColumnMenu: false, width: 100, cellTemplate: '<div class="grid-number-cell">{{row.entity[col.field]}}</div>'},
+        { field: 'expenses', name: 'Ausgaben', enableColumnMenu: false, width: 100, cellTemplate: '<div class="grid-number-cell">{{row.entity[col.field]}}</div>'},
       ]
       vm.delegatesArr.forEach(function(dele){
-        colDefs.push({ field: dele.name, name: dele.name, enableColumnMenu: false, width: 120});
+        colDefs.push({ field: dele.name, name: dele.name, enableColumnMenu: false, width: 120, cellTemplate: '<div class="grid-number-cell">{{row.entity[col.field]}}</div>'});
       });
     }
 

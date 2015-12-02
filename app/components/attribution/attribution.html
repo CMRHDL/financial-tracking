@@ -34,4 +34,22 @@
       </p>
     </div>
   </div>
+  <div class="row my-border">
+    <div class="col-xs-3" ng-attr-title="{{::attr.resource.help.settings_attribution_delete}}">
+      <p>
+        Entfernen <button type="button" class="btn btn-default" ng-click="attr.showDelete = !attr.showDelete">Anzeigen</button>
+      </p>
+      <div ng-show="attr.showDelete" style="color:maroon" role="alert">
+        Einen Eintrag anklicken um ihn zu entfernen. Sollten noch Zahlungen mit der Zuordnung verknüpft sein, kommt ein Dialog zum neu Zuordnen der Zahlungen.
+      </div>
+    </div>
+    <div class="col-xs-9" ng-show="attr.showDelete">
+      <p>
+        <button ng-repeat="entry in attr.all.in" type="button" class="btn btn-success">{{entry.name}}</button>
+      </p>
+      <p>
+        <button ng-repeat="entry in attr.all.out" type="button" class="btn btn-danger">{{entry.name}}</button>
+      </p>
+    </div>
+  </div>
 </form>

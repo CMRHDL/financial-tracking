@@ -2,33 +2,12 @@
   'use strict';
   angular.module('team.app').controller('AttributionCtrl', AttributionCtrl);
 
-  AttributionCtrl.$inject = [ 'resource' ];
-  function AttributionCtrl(resource) {
+  AttributionCtrl.$inject = [ 'attribution', 'resource' ];
+  function AttributionCtrl(attribution, resource) {
     var attr = this;
     attr.resource = resource;
-    attr.all = {};
-    attr.all.in = [
-      {name:'Spende'},
-      {name:'U'},
-      {name:'wot'},
-      {name:'mate'},
-      {name:'Spende'},
-      {name:'Spende'},
-      {name:'Spende'},
-      {name:'Spende'},
-    ];
-    attr.all.out = [
-      {name:'Miete'},
-      {name:'Miete'},
-      {name:'Miete'},
-      {name:'Miete'},
-      {name:'Miete'},
-      {name:'Miete'},
-      {name:'Miete'},
-      {name:'Miete'},
-      {name:'Miete'},
-    ];
-    console.log(attr.resource.placeholder.settings_attribution_add);
+
+    attr.all = attribution.get();
 
     initNewAttr();
     function initNewAttr() {
@@ -45,7 +24,9 @@
     attr.addNewAttribution = addNewAttribution;
     function addNewAttribution() {
       if(attr.newAttr.isValid && !attr.newAttr.isDuplicate) {
-        attr.all[attr.newAttr.kindOfAttr].push({name: attr.newAttr.realName});
+        attribution.add(attr.newAttr.kindOfAttr, {name: attr.newAttr.realName});
+        attr.all = attribution.get();
+        //attr.all[attr.newAttr.kindOfAttr].push({name: attr.newAttr.realName});
         initNewAttr();
       }
     }

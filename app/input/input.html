@@ -1,42 +1,63 @@
-<div style="margin:100px">
-  <br>
-  <br>
-  <div class="row">
-    <div class="col-xs-2" style="width: 200px;">
-      <label>Datum</label><br>      
-      <div class="input-group">
-        <input type="text" class="form-control" uib-datepicker-popup="dd.MM.yyyy" ng-model="vm.date" is-open="vm.showDatePicker" ng-required="true" close-text="Close" />
-        <div class="input-group-addon" ng-click="vm.showDatePicker = true"><i class="glyphicon glyphicon-calendar"></i></div>
-      </div>
-    </div>
-    <div class="col-xs-1">
-      <label>Betrag</label><br>
-      <input type="text" class="form-control" id="exampleInputName2" placeholder="in €" ng-model="vm.amount">
-    </div>
-    <div class="col-xs-2">
-      <label>Beschreibung</label><br>
-      <input type="text" class="form-control" id="exampleInputEmail2" placeholder="Beschreibung" ng-model="vm.description">
-    </div>
-    <div class="col-xs-1">
-      <label title="Kontoauszug Nummer - Blatt Nummer - Position Nummer">Kontoauszug (?)</label><br>
-      <input type="text" class="form-control" id="exampleInputEmail2" title="Kontoauszug Nummer - Blatt Nummer - Position Nummer" ng-model="vm.bankStatement">
-    </div>
-    <div class="col-xs-2">
-      <label>Zuordnung</label><br>
-      <select class="dropdown" ng-options="entry.name group by entry.type for entry in vm.delegatesArr" ng-model="vm.selectedDelegate"></select>
+<div class="row">
+  <div class="col-xs-3 my-medium">
+    <div class="input-heading">
+      Jahr<br>
+      2015
     </div>
   </div>
-  <br>
-  <button type="submit" class="btn {{vm.getSaveState()}}" ng-click="vm.saveDataSet(); vm.init();">Datensatz übernehmen</button>
-  <button type="submit" class="btn btn-default" ng-click="vm.bankFinishPage();">Blatt abschließen</button>
-  <button type="submit" class="btn btn-default" ng-click="vm.bankFinishStatement();">Kontoauszug abschließen</button>
-
-
-  <div id="grid" ui-grid="vm.gridOptions" class="grid" style="margin-top:100px" ui-grid-resize-columns></div>
-  <br>
-  <br>
-  <button type="submit" class="btn btn-default" ng-click="vm.saveAll();">Alles übernehmen</button>
+  <div class="col-xs-3 my-medium">
+    <div class="input-heading">
+      Kontoauszug<br>
+      13
+    </div>
+  </div>
+  <div class="col-xs-3 my-medium">
+    <div class="input-heading">
+      Blatt<br>
+      3
+    </div>
+  </div>
+  <div class="col-xs-3 my-medium">
+    <div class="input-heading">
+      Position<br>
+      1
+    </div>
+  </div>
 </div>
+<br>
+<div class="row">
+  <div class="col-xs-3 my-medium">
+    <label>Datum</label><br>
+    <div class="input-group">
+      <input type="text" class="form-control" uib-datepicker-popup="dd.MM.yyyy" ng-model="vm.params.date.value" is-open="vm.showDatePicker" ng-required="true" close-text="Close"/>
+      <div class="input-group-addon" ng-click="vm.showDatePicker = true"><i class="glyphicon glyphicon-calendar"></i></div>
+    </div>
+  </div>
+  <div class="col-xs-3 my-medium">
+    <label>Betrag</label><br>
+    <input type="text" class="form-control" placeholder="in €" ng-model="vm.params.amount.value">
+  </div>
+  <div class="col-xs-3 my-medium">
+    <label>Beschreibung</label><br>
+    <input type="text" class="form-control" placeholder="Beschreibung" ng-model="vm.params.description.value">
+  </div>
+  <div class="col-xs-3 my-medium">
+    <label>Zuordnung</label><br>
+    <select class="dropdown" ng-options="entry.name group by entry.type for entry in vm.delegatesArr" ng-model="vm.params.selectedDelegate.value"></select>
+  </div>
+</div>
+<br>
+<uib-progressbar class="progress-striped active" value="vm.progressBarValue" type="{{vm.progressBarType}}"><span ng-show="vm.progressBarValue > 0">Erfassung</span></uib-progressbar>
+<br>
+<button type="submit" class="btn {{vm.getSaveState()}}" ng-click="vm.saveDataSet(); vm.init();">Datensatz übernehmen</button>
+<button type="submit" class="btn btn-default" ng-click="vm.bankFinishPage();">Blatt abschließen</button>
+<button type="submit" class="btn btn-default" ng-click="vm.bankFinishStatement();">Kontoauszug abschließen</button>
+
+
+<div id="grid" ui-grid="vm.gridOptions" class="grid" style="margin-top:100px" ui-grid-resize-columns></div>
+<br>
+<br>
+<button type="submit" class="btn btn-default" ng-click="vm.saveAll();">Alles übernehmen</button>
 
 <script type="text/ng-template" id="myModalContent.html">
     <div class="modal-header" ng-if="count === 1">

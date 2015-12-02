@@ -1,6 +1,6 @@
-* Datum Zahl statt ausgeschrieben
+o Datum Zahl statt ausgeschrieben
 * Zahlen rechtsbündig
-* +/- erzwingen bei Zuordnung hinzufügen
+o +/- erzwingen bei Zuordnung hinzufügen
 * Position nur hochzählen, falls wirklich etwas hinzugefügt wurde
 
 
