@@ -2,8 +2,8 @@
   'use strict';
   angular.module('team.app').controller('OverviewCtrl', OverviewCtrl);
 
-  //OverviewCtrl.$inject = [ '' ];
-  function OverviewCtrl($scope, $rootScope, allData) {
+  //OverviewCtrl.$inject = [ 'uiGridConstants' ];
+  function OverviewCtrl($scope, $rootScope, uiGridConstants, allData) {
     var vm = this;
 
     vm.allData = allData.get();
@@ -13,6 +13,9 @@
 
     init();
     function init() {
+
+
+      window.scrollTo(0, 0);
       for(var key in vm.allData.expenses) {
         vm.allData.expenses[key].forEach(function(entry){
           var obj = {
@@ -51,15 +54,15 @@
     buildColDefs();
     function buildColDefs() {
       colDefs = [
-        { field: 'date', name: 'Datum', enableColumnMenu: false, width: 150},
-        { field: 'description', name: 'Text', enableColumnMenu: false, width: 150},
-        { field: 'bankStatemement', name: 'Kto-A', enableColumnMenu: false, width: 100},
+        { field: 'date', name: 'Datum', enableColumnMenu: false, width: 150 },
+        { field: 'description', name: 'Text', enableColumnMenu: false, width: 150 },
+        { field: 'bankStatemement', name: 'Kto-A', enableColumnMenu: false, width: 100 },
         { field: 'refNumber', name: 'Beleg', enableColumnMenu: false, width: 100, cellTemplate: '<div class="grid-number-cell">{{row.entity[col.field]}}</div>'},
-        { field: 'gains', name: 'Einnahmen', enableColumnMenu: false, width: 100, cellTemplate: '<div class="grid-number-cell">{{row.entity[col.field]}}</div>'},
-        { field: 'expenses', name: 'Ausgaben', enableColumnMenu: false, width: 100, cellTemplate: '<div class="grid-number-cell">{{row.entity[col.field]}}</div>'},
+        { field: 'gains', name: 'Einnahmen', enableColumnMenu: false, width: 100, aggregationType: uiGridConstants.aggregationTypes.sum , cellTemplate: '<div class="grid-number-cell">{{row.entity[col.field]}}</div>'},
+        { field: 'expenses', name: 'Ausgaben', enableColumnMenu: false, width: 100, aggregationType: uiGridConstants.aggregationTypes.sum , cellTemplate: '<div class="grid-number-cell">{{row.entity[col.field]}}</div>'},
       ]
       vm.delegatesArr.forEach(function(dele){
-        colDefs.push({ field: dele.name, name: dele.name, enableColumnMenu: false, width: 120, cellTemplate: '<div class="grid-number-cell">{{row.entity[col.field]}}</div>'});
+        colDefs.push({ field: dele.name, name: dele.name, enableColumnMenu: false, width: 120, aggregationType: uiGridConstants.aggregationTypes.sum, cellTemplate: '<div class="grid-number-cell">{{row.entity[col.field]}}</div>'});
       });
     }
 
@@ -67,30 +70,10 @@
       data: 'vm.data',
       columnDefs: colDefs,
       enableGridMenu: true,
+      exporterMenuPdf: false,
+      showColumnFooter: true,
       exporterCsvFilename: 'myFile.csv',
-      exporterPdfDefaultStyle: {fontSize: 9},
-      exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
-      exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
-      exporterPdfHeader: { text: "My Header", style: 'headerStyle' },
-      exporterPdfFooter: function ( currentPage, pageCount ) {
-        return { text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle' };
-      },
-      exporterPdfCustomFormatter: function ( docDefinition ) {
-        docDefinition.styles.headerStyle = { fontSize: 22, bold: true };
-        docDefinition.styles.footerStyle = { fontSize: 10, bold: true };
-        return docDefinition;
-      },
-      exporterPdfOrientation: 'portrait',
-      exporterPdfPageSize: 'LETTER',
-      exporterPdfMaxGridWidth: 500,
       exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
     }
-
-    // $scope.$watchCollection(allData.get(), allDataWatch, true);
-
-    // function allDataWatch(newData) {
-    //   vm.data = newData;
-    //   console.log(newData);
-    // }
   }
 })();

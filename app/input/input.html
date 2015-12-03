@@ -1,26 +1,35 @@
+<input type="checkbox"> Sicheren Eingabemodus verwenden<br><br>
 <div class="row">
   <div class="col-xs-3 my-medium">
     <div class="input-heading">
       Jahr<br>
       2015
+      <button type="submit" class="btn btn-default small" ng-click="vm.bankFinishStatement();">+</button>
+      <button type="submit" class="btn btn-default small" ng-click="vm.bankFinishStatement();">-</button>
     </div>
   </div>
   <div class="col-xs-3 my-medium">
     <div class="input-heading">
       Kontoauszug<br>
-      13
+      13 
+      <button type="submit" class="btn btn-default small" ng-click="vm.bankFinishStatement();">+</button>
+      <button type="submit" class="btn btn-default small" ng-click="vm.bankFinishStatement();">-</button>
     </div>
   </div>
   <div class="col-xs-3 my-medium">
     <div class="input-heading">
       Blatt<br>
       3
+      <button type="submit" class="btn btn-default small" ng-click="vm.bankFinishPage();">+</button>
+      <button type="submit" class="btn btn-default small" ng-click="vm.bankFinishPage();">-</button>
     </div>
   </div>
   <div class="col-xs-3 my-medium">
     <div class="input-heading">
       Position<br>
       1
+      <button type="submit" class="btn btn-default small" ng-click="vm.bankFinishPage();">+</button>
+      <button type="submit" class="btn btn-default small" ng-click="vm.bankFinishPage();">-</button>
     </div>
   </div>
 </div>
@@ -47,14 +56,16 @@
   </div>
 </div>
 <br>
-<uib-progressbar class="progress-striped active" value="vm.progressBarValue" type="{{vm.progressBarType}}"><span ng-show="vm.progressBarValue > 0">Erfassung</span></uib-progressbar>
-<br>
-<button type="submit" class="btn {{vm.getSaveState()}}" ng-click="vm.saveDataSet(); vm.init();">Datensatz übernehmen</button>
-<button type="submit" class="btn btn-default" ng-click="vm.bankFinishPage();">Blatt abschließen</button>
-<button type="submit" class="btn btn-default" ng-click="vm.bankFinishStatement();">Kontoauszug abschließen</button>
-
-
-<div id="grid" ui-grid="vm.gridOptions" class="grid" style="margin-top:100px" ui-grid-resize-columns></div>
+<uib-progressbar 
+  class="progress-striped active" 
+  value="vm.progressBarValue" 
+  type="{{vm.progressBarType}}"
+  ng-click="vm.saveDataSet();"
+  >
+    <span ng-show="vm.progressBarValue > 0 && vm.progressBarValue < 100">Erfassung</span>
+    <span ng-show="vm.progressBarValue == 100">Hier klicken zum Übernehmen</span>
+</uib-progressbar>
+<div id="grid" ui-grid="vm.gridOptions" class="grid" ui-grid-resize-columns></div>
 <br>
 <br>
 <button type="submit" class="btn btn-default" ng-click="vm.saveAll();">Alles übernehmen</button>
@@ -71,5 +82,6 @@
     </div>
     <div class="modal-footer">
         <button class="btn btn-success" type="button" ng-click="ok()">OK</button>
+        <button class="btn btn-success" type="button" ng-click="overview()">Zur Übersicht wechseln</button>
     </div>
 </script>

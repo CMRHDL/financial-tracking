@@ -2,7 +2,10 @@ o Datum Zahl statt ausgeschrieben
 * Zahlen rechtsbündig
 o +/- erzwingen bei Zuordnung hinzufügen
 * Position nur hochzählen, falls wirklich etwas hinzugefügt wurde
-
+* gridctrl für grid-directive (reuse+settings -> checkbox "show settings" über grid)
+* eingabe-daten zwischenspeichern in service
+* login/redirects
 
 Fragen:
 * Zuordnung plain oder mit Beschreibung?
+* sicherer Eingabemodus für jahr-nr-blatt-pos

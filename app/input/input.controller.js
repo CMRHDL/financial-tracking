@@ -10,26 +10,11 @@
     vm.data = [];
     vm.delegates = allData.getDelegates();
     vm.delegatesArr = allData.getDelegatesAsArr();
-    vm.bankStatement = "1-1-1";
-
 
     vm.saveAll = saveAll;
-    vm.init = init;
     vm.saveDataSet = saveDataSet;
-    vm.getSaveState = getSaveState;
 
-    var saveState, count;
-
-    function init() {
-      bankPosNr += 1;
-      vm.params.amount.value = undefined;
-      vm.params.description.value = undefined;
-      bankBuildStatement();
-    }
-    function getSaveState() {
-      saveState = vm.params.amount.value && vm.bankStatement && vm.params.description.value && vm.params.date.value && vm.params.selectedDelegate.value
-      return saveState ? 'btn-success' : 'btn-warning';
-    }
+    var count;
 
     function saveAll() {
       // kindOf, prop, entry
@@ -47,29 +32,31 @@
         controller: 'ModalInstanceCtrl',
         size: 'sm',
         resolve: {
-        count: function () {
-          return count;
-        }
+          count: function () {
+            return count;
+          }
         }
       });
     }
 
     function saveDataSet() {
-      if(saveState) {
+      if(vm.progressBarValue === 100) {
         vm.data.push({
           amount: $filter('currency')(vm.params.amount.value.replace(/,/, '.')),
+          //amount: vm.params.amount.value.replace(/,/, '.'),
           bankStatemement: vm.bankStatement,
           description: vm.params.description.value,
           date: $filter('date')(vm.params.date.value, 'dd.MM.yyyy', 'CET'),
           delegate: vm.params.selectedDelegate.value.name,
           type: vm.params.selectedDelegate.value.type === 'Einnahmearten' ? 'Einnahme' : 'Ausgabe',
         });
+        vm.params.amount.tracked = false;
+        vm.params.description.tracked = false;
+        vm.params.amount.value = undefined;
+        vm.params.description.value = undefined;
+        vm.progressBarValue = 50;
+        vm.progressBarType = 'info';
       }
-
-      vm.params.amount.tracked = false;
-      vm.params.description.tracked = false;
-      vm.progressBarValue = 50;
-      vm.progressBarType = 'info';
     }
 
     var deleteCell = '<button ng-click="grid.appScope.delete(row)" title="Datensatz entfernen">X</button>';
@@ -93,28 +80,6 @@
           vm.data.splice(vm.data.indexOf(row.entity), 1);
         },
       }
-    }
-
-    var bankstatementNr = 1;
-    var bankPageNr = 1;
-    var bankPosNr = 1;
-
-    vm.bankFinishPage = bankFinishPage;
-    vm.bankFinishStatement = bankFinishStatement;
-
-    function bankFinishPage(){
-      bankPageNr += 1;
-      bankPosNr = 1;
-      bankBuildStatement();
-    }
-    function bankFinishStatement(){
-      bankPageNr = 1;
-      bankPosNr = 1;
-      bankstatementNr += 1;
-      bankBuildStatement();
-    }
-    function bankBuildStatement() {
-      vm.bankStatement = bankstatementNr + "-" + bankPageNr + "-" + bankPosNr;
     }
 
     vm.progressBarValue = 0;
@@ -153,7 +118,12 @@
     $scope.count = count;
 
     $scope.ok = function () {
-    $uibModalInstance.close();
+      $uibModalInstance.close();
+    };
+    $scope.overview = function () {
+      
+      window.location = '/#/overview';
+      $uibModalInstance.close();
     };
   });
 })();

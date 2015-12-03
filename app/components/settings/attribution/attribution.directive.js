@@ -9,7 +9,7 @@
       controller : 'AttributionCtrl',
       controllerAs : 'attr',
       restrict: 'E',
-      templateUrl: 'components/attribution/attribution.html',
+      templateUrl: 'components/settings/attribution/attribution.html',
       link: function(scope, element, attrs, ctrls) {
       },
     };

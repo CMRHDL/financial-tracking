@@ -7,8 +7,7 @@
 </head>
 <body>
     <my-nav></my-nav>
-
-    <div style="margin: 75px;">
+    <div style="margin: 75px;" ui-i18n="'de'">
       <div ng-view></div>
     </div>
 
@@ -24,22 +23,23 @@
     <script src="http://ui-grid.info/release/ui-grid.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.js"></script>
     <script src="http://ui-grid.info/docs/grunt-scripts/csv.js"></script>
-    <script src="http://ui-grid.info/docs/grunt-scripts/pdfmake.js"></script>
-    <script src="http://ui-grid.info/docs/grunt-scripts/vfs_fonts.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-messages.js"></script>
     <script src="app.js"></script>
     <script src="app.controller.js"></script>
     <script src="navbar/navbar.directive.js"></script>
     <script src="navbar/navbar.controller.js"></script>
-	<script src="home/home.controller.js"></script>
-	<script src="input/input.controller.js"></script>
-	<script src="overview/overview.controller.js"></script>
+	  <script src="home/home.controller.js"></script>
+	  <script src="input/input.controller.js"></script>
+	  <script src="overview/overview.controller.js"></script>
     <script src="details/details.controller.js"></script>
     <script src="provider/alldata.service.js"></script>
     <script src="settings/settings.controller.js"></script>
-    <script src="components/attribution/attribution.directive.js"></script>
-    <script src="components/attribution/attribution.service.js"></script>
-    <script src="components/attribution/attribution.controller.js"></script>
+    <script src="components/settings/attribution/attribution.directive.js"></script>
+    <script src="components/settings/attribution/attribution.service.js"></script>
+    <script src="components/settings/attribution/attribution.controller.js"></script>
+    <script src="components/grid/grid.directive.js"></script>
+    <script src="components/grid/grid.service.js"></script>
+    <script src="components/grid/grid.controller.js"></script>
     <script src="components/resource/resource.js"></script>
 </body>
 </html>
