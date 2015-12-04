@@ -42,8 +42,8 @@
     function saveDataSet() {
       if(vm.progressBarValue === 100) {
         vm.data.push({
-          amount: $filter('currency')(vm.params.amount.value.replace(/,/, '.')),
-          //amount: vm.params.amount.value.replace(/,/, '.'),
+          //amount: $filter('currency')(vm.params.amount.value.replace(/,/, '.')),
+          amount: vm.params.amount.value.replace(/,/, '.'),
           bankStatemement: vm.bankStatement,
           description: vm.params.description.value,
           date: $filter('date')(vm.params.date.value, 'dd.MM.yyyy', 'CET'),
