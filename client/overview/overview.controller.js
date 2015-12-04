@@ -2,67 +2,35 @@
   'use strict';
   angular.module('team.app').controller('OverviewCtrl', OverviewCtrl);
 
-  //OverviewCtrl.$inject = [ 'uiGridConstants' ];
-  function OverviewCtrl($scope, $rootScope, uiGridConstants, allData) {
+  OverviewCtrl.$inject = [ 'uiGridConstants','attribution', 'recordset', 'resource' ];
+  function OverviewCtrl(uiGridConstants, attribution, recordset, resource) {
     var vm = this;
 
-    vm.allData = allData.get();
-    vm.data = [];
+    vm.attributions = attribution.getAsArray();
+    vm.data = recordset.get();
 
-    vm.delegatesArr = allData.getDelegatesAsArr();
+    var colDefs = [];
 
     init();
     function init() {
-
-
       window.scrollTo(0, 0);
-      for(var key in vm.allData.expenses) {
-        vm.allData.expenses[key].forEach(function(entry){
-          var obj = {
-            date: entry.date,
-            description: entry.description,
-            bankStatemement: entry.bankStatemement,
-            refNumber: entry.refNumber,
-            gains: '',
-            expenses: entry.amount,
-          };
-          vm.delegatesArr.forEach(function(dele){
-            obj[dele.name] = dele.name === entry.delegate ? entry.amount : '';
-          });
-          vm.data.push(obj);
+      vm.data.forEach(function(entry){
+        vm.attributions.forEach(function(attr){
+          entry[attr.name] = entry.attribution === attr.name && entry.type === attr.type ? entry.amount : '';
         });
-      }
-      for(var key in vm.allData.gains) {
-        vm.allData.gains[key].forEach(function(entry){
-          var obj = {
-            date: entry.date,
-            description: entry.description,
-            bankStatemement: entry.bankStatemement,
-            refNumber: entry.refNumber,
-            gains: entry.amount,
-            expenses: '',
-          };
-          vm.delegatesArr.forEach(function(dele){
-            obj[dele.name] = dele.name === entry.delegate ? entry.amount : '';
-          });
-          vm.data.push(obj);
-        });
-      }
+      });
     }
 
-    var colDefs = [];
     buildColDefs();
     function buildColDefs() {
       colDefs = [
         { field: 'date', name: 'Datum', enableColumnMenu: false, width: 150 },
         { field: 'description', name: 'Text', enableColumnMenu: false, width: 150 },
-        { field: 'bankStatemement', name: 'Kto-A', enableColumnMenu: false, width: 100 },
-        { field: 'refNumber', name: 'Beleg', enableColumnMenu: false, width: 100, cellTemplate: '<div class="grid-number-cell">{{row.entity[col.field]}}</div>'},
-        { field: 'gains', name: 'Einnahmen', enableColumnMenu: false, width: 100, aggregationType: uiGridConstants.aggregationTypes.sum , cellTemplate: '<div class="grid-number-cell">{{row.entity[col.field]}}</div>'},
-        { field: 'expenses', name: 'Ausgaben', enableColumnMenu: false, width: 100, aggregationType: uiGridConstants.aggregationTypes.sum , cellTemplate: '<div class="grid-number-cell">{{row.entity[col.field]}}</div>'},
-      ]
-      vm.delegatesArr.forEach(function(dele){
-        colDefs.push({ field: dele.name, name: dele.name, enableColumnMenu: false, width: 120, aggregationType: uiGridConstants.aggregationTypes.sum, cellTemplate: '<div class="grid-number-cell">{{row.entity[col.field]}}</div>'});
+        { field: 'gains', name: 'Einnahmen', enableColumnMenu: false, width: 100, aggregationType: uiGridConstants.aggregationTypes.sum , cellTemplate: resource.templates.table_cell_number},
+        { field: 'expenses', name: 'Ausgaben', enableColumnMenu: false, width: 100, aggregationType: uiGridConstants.aggregationTypes.sum , cellTemplate: resource.templates.table_cell_number},
+      ];
+      vm.attributions.forEach(function(entry){
+        colDefs.push({ field: entry.name, name: entry.name, enableColumnMenu: false, width: 120, aggregationType: uiGridConstants.aggregationTypes.sum, cellTemplate: resource.templates.table_cell_number});
       });
     }
 

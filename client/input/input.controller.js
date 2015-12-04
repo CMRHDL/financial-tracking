@@ -2,14 +2,13 @@
   'use strict';
   angular.module('team.app').controller('InputCtrl', InputCtrl);
 
-  InputCtrl.$inject = [ '$filter', '$rootScope', '$scope', 'allData', '$uibModal' ];
-  function InputCtrl($filter, $rootScope, $scope, allData, $uibModal) {
+  InputCtrl.$inject = [ '$filter', '$rootScope', '$scope', '$uibModal', 'attribution', 'recordset', 'resource' ];
+  function InputCtrl($filter, $rootScope, $scope, $uibModal, attribution, recordset, resource) {
     var vm = this;
 
     vm.showDatePicker = false;
     vm.data = [];
-    vm.delegates = allData.getDelegates();
-    vm.delegatesArr = allData.getDelegatesAsArr();
+    vm.delegates = attribution.getAsArray();
 
     vm.saveAll = saveAll;
     vm.saveDataSet = saveDataSet;
@@ -17,45 +16,34 @@
     var count;
 
     function saveAll() {
-      // kindOf, prop, entry
-      count = 0;
-      vm.data.forEach(function(entry){
-        allData.add(entry);
-        count++;
-      });
+      recordset.addAll(vm.data);
       vm.data = [];
-          /* Modal */
 
+      /* Modal */
       var modalInstance = $uibModal.open({
         animation: false,
         templateUrl: 'myModalContent.html',
         controller: 'ModalInstanceCtrl',
         size: 'sm',
-        resolve: {
-          count: function () {
-            return count;
-          }
-        }
       });
     }
 
     function saveDataSet() {
       if(vm.progressBarValue === 100) {
+        var income = vm.params.selectedDelegate.value.type === 'Einnahmearten' ? true : false;
+        // var amount = $filter('currency')(vm.params.amount.value.replace(/,/, '.'));
+        var amount = vm.params.amount.value.replace(/,/, '.');
         vm.data.push({
-          //amount: $filter('currency')(vm.params.amount.value.replace(/,/, '.')),
-          amount: vm.params.amount.value.replace(/,/, '.'),
-          bankStatemement: vm.bankStatement,
-          description: vm.params.description.value,
+          amount: amount,
+          attribution: vm.params.selectedDelegate.value.name,
           date: $filter('date')(vm.params.date.value, 'dd.MM.yyyy', 'CET'),
-          delegate: vm.params.selectedDelegate.value.name,
-          type: vm.params.selectedDelegate.value.type === 'Einnahmearten' ? 'Einnahme' : 'Ausgabe',
+          description: vm.params.description.value,
+          gains: income ? amount : '',
+          expenses: income ? '' : amount,
+          type: vm.params.selectedDelegate.value.type,
         });
-        vm.params.amount.tracked = false;
-        vm.params.description.tracked = false;
         vm.params.amount.value = undefined;
         vm.params.description.value = undefined;
-        vm.progressBarValue = 50;
-        vm.progressBarType = 'info';
       }
     }
 
@@ -67,11 +55,10 @@
       columnDefs: [
         { field: 'date', name:'Datum', enableColumnMenu: false, enableSorting: false, width: 155},
         { field: 'description', name:'Beschreibung', enableColumnMenu: false, enableSorting: false},
-        { field: 'bankStatemement', name:'Kto-Auszug', enableColumnMenu: false, enableSorting: false},
         { field: 'amount', name:'Betrag', enableColumnMenu: false, enableSorting: false,
-          cellTemplate: '<div class="grid-number-cell">{{row.entity[col.field]}}</div>'
+          cellTemplate: resource.templates.table_cell_number
         },
-        { field: 'delegate', name:'Zuordnung', enableColumnMenu: false, enableSorting: false},
+        { field: 'attribution', name:'Zuordnung', enableColumnMenu: false, enableSorting: false},
         { field: 'type', name:'Art', enableColumnMenu: false, enableSorting: false},
         { field: 'x', name:'X', enableColumnMenu: false, enableSorting: false, width: '5%', cellTemplate: deleteCell},
       ],
@@ -93,7 +80,9 @@
     }
 
 
-    $scope.$watch('vm.params', function(newData){
+    $scope.$watch('vm.params', parseParams, true);
+
+    function parseParams() {
       for(var key in vm.params) {
         if(vm.params[key].value && !vm.params[key].tracked) {
           vm.progressBarValue += 25;
@@ -110,18 +99,14 @@
       } else {
         vm.progressBarType = 'info';
       }
-    }, true);
+    }
   }
 
-  angular.module('team.app').controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, count) {
-
-    $scope.count = count;
-
+  angular.module('team.app').controller('ModalInstanceCtrl', function ($scope, $uibModalInstance) {
     $scope.ok = function () {
       $uibModalInstance.close();
     };
     $scope.overview = function () {
-      
       window.location = '/#/overview';
       $uibModalInstance.close();
     };

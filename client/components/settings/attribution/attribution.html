@@ -8,14 +8,14 @@
     </div>
     <div class="col-xs-9">
       <p>
-        <input type="text" class="form-control" placeholder="{{::attr.resource.placeholder.settings_attribution_add}}" ng-model="attr.newAttr.name"  ng-change="attr.checkNewAttr();">
-        <div ng-show="!attr.newAttr.isValid && attr.newAttr.name.length > 1" style="color:maroon" role="alert">
+        <input type="text" class="form-control" placeholder="{{::attr.resource.placeholder.settings_attribution_add}}" ng-model="attr.new.name"  ng-change="attr.check();">
+        <div ng-show="!attr.new.isValid && attr.new.name.length > 1" style="color:maroon" role="alert">
           Bitte "+" (Einnahme) oder "-" (Ausgabe) vor die Bezeichnung schreiben.
         </div>
-        <div ng-show="attr.newAttr.isDuplicate && attr.newAttr.name.length > 1" style="color:maroon" role="alert">
+        <div ng-show="attr.new.isDuplicate && attr.new.name.length > 1" style="color:maroon" role="alert">
           Eintrag bereits vorhanden.
         </div>
-        <button type="submit" class="btn btn-default" ng-click="attr.addNewAttribution();" ng-attr-title="{{::attr.resource.help.settings_attribution_add}}" ng-bind="attr.addKindOfAttr"></button>
+        <button type="submit" class="btn btn-default" ng-click="attr.add();" ng-attr-title="{{::attr.resource.help.settings_attribution_add}}" ng-bind="attr.addKindOfAttr"></button>
       </p>
     </div>
   </div>

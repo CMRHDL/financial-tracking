@@ -9,6 +9,9 @@
     },
     placeholder: {
       settings_attribution_add: 'Name der Zuordnung',
+    },
+    templates: {
+      table_cell_number: '<div class="grid-number-cell">{{row.entity[col.field]}}</div>',
     }
   });
 })();

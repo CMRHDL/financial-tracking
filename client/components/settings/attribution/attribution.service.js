@@ -9,33 +9,30 @@
 
     var attributions = {};
     attributions.in = [
-      {name:'Spende'},
-      {name:'U'},
-      {name:'wot'},
-      {name:'mate'},
-      {name:'Spende'},
-      {name:'Spende'},
-      {name:'Spende'},
-      {name:'Spende'},
+      { name:'Miete' },
+      { name:'Spende' },
     ];
     attributions.out = [
-      {name:'Miete'},
-      {name:'Miete'},
-      {name:'Miete'},
-      {name:'Miete'},
-      {name:'Miete'},
-      {name:'Miete'},
-      {name:'Miete'},
-      {name:'Miete'},
-      {name:'Miete'},
+      {name:'Gehalt'},
+      {name:'Telefon'},
     ];
 
     service.get = function() {
       return attributions;
     }
 
+    service.getAsArray = function() {
+      return attributions.in.reduce(function(arr, val) {
+        arr.push({ name: val.name, type: 'Einnahmearten' })
+        return arr;
+      }, []).concat(attributions.out.reduce(function(arr, val) {
+        arr.push({ name: val.name, type: 'Ausgabearten' })
+        return arr;
+      }, []));
+    }
+
     service.add = function(kindOf, val) {
-      attributions[kindOf].push(val);
+      attributions[kindOf].push( { name: val } );
     }
   }
 })();

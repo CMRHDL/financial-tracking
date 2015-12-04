@@ -5,6 +5,7 @@ o +/- erzwingen bei Zuordnung hinzufügen
 * gridctrl für grid-directive (reuse+settings -> checkbox "show settings" über grid)
 * eingabe-daten zwischenspeichern in service
 * login/redirects
+* +/- miete in tabelle
 
 Fragen:
 * Zuordnung plain oder mit Beschreibung?
