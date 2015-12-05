@@ -6,6 +6,10 @@ o +/- erzwingen bei Zuordnung hinzufügen
 * eingabe-daten zwischenspeichern in service
 * login/redirects
 * +/- miete in tabelle
+* nach üebernahme auch zuordnung zurücksetzen
+* rundung beim summieren
+* zahlen auf 2 stellen runden, mit tausender-stelle
+* dropdown alphabetisch sortieren
 
 Fragen:
 * Zuordnung plain oder mit Beschreibung?

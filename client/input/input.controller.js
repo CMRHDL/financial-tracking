@@ -31,8 +31,8 @@
     function saveDataSet() {
       if(vm.progressBarValue === 100) {
         var income = vm.params.selectedDelegate.value.type === 'Einnahmearten' ? true : false;
-        // var amount = $filter('currency')(vm.params.amount.value.replace(/,/, '.'));
-        var amount = vm.params.amount.value.replace(/,/, '.');
+        var amount = $filter('currency')(vm.params.amount.value.replace(/,/, '.'));
+        // var amount = vm.params.amount.value.replace(/,/, '.');
         vm.data.push({
           amount: amount,
           attribution: vm.params.selectedDelegate.value.name,
