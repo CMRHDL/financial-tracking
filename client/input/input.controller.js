@@ -30,17 +30,16 @@
 
     function saveDataSet() {
       if(vm.progressBarValue === 100) {
-        var income = vm.params.selectedDelegate.value.type === 'Einnahmearten' ? true : false;
+        var income = vm.params.selectedDelegate.value.group === 'Einnahmearten' ? true : false;
         var amount = $filter('currency')(vm.params.amount.value.replace(/,/, '.'));
         // var amount = vm.params.amount.value.replace(/,/, '.');
         vm.data.push({
           amount: amount,
-          attribution: vm.params.selectedDelegate.value.name,
+          attribution: vm.params.selectedDelegate.value,
           date: $filter('date')(vm.params.date.value, 'dd.MM.yyyy', 'CET'),
           description: vm.params.description.value,
           gains: income ? amount : '',
           expenses: income ? '' : amount,
-          type: vm.params.selectedDelegate.value.type,
         });
         vm.params.amount.value = undefined;
         vm.params.description.value = undefined;
@@ -59,8 +58,8 @@
         { field: 'amount', name:'Betrag', enableColumnMenu: false, enableSorting: false,
           cellTemplate: resource.templates.table_cell_number
         },
-        { field: 'attribution', name:'Zuordnung', enableColumnMenu: false, enableSorting: false},
-        { field: 'type', name:'Art', enableColumnMenu: false, enableSorting: false},
+        { field: 'attribution.displayName', name:'Zuordnung', enableColumnMenu: false, enableSorting: false},
+        { field: 'attribution.group', name:'Art', enableColumnMenu: false, enableSorting: false},
         { field: 'x', name:'X', enableColumnMenu: false, enableSorting: false, width: '5%', cellTemplate: deleteCell},
       ],
       appScopeProvider: {

@@ -52,7 +52,7 @@
   </div>
   <div class="col-xs-3 my-medium">
     <label>Zuordnung</label><br>
-    <select class="dropdown" ng-options="entry.name group by entry.type for entry in vm.delegates" ng-model="vm.params.selectedDelegate.value"></select>
+    <select class="dropdown" ng-options="entry.displayName group by entry.group for entry in vm.delegates" ng-model="vm.params.selectedDelegate.value"></select>
   </div>
 </div>
 <br>

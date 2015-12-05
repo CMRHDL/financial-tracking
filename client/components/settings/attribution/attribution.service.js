@@ -9,12 +9,12 @@
 
     var attributions = {};
     attributions.in = [
-      { name:'Miete' },
-      { name:'Spende' },
+      { name:'Miete_in', displayName: 'Miete' },
+      { name:'Spende_in', displayName: 'Spende' },
     ];
     attributions.out = [
-      {name:'Gehalt'},
-      {name:'Telefon'},
+      {name:'Gehalt_out', displayName: 'Gehalt' },
+      {name:'Telefon_out', displayName: 'Telefon' },
     ];
 
     service.get = function() {
@@ -23,18 +23,18 @@
 
     service.getAsArray = function() {
       return attributions.in.reduce(function(arr, val) {
-        arr.push({ name: val.name, type: 'Einnahmearten' })
+        arr.push({ name: val.name, displayName: val.displayName, group: 'Einnahmearten', type: 'in' })
         return arr;
       }, []).concat(attributions.out.reduce(function(arr, val) {
-        arr.push({ name: val.name, type: 'Ausgabearten' })
+        arr.push({ name: val.name, displayName: val.displayName, group: 'Ausgabearten', type: 'out' })
         return arr;
       }, []));
     }
 
-    service.add = function(kindOf, val) {
-      attributions[kindOf].push( { name: val } );
-      attributions.in = _.sortBy(attributions.in, 'name')
-      attributions.out = _.sortBy(attributions.in, 'name')
+    service.add = function(attr) {
+      attributions[attr.type].push( { name: attr.displayName + "_" + attr.type, displayName: attr.displayName, type: attr.type } );
+      attributions.in = _.sortBy(attributions.in, 'displayName')
+      attributions.out = _.sortBy(attributions.out, 'displayName')
     }
 
     

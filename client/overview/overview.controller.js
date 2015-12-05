@@ -16,7 +16,7 @@
       window.scrollTo(0, 0);
       vm.data.forEach(function(entry){
         vm.attributions.forEach(function(attr){
-          entry[attr.name] = entry.attribution === attr.name && entry.type === attr.type ? entry.amount : '';
+          entry[attr.name] = entry.attribution.name === attr.name ? entry.amount : '';
         });
       });
     }
@@ -30,7 +30,11 @@
         { field: 'expenses', name: 'Ausgaben', enableColumnMenu: false, width: 100, aggregationType: uiGridConstants.aggregationTypes.sum , cellTemplate: resource.templates.table_cell_number},
       ];
       vm.attributions.forEach(function(entry){
-        colDefs.push({ field: entry.name, name: entry.name, enableColumnMenu: false, width: 120, aggregationType: uiGridConstants.aggregationTypes.sum, cellTemplate: resource.templates.table_cell_number});
+        if(entry.type == 'in') {
+          colDefs.push({ field: entry.name, name: entry.displayName + " (E)", enableColumnMenu: false, width: 120, aggregationType: uiGridConstants.aggregationTypes.sum, cellTemplate: resource.templates.table_cell_number});
+        } else {
+          colDefs.push({ field: entry.name, name: entry.displayName + " (A)", enableColumnMenu: false, width: 120, aggregationType: uiGridConstants.aggregationTypes.sum, cellTemplate: resource.templates.table_cell_number});
+        }
       });
     }
 
