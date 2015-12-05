@@ -44,6 +44,7 @@
         });
         vm.params.amount.value = undefined;
         vm.params.description.value = undefined;
+        vm.params.selectedDelegate.value = null;
       }
     }
 

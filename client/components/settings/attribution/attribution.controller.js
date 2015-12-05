@@ -2,8 +2,8 @@
   'use strict';
   angular.module('team.app').controller('AttributionCtrl', AttributionCtrl);
 
-  AttributionCtrl.$inject = [ 'attribution', 'resource' ];
-  function AttributionCtrl(attribution, resource) {
+  AttributionCtrl.$inject = [ 'attribution', 'resource', '$http' ];
+  function AttributionCtrl(attribution, resource, $http) {
     var attr = this;
 
     attr.resource = resource;
@@ -57,5 +57,40 @@
     function resetFull() {
       init(true);
     }
+
+
+
+
+    attr.dbGet = dbGet;
+    attr.dbAdd = dbAdd;
+    attr.dbClear = dbClear;
+
+    function dbGet() {
+      $http.get('/api/attr').then(function(res){
+        console.log(res);
+      },
+      function(err){
+        console.log(err);
+      });
+    }
+
+    function dbAdd() {
+      $http.post('/api/attr', { name: 'Zildjian' }).then(function(res){
+        console.log(res);
+      },
+      function(err){
+        console.log(err);
+      });
+    }
+
+    function dbClear() {
+      $http.delete('/api/attr').then(function(res){
+        console.log(res);
+      },
+      function(err){
+        console.log(err);
+      });
+    }
+
   }
 })();

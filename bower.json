@@ -12,7 +12,8 @@
     "angular-touch": "*",
     "angular-bootstrap": "*",
     "angular-ui-grid": "*",
-    "angular-i18n": "*"
+    "angular-i18n": "*",
+    "lodash": "*"
   },
   "devDependencies": {
     "angular-mocks": "*"

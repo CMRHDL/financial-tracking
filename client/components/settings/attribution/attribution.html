@@ -1,6 +1,11 @@
 <form class="form-inline">
   <p>
-    <h1 ng-attr-title="{{::attr.resource.help.settings_attribution_header}}">Zuordnungen (?)</h1>
+    <h1 ng-attr-title="{{::attr.resource.help.settings_attribution_header}}">
+      Zuordnungen<br>
+      <button type="submit" class="btn btn-default" ng-click="attr.dbGet();"> Get </button><br>
+      <button type="submit" class="btn btn-default" ng-click="attr.dbAdd();"> Add </button><br>      
+      <button type="submit" class="btn btn-default" ng-click="attr.dbClear();"> Clear </button><br>      
+    </h1>
   </p>
   <div class="row my-border">
     <div class="col-xs-3" ng-attr-title="{{::attr.resource.help.settings_attribution_add}}">

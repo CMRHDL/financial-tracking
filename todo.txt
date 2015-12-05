@@ -1,15 +1,16 @@
 o Datum Zahl statt ausgeschrieben
-* Zahlen rechtsbündig
+o Zahlen rechtsbündig
 o +/- erzwingen bei Zuordnung hinzufügen
+
 * Position nur hochzählen, falls wirklich etwas hinzugefügt wurde
 * gridctrl für grid-directive (reuse+settings -> checkbox "show settings" über grid)
 * eingabe-daten zwischenspeichern in service
 * login/redirects
 * +/- miete in tabelle
-* nach üebernahme auch zuordnung zurücksetzen
+o nach üebernahme auch zuordnung zurücksetzen
 * rundung beim summieren
 * zahlen auf 2 stellen runden, mit tausender-stelle
-* dropdown alphabetisch sortieren
+o dropdown alphabetisch sortieren
 
 Fragen:
 * Zuordnung plain oder mit Beschreibung?

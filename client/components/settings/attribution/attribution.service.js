@@ -33,6 +33,10 @@
 
     service.add = function(kindOf, val) {
       attributions[kindOf].push( { name: val } );
+      attributions.in = _.sortBy(attributions.in, 'name')
+      attributions.out = _.sortBy(attributions.in, 'name')
     }
+
+    
   }
 })();
