@@ -13,11 +13,11 @@
     </div>
     <div class="col-xs-9">
       <p>
-        <input type="text" class="form-control" placeholder="{{::attr.resource.placeholder.settings_attribution_add}}" ng-model="attr.new.name"  ng-change="attr.check();">
-        <div ng-show="!attr.new.isValid && attr.new.name.length > 1" style="color:maroon" role="alert">
+        <input type="text" class="form-control" placeholder="{{::attr.resource.placeholder.settings_attribution_add}}" ng-model="attr.new.val"  ng-change="attr.check();">
+        <div ng-show="!attr.new.isValid && attr.new.val.length > 1" style="color:maroon" role="alert">
           Bitte "+" (Einnahme) oder "-" (Ausgabe) vor die Bezeichnung schreiben.
         </div>
-        <div ng-show="attr.new.isDuplicate && attr.new.name.length > 1" style="color:maroon" role="alert">
+        <div ng-show="attr.new.isDuplicate && attr.new.val.length > 1" style="color:maroon" role="alert">
           Eintrag bereits vorhanden.
         </div>
         <button type="submit" class="btn btn-default" ng-click="attr.add();" ng-attr-title="{{::attr.resource.help.settings_attribution_add}}" ng-bind="attr.addKindOfAttr"></button>
@@ -31,11 +31,11 @@
     <div class="col-xs-9">
       <p>
         <p>Einnahmearten:</p>
-        <button ng-repeat="entry in attr.all.in" type="button" class="btn btn-success">{{entry.displayName}}</button>
+        <button ng-repeat="entry in attr.all" type="button" class="btn btn-success"ng-if="entry.type === 'in'">{{entry.displayName}}</button>
       </p>
       <p>
         <p>Ausgabearten:</p>
-        <button ng-repeat="entry in attr.all.out" type="button" class="btn btn-danger">{{entry.displayName}}</button>
+        <button ng-repeat="entry in attr.all" type="button" class="btn btn-danger" ng-if="entry.type === 'out'">{{entry.displayName}}</button>
       </p>
     </div>
   </div>
@@ -50,10 +50,10 @@
     </div>
     <div class="col-xs-9" ng-show="attr.showDelete">
       <p>
-        <button ng-repeat="entry in attr.all.in" type="button" class="btn btn-success">{{entry.displayName}}</button>
+        <button ng-repeat="entry in attr.all" type="button" class="btn btn-success" ng-if="entry.type === 'in'">{{entry.displayName}}</button>
       </p>
       <p>
-        <button ng-repeat="entry in attr.all.out" type="button" class="btn btn-danger">{{entry.displayName}}</button>
+        <button ng-repeat="entry in attr.all" type="button" class="btn btn-danger" ng-if="entry.type === 'out'">{{entry.displayName}}</button>
       </p>
     </div>
   </div>

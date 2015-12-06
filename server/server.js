@@ -23,7 +23,7 @@ app.use(express.static(path.resolve('client'))); // set the static files locatio
 app.use('/bower_components', express.static(path.resolve('bower_components'))); // set the static files location /public/img will be /img for users
 
 // routes ==================================================
-require('./routes/attribution.route.js')(app); // pass our application into our routes
+require('./routes')(app); // pass our application into our routes
 var server = require('http').createServer(app);
 // start app ===============================================
 //server.listen(port); 

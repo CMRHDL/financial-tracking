@@ -3,40 +3,29 @@
 
   angular.module('team.app').service('attribution', attribution);
 
-  //attribution.$inject = [''];
-  function attribution() {
+  attribution.$inject = [ '$http' ];
+  function attribution($http) {
     var service = this; // jshint ignore:line
 
-    var attributions = {};
-    attributions.in = [
-      { name:'Miete_in', displayName: 'Miete' },
-      { name:'Spende_in', displayName: 'Spende' },
-    ];
-    attributions.out = [
-      {name:'Gehalt_out', displayName: 'Gehalt' },
-      {name:'Telefon_out', displayName: 'Telefon' },
-    ];
+    var attributions = [];
 
     service.get = function() {
-      return attributions;
-    }
-
-    service.getAsArray = function() {
-      return attributions.in.reduce(function(arr, val) {
-        arr.push({ name: val.name, displayName: val.displayName, group: 'Einnahmearten', type: 'in' })
-        return arr;
-      }, []).concat(attributions.out.reduce(function(arr, val) {
-        arr.push({ name: val.name, displayName: val.displayName, group: 'Ausgabearten', type: 'out' })
-        return arr;
-      }, []));
+      //return attributions;
+      return $http.get('/api/attr').then(function(res){
+        return res.data;
+      },
+      function(err){
+        console.log(err);
+      });
     }
 
     service.add = function(attr) {
-      attributions[attr.type].push( { name: attr.displayName + "_" + attr.type, displayName: attr.displayName, type: attr.type } );
-      attributions.in = _.sortBy(attributions.in, 'displayName')
-      attributions.out = _.sortBy(attributions.out, 'displayName')
-    }
-
-    
+      $http.post('/api/attr', attr).then(function(res){
+        console.log(res);
+      },
+      function(err){
+        console.log(err);
+      });       
+    }   
   }
 })();

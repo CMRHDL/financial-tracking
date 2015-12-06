@@ -12,14 +12,21 @@
     attr.add = add;
     attr.check = check;
 
+    attr.all = [];
+    attribution.get().then(function(response) {
+      attr.all = response;
+    });
+
     init(true);
     function init(resetName) {
       attr.new = {
+        val: '',
         name: resetName ? '' : attr.new.name,
         displayName: resetName ? '' : attr.new.displayName,
         isValid: false,
         isDuplicate: false,
         type: null,
+        group: null,
       }
       attr.addKindOfAttr = 'Zuordnung hinzufügen';
     }
@@ -27,21 +34,25 @@
     function add() {
       if(attr.new.isValid && !attr.new.isDuplicate) {
         attribution.add(attr.new);
-        attr.all = attribution.get();
+        attribution.get().then(function(response) {
+          attr.all = response;
+        });
         resetFull();
       }
     }
 
     function check() {
-      var firstLetter = attr.new.name.substring(0, 1);
-      attr.new.displayName = attr.new.name.substring(1, attr.new.name.length);
-      if(attr.new.name.length > 1 && (firstLetter === '-' || firstLetter === '+')) {
+      var type = attr.new.val.substring(0, 1) === '-' ? 'out' : attr.new.val.substring(0, 1) === '+' ? 'in' : null;
+      attr.new.displayName = attr.new.val.substring(1, attr.new.val.length);
+      attr.new.name = attr.new.displayName + "_" + type;
+      if(attr.new.val.length > 0 && type) {
         attr.new.isValid = true;
-        attr.addKindOfAttr = firstLetter === '-' ? 'Ausgabe hinzufügen' : 'Einnahme hinzufügen';
-        attr.new.type = firstLetter === '-' ? 'out' : 'in';
+        attr.addKindOfAttr = type === 'out' ? 'Ausgabe hinzufügen' : 'Einnahme hinzufügen';
+        attr.new.type = type
         attr.new.isDuplicate = false;
-        for (var i = 0, len = attr.all[attr.new.type].length; i < len; i++) {
-          if(attr.all[attr.new.type][i].name === attr.new.displayName) {
+        attr.new.group = type === 'in' ? 'Einnahmearten' : 'Ausgabearten' 
+        for (var i = 0, len = attr.all.length; i < len; i++) {
+          if(attr.all[i].name === attr.new.name) {
             attr.new.isDuplicate = true; break;
           }
         }

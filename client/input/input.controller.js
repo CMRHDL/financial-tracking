@@ -8,7 +8,9 @@
 
     vm.showDatePicker = false;
     vm.data = [];
-    vm.delegates = attribution.getAsArray();
+    attribution.get().then(function(response) {
+      vm.delegates = response;
+    });
 
     vm.saveAll = saveAll;
     vm.saveDataSet = saveDataSet;
@@ -16,7 +18,8 @@
     var count;
 
     function saveAll() {
-      recordset.addAll(vm.data);
+      recordset.add(vm.data);
+      // console.log(vm.data[0]);
       vm.data = [];
 
       /* Modal */
@@ -31,8 +34,8 @@
     function saveDataSet() {
       if(vm.progressBarValue === 100) {
         var income = vm.params.selectedDelegate.value.group === 'Einnahmearten' ? true : false;
-        var amount = $filter('currency')(vm.params.amount.value.replace(/,/, '.'));
-        // var amount = vm.params.amount.value.replace(/,/, '.');
+        // var amount = $filter('currency')(vm.params.amount.value.replace(/,/, '.'));
+        var amount = parseFloat(vm.params.amount.value.replace(/,/, '.')).toFixed(2);
         vm.data.push({
           amount: amount,
           attribution: vm.params.selectedDelegate.value,
