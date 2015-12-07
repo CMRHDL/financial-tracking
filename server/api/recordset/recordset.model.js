@@ -6,6 +6,7 @@ var mongoose = require('mongoose'),
 var RecordsetSchema = new Schema({
     amount: Number,
     attribution: Object,
+    code: Number,
     date: Date,
     description: String,
     gains: Number,

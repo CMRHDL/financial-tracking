@@ -1,17 +1,41 @@
 o Datum Zahl statt ausgeschrieben
 o Zahlen rechtsbündig
 o +/- erzwingen bei Zuordnung hinzufügen
-
-* Position nur hochzählen, falls wirklich etwas hinzugefügt wurde
-* gridctrl für grid-directive (reuse+settings -> checkbox "show settings" über grid)
-* eingabe-daten zwischenspeichern in service
-* login/redirects
-* +/- miete in tabelle
+o +/- miete in tabelle
 o nach üebernahme auch zuordnung zurücksetzen
-* rundung beim summieren
-* zahlen auf 2 stellen runden, mit tausender-stelle
 o dropdown alphabetisch sortieren
 
+##Input
+
+##Code
+*prepend zeroes
+** Jahr/Nummer/Blatt/Pos + Logik + DB
+-> * Position nur hochzählen, falls wirklich etwas hinzugefügt wurde
+-> * Dropdown neben Kontoauszug, Blatt und Nummer
+
+-> Jahr 4 Stellen, Kontoauszug 3, Blatt 2, Position 2
+--> 2015|001|01|01
+--->20150010101
+
+##DB
+
+##Bonus
+* eingabe-daten zwischenspeichern in service
+
+##Auth
+* login/redirects
+
+##Tabellen
+* filter für zahlenzellen + footer und zahlen im js plain halten
+* zahlen auf 2 stellen runden, mit tausender-stelle
+* rundung beim summieren
+** gridctrl für grid-directive (reuse+settings -> checkbox "show settings" über grid)
+
+##Einstellungen
+
+
+
+
+** export footer
+
 Fragen:
-* Zuordnung plain oder mit Beschreibung?
-* sicherer Eingabemodus für jahr-nr-blatt-pos

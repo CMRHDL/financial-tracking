@@ -2,8 +2,8 @@
   'use strict';
   angular.module('team.app').controller('OverviewCtrl', OverviewCtrl);
 
-  OverviewCtrl.$inject = [ 'uiGridConstants','attribution', 'recordset', 'resource' ];
-  function OverviewCtrl(uiGridConstants, attribution, recordset, resource) {
+  OverviewCtrl.$inject = [ '$filter', 'uiGridConstants','attribution', 'recordset', 'resource', 'util' ];
+  function OverviewCtrl($filter, uiGridConstants, attribution, recordset, resource, util) {
     var vm = this;
     vm.gridOptions = {
       data: 'vm.data',
@@ -15,9 +15,11 @@
       ],
       enableGridMenu: true,
       exporterMenuPdf: false,
+      gridFooterTemplate: '<div>pink floyd</div>',
       showColumnFooter: true,
       exporterCsvFilename: 'myFile.csv',
       exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
+      //exporterCsvFooter: true
     }
 
     init();
@@ -28,8 +30,9 @@
       }).then(function() {
         recordset.get().then(function(response) {
           vm.data = response;
-          console.log(vm.data);
           vm.data.forEach(function(entry){
+            util.formatAllNumbers(entry);
+            entry.date = util.formatDate(entry.date);
             vm.attributions.forEach(function(attr){
               entry[attr.name] = entry.attribution.name === attr.name ? entry.amount : '';
             });

@@ -11,7 +11,8 @@
       settings_attribution_add: 'Name der Zuordnung',
     },
     templates: {
-      table_cell_number: '<div class="grid-number-cell">{{row.entity[col.field]}}</div>',
+      table_cell_number: '<div class="grid-cell number">{{row.entity[col.field]}}</div>',
+      table_cell_date: '<div class="grid-cell date">{{row.entity[col.field] | date : "dd.MM.yyyy" : "CET"}}</div>',
     }
   });
 })();

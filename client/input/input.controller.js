@@ -39,7 +39,7 @@
         vm.data.push({
           amount: amount,
           attribution: vm.params.selectedDelegate.value,
-          date: $filter('date')(vm.params.date.value, 'dd.MM.yyyy', 'CET'),
+          date: vm.params.date.value,
           description: vm.params.description.value,
           gains: income ? amount : '',
           expenses: income ? '' : amount,
@@ -56,7 +56,9 @@
       data: 'vm.data',
       enableColumnResizing: true,
       columnDefs: [
-        { field: 'date', name:'Datum', enableColumnMenu: false, enableSorting: false, width: 155},
+        { field: 'date', name:'Datum', enableColumnMenu: false, enableSorting: false, width: 155,
+          cellTemplate: resource.templates.table_cell_date
+        },
         { field: 'description', name:'Beschreibung', enableColumnMenu: false, enableSorting: false},
         { field: 'amount', name:'Betrag', enableColumnMenu: false, enableSorting: false,
           cellTemplate: resource.templates.table_cell_number

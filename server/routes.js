@@ -7,6 +7,7 @@ module.exports = function(app) {
 
   // Insert routes below
   app.use('/api/attr', require('./api/attribution'));
+  app.use('/api/code', require('./api/code'));
   app.use('/api/recordset', require('./api/recordset'));
   
   // All undefined asset or api routes should return a 404
