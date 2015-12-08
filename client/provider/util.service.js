@@ -24,5 +24,13 @@
     service.formatDate = function(date) {
       return $filter('date')(date, "dd.MM.yyyy" , "CET");
     }
+
+    service.prependZeroes = function(value, digits) {
+      if(value.toString().length >= digits) {
+        return value;
+      }
+      var zeroesToPrepend = digits - value.toString().length;
+      return "0".repeat(zeroesToPrepend) + value;
+    }
   }
 })();

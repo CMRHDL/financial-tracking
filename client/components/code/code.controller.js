@@ -2,8 +2,8 @@
   'use strict';
   angular.module('team.app').controller('CodeCtrl', CodeCtrl);
 
-  CodeCtrl.$inject = [ 'codeService' ];
-  function CodeCtrl(codeService) {
+  CodeCtrl.$inject = [ 'codeService', 'util' ];
+  function CodeCtrl(codeService, util) {
     var code = this;
 
     code.decrease = decrease;
@@ -20,5 +20,9 @@
       codeService.incease(type);
       code.codes = codeService.get();
     }
+
+    console.log(util.prependZeroes(1, 5));
+    console.log(util.prependZeroes(55555, 5));
+    console.log(util.prependZeroes(55, 3));
   }
 })();
