@@ -13,18 +13,33 @@ var Code = require('./code.model');
 
 // Get list of attributions
 exports.index = function(req, res) {
-  Code.find(function(err, recordset) {
+  Code.find(function(err, codes) {
     if (err) { 
       res.send(err);
     }
-    res.json(recordset);
+    res.json(codes);
+  });
+};
+
+// Get list of attributions
+exports.max = function(req, res) {
+  Code.findOne()
+    .where({})
+    .sort('-code')
+    .exec(function(err, maxCode) {
+    if (err) { 
+      res.send(err);
+    }
+    console.log(maxCode);
+    res.json(maxCode);
   });
 };
 
 // Creates a new attribution in the DB.
 exports.create = function(req, res) {
-  var recordset = new Code(req.body);
-  recordset.save(function (err) {
+  console.log(req.body);
+  var code = new Code(req.body);
+  code.save(function (err) {
     if (err) {
       res.send(err);
     }

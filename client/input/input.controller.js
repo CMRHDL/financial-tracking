@@ -2,8 +2,8 @@
   'use strict';
   angular.module('team.app').controller('InputCtrl', InputCtrl);
 
-  InputCtrl.$inject = [ '$filter', '$rootScope', '$scope', '$uibModal', 'attribution', 'recordset', 'resource' ];
-  function InputCtrl($filter, $rootScope, $scope, $uibModal, attribution, recordset, resource) {
+  InputCtrl.$inject = [ '$filter', '$rootScope', '$scope', '$uibModal', 'attribution', 'recordset', 'resource', 'codeService' ];
+  function InputCtrl($filter, $rootScope, $scope, $uibModal, attribution, recordset, resource, codeService) {
     var vm = this;
 
     vm.showDatePicker = false;
@@ -15,13 +15,14 @@
     vm.saveAll = saveAll;
     vm.saveDataSet = saveDataSet;
 
-    var count;
+    var codes = [];
 
     function saveAll() {
       recordset.add(vm.data);
-      // console.log(vm.data[0]);
+      codes.push(codeService.getCode());
+      codeService.add(codes);
       vm.data = [];
-
+      codes = [];
       /* Modal */
       var modalInstance = $uibModal.open({
         animation: false,
@@ -43,10 +44,13 @@
           description: vm.params.description.value,
           gains: income ? amount : '',
           expenses: income ? '' : amount,
+          code: codeService.getCode(),
         });
+        codes.push(codeService.getCode());
         vm.params.amount.value = undefined;
         vm.params.description.value = undefined;
         vm.params.selectedDelegate.value = null;
+        codeService.increase('position');
       }
     }
 
@@ -56,6 +60,7 @@
       data: 'vm.data',
       enableColumnResizing: true,
       columnDefs: [
+        { field: 'code', name:'Code', enableColumnMenu: false, enableSorting: false, width: 120},
         { field: 'date', name:'Datum', enableColumnMenu: false, enableSorting: false, width: 155,
           cellTemplate: resource.templates.table_cell_date
         },

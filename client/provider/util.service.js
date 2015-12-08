@@ -9,7 +9,9 @@
 
     service.formatAllNumbers = function (dataSet) {
       for(var key in dataSet) {
-        dataSet[key] = service.formatNumber(dataSet[key]);
+        if(key != 'code') {
+          dataSet[key] = service.formatNumber(dataSet[key]);
+        }
       }
     };
 

@@ -1,10 +1,10 @@
-<input type="checkbox"> Sicheren Eingabemodus verwenden<br><br>
-<div class="row">
+<input type="checkbox" ng-model="code.secureMode"> Sicheren Eingabemodus verwenden<br><br>
+<div class="row" ng-if="!code.secureMode">
   <div class="col-xs-3 my-medium">
     <div class="input-heading">
       Jahr<br>
       <span ng-bind="code.codes.year"></span>
-      <button type="submit" class="btn btn-default small" ng-click="code.incease('year');">+</button>
+      <button type="submit" class="btn btn-default small" ng-click="code.increase('year');">+</button>
       <button type="submit" class="btn btn-default small" ng-click="code.decrease('year');">-</button>
     </div>
   </div>
@@ -12,7 +12,7 @@
     <div class="input-heading">
       Kontoauszug<br>
       <span ng-bind="code.codes.number"></span> 
-      <button type="submit" class="btn btn-default small" ng-click="code.incease('number');">+</button>
+      <button type="submit" class="btn btn-default small" ng-click="code.increase('number');">+</button>
       <button type="submit" class="btn btn-default small" ng-click="code.decrease('number');">-</button>
     </div>
   </div>
@@ -20,7 +20,7 @@
     <div class="input-heading">
       Blatt<br>
       <span ng-bind="code.codes.page"></span>
-      <button type="submit" class="btn btn-default small" ng-click="code.incease('page');">+</button>
+      <button type="submit" class="btn btn-default small" ng-click="code.increase('page');">+</button>
       <button type="submit" class="btn btn-default small" ng-click="code.decrease('page');">-</button>
     </div>
   </div>
@@ -28,8 +28,49 @@
     <div class="input-heading">
       Position<br>
       <span ng-bind="code.codes.position"></span>
-      <button type="submit" class="btn btn-default small" ng-click="code.incease('position');">+</button>
+      <button type="submit" class="btn btn-default small" ng-click="code.increase('position');">+</button>
       <button type="submit" class="btn btn-default small" ng-click="code.decrease('position');">-</button>
     </div>
   </div>
 </div>
+<div class="row" ng-if="code.secureMode">
+  <div class="col-xs-3 my-medium">
+    <div class="input-heading">
+      Jahr<br>
+      <span ng-bind="code.codes.year"></span>
+      <button type="submit" class="btn btn-default small" ng-click="code.increase('year');">+</button>
+      <button type="submit" class="btn btn-default small" ng-click="code.decrease('year');">-</button>
+    </div>
+  </div>
+  <div class="col-xs-3 my-medium">
+    <div class="input-heading">
+      Kontoauszug<br>
+      <span ng-bind="code.codes.number"></span> 
+      <button 
+        type="submit" 
+        class="btn btn-default small" 
+        ng-click="code.increase('number'); code.set('page', 1); code.set('position', 1)" 
+        ng-if="code.codes.position > 1"
+      >+</button>
+    </div>
+  </div>
+  <div class="col-xs-3 my-medium">
+    <div class="input-heading">
+      Blatt<br>
+      <span ng-bind="code.codes.page"></span>
+      <button
+        type="submit" 
+        class="btn btn-default small" 
+        ng-click="code.increase('page'); code.set('position', 1)" 
+        ng-if="code.codes.position > 1"
+      >+</button>
+    </div>
+  </div>
+  <div class="col-xs-3 my-medium">
+    <div class="input-heading">
+      Position<br>
+      <span ng-bind="code.codes.position"></span>
+    </div>
+  </div>
+</div>
+<span ng-attr-title="{{code.resource.help.code_explain_id}}">Code: <span ng-bind="code.codes.code"></span></span><br>

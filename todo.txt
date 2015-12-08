@@ -39,3 +39,7 @@ o dropdown alphabetisch sortieren
 ** export footer
 
 Fragen:
+* leerer Kontoauszug möglich?
+* code -> konzept verständlich? (jahr|nummer|blatt|pos)
+* bei alles übernehmen -> blatt und pos auf 1 und kontoauszugnummer hochzählen?
+-> man darf nicht mittendrin das erfassen eines auszuges beenden

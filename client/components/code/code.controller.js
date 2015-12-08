@@ -2,27 +2,38 @@
   'use strict';
   angular.module('team.app').controller('CodeCtrl', CodeCtrl);
 
-  CodeCtrl.$inject = [ 'codeService', 'util' ];
-  function CodeCtrl(codeService, util) {
+  CodeCtrl.$inject = [ 'codeService', 'resource' ];
+  function CodeCtrl(codeService, resource) {
     var code = this;
 
     code.decrease = decrease;
-    code.incease = incease;
+    code.increase = increase;
+    code.set = set;
 
-    code.codes = codeService.get();
+    codeService.getHighestCode().then(function(response) {
+      code.codes = response;
+    });
+
+    code.resource = resource;
+    code.secureMode = true;
 
     function decrease(type) {
       codeService.decrease(type);
-      code.codes = codeService.get();
+      getCodes();
     }
 
-    function incease(type) {
-      codeService.incease(type);
-      code.codes = codeService.get();
+    function increase(type) {
+      codeService.increase(type);
+      getCodes();
     }
 
-    console.log(util.prependZeroes(1, 5));
-    console.log(util.prependZeroes(55555, 5));
-    console.log(util.prependZeroes(55, 3));
+    function set(type, number) {
+      codeService.set(type, number);
+      getCodes();
+    }
+
+    function getCodes() {
+      code.codes = codeService.get();
+    }
   }
 })();

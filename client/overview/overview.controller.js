@@ -8,6 +8,7 @@
     vm.gridOptions = {
       data: 'vm.data',
       columnDefs: [
+        { field: 'code', name: 'Code', enableColumnMenu: false, width: 150 },
         { field: 'date', name: 'Datum', enableColumnMenu: false, width: 150 },
         { field: 'description', name: 'Text', enableColumnMenu: false, width: 150 },
         { field: 'gains', name: 'Einnahmen', enableColumnMenu: false, width: 100, aggregationType: uiGridConstants.aggregationTypes.sum , cellTemplate: resource.templates.table_cell_number},
@@ -44,8 +45,9 @@
 
     function buildColDefs() {
       var colDefs = [
+        { field: 'code', name: 'Code', enableColumnMenu: false, width: 150 },
         { field: 'date', name: 'Datum', enableColumnMenu: false, width: 150 },
-        { field: 'description', name: 'Text', enableColumnMenu: false, width: 150 },
+        { field: 'description', name: 'Beschreibung', enableColumnMenu: false, width: 150 },
         { field: 'gains', name: 'Einnahmen', enableColumnMenu: false, width: 100, aggregationType: uiGridConstants.aggregationTypes.sum , cellTemplate: resource.templates.table_cell_number},
         { field: 'expenses', name: 'Ausgaben', enableColumnMenu: false, width: 100, aggregationType: uiGridConstants.aggregationTypes.sum , cellTemplate: resource.templates.table_cell_number},
       ];
