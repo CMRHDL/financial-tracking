@@ -8,7 +8,7 @@ o dropdown alphabetisch sortieren
 ##Input
 
 ##Code
-*prepend zeroes
+o prepend zeroes
 ** Jahr/Nummer/Blatt/Pos + Logik + DB
 -> * Position nur hochzählen, falls wirklich etwas hinzugefügt wurde
 -> * Dropdown neben Kontoauszug, Blatt und Nummer

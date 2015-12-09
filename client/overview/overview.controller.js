@@ -32,8 +32,8 @@
         recordset.get().then(function(response) {
           vm.data = response;
           vm.data.forEach(function(entry){
-            util.formatAllNumbers(entry);
-            entry.date = util.formatDate(entry.date);
+            // util.formatAllNumbers(entry);
+            // entry.date = util.formatDate(entry.date);
             vm.attributions.forEach(function(attr){
               entry[attr.name] = entry.attribution.name === attr.name ? entry.amount : '';
             });
@@ -46,16 +46,16 @@
     function buildColDefs() {
       var colDefs = [
         { field: 'code', name: 'Code', enableColumnMenu: false, width: 150 },
-        { field: 'date', name: 'Datum', enableColumnMenu: false, width: 150 },
+        { field: 'date', name: 'Datum', enableColumnMenu: false, width: 150, cellTemplate: resource.templates.table_cell_date },
         { field: 'description', name: 'Beschreibung', enableColumnMenu: false, width: 150 },
-        { field: 'gains', name: 'Einnahmen', enableColumnMenu: false, width: 100, aggregationType: uiGridConstants.aggregationTypes.sum , cellTemplate: resource.templates.table_cell_number},
-        { field: 'expenses', name: 'Ausgaben', enableColumnMenu: false, width: 100, aggregationType: uiGridConstants.aggregationTypes.sum , cellTemplate: resource.templates.table_cell_number},
+        { field: 'gains', name: 'Einnahmen', enableColumnMenu: false, width: 100, aggregationType: uiGridConstants.aggregationTypes.sum, cellTemplate: resource.templates.table_cell_currency },
+        { field: 'expenses', name: 'Ausgaben', enableColumnMenu: false, width: 100, aggregationType: uiGridConstants.aggregationTypes.sum, cellTemplate: resource.templates.table_cell_currency },
       ];
       vm.attributions.forEach(function(entry){
         if(entry.type == 'in') {
-          colDefs.push({ field: entry.name, name: entry.displayName + " (E)", enableColumnMenu: false, width: 120, aggregationType: uiGridConstants.aggregationTypes.sum, cellTemplate: resource.templates.table_cell_number});
+          colDefs.push({ field: entry.name, name: entry.displayName + " (E)", enableColumnMenu: false, width: 120, aggregationType: uiGridConstants.aggregationTypes.sum, cellTemplate: resource.templates.table_cell_currency });
         } else {
-          colDefs.push({ field: entry.name, name: entry.displayName + " (A)", enableColumnMenu: false, width: 120, aggregationType: uiGridConstants.aggregationTypes.sum, cellTemplate: resource.templates.table_cell_number});
+          colDefs.push({ field: entry.name, name: entry.displayName + " (A)", enableColumnMenu: false, width: 120, aggregationType: uiGridConstants.aggregationTypes.sum, cellTemplate: resource.templates.table_cell_currency });
         }
       });
       vm.gridOptions.columnDefs = colDefs;
