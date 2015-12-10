@@ -10,14 +10,15 @@
     service.formatAllNumbers = function (dataSet) {
       for(var key in dataSet) {
         if(key != 'code') {
-          dataSet[key] = service.formatNumber(dataSet[key]);
+          dataSet[key] = service.currency(dataSet[key]);
         }
       }
     };
 
-    service.formatNumber = function (value) {
-      if(typeof value !== 'number') {
-        return value;
+    service.currency = function (value) {
+      // if value contains anything but digits
+      if(!/^[0-9]+(\.[0-9]{1,2})?$/.test(value)) {
+        return '';
       } else {
         return $filter('currency')(value, '€').replace(/..$/, '');
       }      

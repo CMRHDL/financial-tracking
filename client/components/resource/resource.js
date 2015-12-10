@@ -12,8 +12,9 @@
       settings_attribution_add: 'Name der Zuordnung',
     },
     templates: {
-      table_cell_currency: '<div class="grid-cell number">{{row.entity[col.field]}}</div>',
+      table_cell_currency: '<div class="grid-cell currency">{{grid.appScope.formatCurrency(row.entity[col.field])}}</div>',
       table_cell_date: '<div class="grid-cell date">{{row.entity[col.field] | date : "dd.MM.yyyy" : "CET"}}</div>',
+      // table_cell_date: '<div class="grid-cell date">{{row.entity[col.field]}}</div>',
     }
   });
 })();

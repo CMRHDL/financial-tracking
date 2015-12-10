@@ -2,12 +2,14 @@
   'use strict';
   angular.module('team.app').controller('InputCtrl', InputCtrl);
 
-  InputCtrl.$inject = [ '$filter', '$rootScope', '$scope', '$uibModal', 'attribution', 'recordset', 'resource', 'codeService' ];
-  function InputCtrl($filter, $rootScope, $scope, $uibModal, attribution, recordset, resource, codeService) {
+  InputCtrl.$inject = [ '$filter', '$rootScope', '$scope', '$uibModal', 'attribution', 'recordset', 'resource', 'codeService', 'util' ];
+  function InputCtrl($filter, $rootScope, $scope, $uibModal, attribution, recordset, resource, codeService, util) {
     var vm = this;
 
-    vm.showDatePicker = false;
+    vm.codes = [];
     vm.data = [];
+    vm.showDatePicker = false;
+
     attribution.get().then(function(response) {
       vm.delegates = response;
     });
@@ -15,21 +17,22 @@
     vm.saveAll = saveAll;
     vm.saveDataSet = saveDataSet;
 
-    var codes = [];
 
     function saveAll() {
-      recordset.add(vm.data);
-      codes.push(codeService.getCode());
-      codeService.add(codes);
-      vm.data = [];
-      codes = [];
-      /* Modal */
-      var modalInstance = $uibModal.open({
-        animation: false,
-        templateUrl: 'myModalContent.html',
-        controller: 'ModalInstanceCtrl',
-        size: 'sm',
-      });
+      if(vm.data.length > 0){       
+        recordset.add(vm.data);
+        vm.codes.push(codeService.getCode());
+        codeService.add(vm.codes);
+        vm.data = [];
+        vm.codes = [];
+        /* Modal */
+        var modalInstance = $uibModal.open({
+          animation: false,
+          templateUrl: 'myModalContent.html',
+          controller: 'ModalInstanceCtrl',
+          size: 'sm',
+        });
+      }
     }
 
     function saveDataSet() {
@@ -46,7 +49,7 @@
           expenses: income ? '' : amount,
           code: codeService.getCode(),
         });
-        codes.push(codeService.getCode());
+        vm.codes.push(codeService.getCode());
         vm.params.amount.value = undefined;
         vm.params.description.value = undefined;
         vm.params.selectedDelegate.value = null;
@@ -66,7 +69,7 @@
         },
         { field: 'description', name:'Beschreibung', enableColumnMenu: false, enableSorting: false},
         { field: 'amount', name:'Betrag', enableColumnMenu: false, enableSorting: false,
-          cellTemplate: resource.templates.table_cell_number
+          cellTemplate: resource.templates.table_cell_currency
         },
         { field: 'attribution.displayName', name:'Zuordnung', enableColumnMenu: false, enableSorting: false},
         { field: 'attribution.group', name:'Art', enableColumnMenu: false, enableSorting: false},
@@ -74,7 +77,11 @@
       ],
       appScopeProvider: {
         delete : function(row) {
+          vm.codes.splice(vm.codes.indexOf(row.entity.code), 1);
           vm.data.splice(vm.data.indexOf(row.entity), 1);
+        },
+        formatCurrency : function(cellValue) {
+          return util.currency(cellValue);
         },
       }
     }

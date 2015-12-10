@@ -20,8 +20,13 @@
       showColumnFooter: true,
       exporterCsvFilename: 'myFile.csv',
       exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
-      //exporterCsvFooter: true
-    }
+      //exporterCsvFooter: true,
+      appScopeProvider: {
+        formatCurrency : function(cellValue) {
+          return util.currency(cellValue);
+        },
+      }
+    };
 
     init();
     function init() {
@@ -33,7 +38,7 @@
           vm.data = response;
           vm.data.forEach(function(entry){
             // util.formatAllNumbers(entry);
-            // entry.date = util.formatDate(entry.date);
+            entry.date = util.formatDate(entry.date);
             vm.attributions.forEach(function(attr){
               entry[attr.name] = entry.attribution.name === attr.name ? entry.amount : '';
             });
@@ -46,7 +51,7 @@
     function buildColDefs() {
       var colDefs = [
         { field: 'code', name: 'Code', enableColumnMenu: false, width: 150 },
-        { field: 'date', name: 'Datum', enableColumnMenu: false, width: 150, cellTemplate: resource.templates.table_cell_date },
+        { field: 'date', name: 'Datum', enableColumnMenu: false, width: 150, }, // cellTemplate: resource.templates.table_cell_date },
         { field: 'description', name: 'Beschreibung', enableColumnMenu: false, width: 150 },
         { field: 'gains', name: 'Einnahmen', enableColumnMenu: false, width: 100, aggregationType: uiGridConstants.aggregationTypes.sum, cellTemplate: resource.templates.table_cell_currency },
         { field: 'expenses', name: 'Ausgaben', enableColumnMenu: false, width: 100, aggregationType: uiGridConstants.aggregationTypes.sum, cellTemplate: resource.templates.table_cell_currency },
