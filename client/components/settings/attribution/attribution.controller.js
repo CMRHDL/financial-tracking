@@ -72,30 +72,25 @@
 
 
 
-    attr.dbGet = dbGet;
-    attr.dbAdd = dbAdd;
     attr.dbClear = dbClear;
 
-    function dbGet() {
-      $http.get('/api/attr').then(function(res){
-        console.log(res);
-      },
-      function(err){
-        console.log(err);
-      });
-    }
-
-    function dbAdd() {
-      $http.post('/api/attr', { name: 'Zildjian' }).then(function(res){
-        console.log(res);
-      },
-      function(err){
-        console.log(err);
-      });
-    }
 
     function dbClear() {
       $http.delete('/api/attr').then(function(res){
+        console.log(res);
+      },
+      function(err){
+        console.log(err);
+      });
+
+      $http.delete('/api/code').then(function(res){
+        console.log(res);
+      },
+      function(err){
+        console.log(err);
+      });
+
+      $http.delete('/api/recordset').then(function(res){
         console.log(res);
       },
       function(err){

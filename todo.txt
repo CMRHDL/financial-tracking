@@ -13,9 +13,7 @@ o prepend zeroes
 -> * Position nur hochzählen, falls wirklich etwas hinzugefügt wurde
 -> * Dropdown neben Kontoauszug, Blatt und Nummer
 
--> Jahr 4 Stellen, Kontoauszug 3, Blatt 2, Position 2
---> 2015|001|01|01
---->20150010101
+** Position 
 
 ##DB
 
@@ -43,3 +41,4 @@ Fragen:
 * code -> konzept verständlich? (jahr|nummer|blatt|pos)
 * bei alles übernehmen -> blatt und pos auf 1 und kontoauszugnummer hochzählen?
 -> man darf nicht mittendrin das erfassen eines auszuges beenden
+* ausversehen neues Blatt?

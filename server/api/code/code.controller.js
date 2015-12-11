@@ -37,12 +37,21 @@ exports.max = function(req, res) {
 
 // Creates a new attribution in the DB.
 exports.create = function(req, res) {
-  console.log(req.body);
   var code = new Code(req.body);
   code.save(function (err) {
     if (err) {
       res.send(err);
     }
     res.json('All well and done');
+  });
+};
+
+// Delete all codes in the DB.
+exports.deleteAll = function(req, res) {
+  Code.find({}).remove(function (err) {
+    if (err) {
+      res.send(err);
+    }
+    res.json('All well and gone');
   });
 };

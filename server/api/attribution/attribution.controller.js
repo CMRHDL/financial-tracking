@@ -38,3 +38,13 @@ exports.create = function(req, res) {
     res.json(attr);
   });
 };
+
+// Delete all attributions in the DB.
+exports.deleteAll = function(req, res) {
+  Attr.find({}).remove(function (err) {
+    if (err) {
+      res.send(err);
+    }
+    res.json('All well and gone');
+  });
+};
