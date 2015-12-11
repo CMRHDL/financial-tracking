@@ -14,7 +14,7 @@ var Recordset = require('./recordset.model');
 // Get list of attributions
 exports.index = function(req, res) {
   Recordset.find(function(err, recordset) {
-    if (err) { 
+    if (err) {
       res.send(err);
     }
     res.json(recordset);

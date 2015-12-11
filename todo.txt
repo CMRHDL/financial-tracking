@@ -13,7 +13,7 @@ o prepend zeroes
 -> * Position nur hochzählen, falls wirklich etwas hinzugefügt wurde
 -> * Dropdown neben Kontoauszug, Blatt und Nummer
 
-** Position 
+** Position
 
 ##DB
 

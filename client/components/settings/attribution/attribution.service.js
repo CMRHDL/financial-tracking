@@ -17,7 +17,7 @@
       function(err){
         console.log(err);
       });
-    }
+    };
 
     service.add = function(attr) {
       $http.post('/api/attr', attr).then(function(res){
@@ -25,7 +25,7 @@
       },
       function(err){
         console.log(err);
-      });       
-    }   
+      });
+    };
   }
 })();

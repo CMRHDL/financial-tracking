@@ -19,7 +19,7 @@
 
 
     function saveAll() {
-      if(vm.data.length > 0){       
+      if(vm.data.length > 0){
         recordset.add(vm.data);
         vm.codes.push(codeService.getCode());
         codeService.add(vm.codes);
@@ -84,7 +84,7 @@
           return util.currency(cellValue);
         },
       }
-    }
+    };
 
     vm.progressBarValue = 0;
     vm.progressBarType = 'info';
@@ -94,7 +94,7 @@
       amount: { value: null, tracked: false },
       selectedDelegate: { value: null, tracked: false },
       description: { value: null, tracked: false },
-    }
+    };
 
 
     $scope.$watch('vm.params', parseParams, true);
@@ -111,7 +111,7 @@
         }
       }
 
-      if(vm.progressBarValue == 100) {
+      if(vm.progressBarValue === 100) {
         vm.progressBarType = 'success';
       } else {
         vm.progressBarType = 'info';

@@ -16,7 +16,7 @@ exports.index = function(req, res) {
   Attr.find({})
     .sort({ type: 1, displayName: 1 })
     .exec(function(err, attributions) {
-      if (err) { 
+      if (err) {
         res.send(err);
       }
       res.json(attributions);
@@ -25,7 +25,7 @@ exports.index = function(req, res) {
 
 // Creates a new attribution in the DB.
 exports.create = function(req, res) {
-  var attr = new Attr({ 
+  var attr = new Attr({
     name: req.body.name,
     displayName: req.body.displayName,
     type: req.body.type,

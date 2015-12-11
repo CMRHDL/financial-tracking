@@ -27,10 +27,10 @@
         isDuplicate: false,
         type: null,
         group: null,
-      }
+      };
       attr.addKindOfAttr = 'Zuordnung hinzufügen';
     }
-    
+
     function add() {
       if(attr.new.isValid && !attr.new.isDuplicate) {
         attribution.add(attr.new);
@@ -48,9 +48,9 @@
       if(attr.new.val.length > 0 && type) {
         attr.new.isValid = true;
         attr.addKindOfAttr = type === 'out' ? 'Ausgabe hinzufügen' : 'Einnahme hinzufügen';
-        attr.new.type = type
+        attr.new.type = type;
         attr.new.isDuplicate = false;
-        attr.new.group = type === 'in' ? 'Einnahmearten' : 'Ausgabearten' 
+        attr.new.group = type === 'in' ? 'Einnahmearten' : 'Ausgabearten';
         for (var i = 0, len = attr.all.length; i < len; i++) {
           if(attr.all[i].name === attr.new.name) {
             attr.new.isDuplicate = true; break;

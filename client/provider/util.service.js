@@ -9,7 +9,7 @@
 
     service.formatAllNumbers = function (dataSet) {
       for(var key in dataSet) {
-        if(key != 'code') {
+        if(key !== 'code') {
           dataSet[key] = service.currency(dataSet[key]);
         }
       }
@@ -21,12 +21,12 @@
         return '';
       } else {
         return $filter('currency')(value, '€').replace(/..$/, '');
-      }      
-    }
+      }
+    };
 
     service.formatDate = function(date) {
       return $filter('date')(date, "dd.MM.yyyy" , "CET");
-    }
+    };
 
     service.prependZeroes = function(value, digits) {
       if(value.toString().length >= digits) {
@@ -34,6 +34,6 @@
       }
       var zeroesToPrepend = digits - value.toString().length;
       return "0".repeat(zeroesToPrepend) + value;
-    }
+    };
   }
 })();

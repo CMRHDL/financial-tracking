@@ -1,6 +1,6 @@
 (function() {
 
-  'use strict'
+  'use strict';
   function config($routeProvider){
     $routeProvider
     .when('/', {

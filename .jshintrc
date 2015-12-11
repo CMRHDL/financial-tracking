@@ -4,12 +4,12 @@
   "curly": true,
   "eqeqeq": true,
   "esnext": true,
-  "latedef": true,
+  "latedef": false,
   "noarg": true,
   "node": true,
   "strict": true,
   "undef": true,
-  "unused": true,
+  "unused": false,
   "globals": {
     "angular": false
   }

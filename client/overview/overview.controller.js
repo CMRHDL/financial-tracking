@@ -57,7 +57,7 @@
         { field: 'expenses', name: 'Ausgaben', enableColumnMenu: false, width: 100, aggregationType: uiGridConstants.aggregationTypes.sum, cellTemplate: resource.templates.table_cell_currency },
       ];
       vm.attributions.forEach(function(entry){
-        if(entry.type == 'in') {
+        if(entry.type === 'in') {
           colDefs.push({ field: entry.name, name: entry.displayName + " (E)", enableColumnMenu: false, width: 120, aggregationType: uiGridConstants.aggregationTypes.sum, cellTemplate: resource.templates.table_cell_currency });
         } else {
           colDefs.push({ field: entry.name, name: entry.displayName + " (A)", enableColumnMenu: false, width: 120, aggregationType: uiGridConstants.aggregationTypes.sum, cellTemplate: resource.templates.table_cell_currency });
@@ -73,7 +73,7 @@
         init();
       },
       function(error){
-        console.log(error);;
+        console.log(error);
       });
     }
 

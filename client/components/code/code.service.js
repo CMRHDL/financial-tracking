@@ -19,7 +19,7 @@
             page: 1,
             position: 1,
             code: null,
-          }
+          };
           setCode();
           return service.codes;
         }
@@ -76,6 +76,6 @@
         position: code.substring(9, 11).replace(/^0/, ''),
         code: code,
       };
-    }  
+    }
   }
 })();
