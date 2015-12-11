@@ -11,7 +11,7 @@
 
 var Code = require('./code.model');
 
-// Get list of attributions
+// Get list of codes
 exports.index = function(req, res) {
   Code.find(function(err, codes) {
     if (err) { 
@@ -21,7 +21,7 @@ exports.index = function(req, res) {
   });
 };
 
-// Get list of attributions
+// Get highest code
 exports.max = function(req, res) {
   Code.findOne()
     .where({})
@@ -35,7 +35,7 @@ exports.max = function(req, res) {
   });
 };
 
-// Creates a new attribution in the DB.
+// Creates a new code
 exports.create = function(req, res) {
   var code = new Code(req.body);
   code.save(function (err) {
@@ -46,7 +46,7 @@ exports.create = function(req, res) {
   });
 };
 
-// Delete all codes in the DB.
+// Delete all codes
 exports.deleteAll = function(req, res) {
   Code.find({}).remove(function (err) {
     if (err) {

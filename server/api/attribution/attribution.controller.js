@@ -11,7 +11,7 @@
 
 var Attr = require('./attribution.model');
 
-// Get list of attributions
+// Get list of attributions, ordered
 exports.index = function(req, res) {
   Attr.find({})
     .sort({ type: 1, displayName: 1 })
@@ -23,7 +23,7 @@ exports.index = function(req, res) {
     });
 };
 
-// Creates a new attribution in the DB.
+// Creates a new attribution
 exports.create = function(req, res) {
   var attr = new Attr({
     name: req.body.name,
@@ -39,7 +39,7 @@ exports.create = function(req, res) {
   });
 };
 
-// Delete all attributions in the DB.
+// Delete all attributions
 exports.deleteAll = function(req, res) {
   Attr.find({}).remove(function (err) {
     if (err) {

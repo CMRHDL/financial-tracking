@@ -21,7 +21,7 @@ exports.index = function(req, res) {
   });
 };
 
-// Creates a new attribution in the DB.
+// Creates a new attribution
 exports.create = function(req, res) {
   var recordset = new Recordset(req.body);
   recordset.save(function (err) {
@@ -32,7 +32,7 @@ exports.create = function(req, res) {
   });
 };
 
-// Delete all attributions in the DB.
+// Delete all attributions
 exports.deleteAll = function(req, res) {
   Recordset.find({}).remove(function (err) {
     if (err) {
