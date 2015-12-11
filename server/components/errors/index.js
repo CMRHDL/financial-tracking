@@ -1,7 +1,7 @@
 /**
  * Error responses
  */
-
+/*
 'use strict';
 
 module.exports[404] = function pageNotFound(req, res) {
@@ -18,3 +18,4 @@ module.exports[404] = function pageNotFound(req, res) {
     res.render(viewFilePath);
   });
 };
+*/
