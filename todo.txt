@@ -30,7 +30,9 @@ o prepend zeroes
 ** gridctrl für grid-directive (reuse+settings -> checkbox "show settings" über grid)
 
 ##Einstellungen
-
+###Zuordnungen
+* rename
+* delete
 
 
 

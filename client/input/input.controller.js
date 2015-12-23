@@ -28,7 +28,7 @@
         /* Modal */
         var modalInstance = $uibModal.open({
           animation: false,
-          templateUrl: 'myModalContent.html',
+          templateUrl: 'hue.html',
           controller: 'ModalInstanceCtrl',
           size: 'sm',
         });

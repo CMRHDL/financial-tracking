@@ -30,7 +30,6 @@ exports.max = function(req, res) {
     if (err) { 
       res.send(err);
     }
-    console.log(maxCode);
     res.json(maxCode);
   });
 };

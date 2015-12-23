@@ -27,14 +27,22 @@
     <div class="col-xs-3" ng-attr-title="{{::attr.resource.help.settings_attribution_edit}}">
       Umbenennen
     </div>
-    <div class="col-xs-9">
+    <div class="col-xs-9" ng-if="!attr.currentlyRenaming">
       <p>
         <p>Einnahmearten:</p>
-        <button ng-repeat="entry in attr.all" type="button" class="btn btn-success"ng-if="entry.type === 'in'">{{entry.displayName}}</button>
+        <button ng-repeat="entry in attr.all" type="button" class="btn btn-success"ng-if="entry.type === 'in'" ng-click="attr.renameAttribution(entry)">{{entry.displayName}}</button>
       </p>
       <p>
         <p>Ausgabearten:</p>
-        <button ng-repeat="entry in attr.all" type="button" class="btn btn-danger" ng-if="entry.type === 'out'">{{entry.displayName}}</button>
+        <button ng-repeat="entry in attr.all" type="button" class="btn btn-danger" ng-if="entry.type === 'out'" ng-click="attr.renameAttribution(entry)">{{entry.displayName}}</button>
+      </p>
+    </div>
+    <div class="col-xs-9" ng-if="attr.currentlyRenaming">
+      <p>
+        Neue Bezeichnung eingeben: <input type="text" class="form-control" placeholder="{{attr.renaming.displayName}} wird zu ..." ng-model="attr.newDisplayName"><br><br>
+        <button type="button" class="btn {{attr.renaming.type === 'in' ? 'btn-success' : 'btn-danger'}}">{{attr.renaming.displayName}}</button> wird zu <button type="button" class="btn {{attr.renaming.type === 'in' ? 'btn-success' : 'btn-danger'}}">{{attr.newDisplayName}}</button><br><br>
+        <button type="button" class="btn btn-default" ng-click="attr.cancelRenaming()">Abbrechen</button>
+        <button type="button" class="btn btn-default" ng-click="attr.finishRenaming()">Speichern</button>
       </p>
     </div>
   </div>

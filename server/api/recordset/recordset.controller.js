@@ -10,6 +10,7 @@
 'use strict';
 
 var Recordset = require('./recordset.model');
+var _ = require('lodash');
 
 // Get list of attributions
 exports.index = function(req, res) {
@@ -39,5 +40,24 @@ exports.deleteAll = function(req, res) {
       res.send(err);
     }
     res.json('All well and gone');
+  });
+};
+
+// Delete all attributions
+exports.update = function(req, res) {
+  var renamed = {
+    name: req.body.newDisplayName + "_" + req.body.type,
+    displayName: req.body.newDisplayName,
+    type: req.body.type,
+    group: req.body.group,
+  }
+  var conditions = { 'attribution.name': req.body.name };
+  var update = { $set: { attribution: renamed }}
+  var options = { multi: true };
+  Recordset.update(conditions, update, options, function (err) {
+    if (err) {
+      res.send(err);
+    }
+    res.json('something was updated');
   });
 };

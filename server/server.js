@@ -10,7 +10,11 @@ var path           = require('path');
 // configuration ===========================================
 
 // config files
-mongoose.connect('mongodb://localhost:27017/team'); // connect to our mongoDB database
+var url = 'mongodb://localhost:27017/team';
+var port = 8080;
+var ip = 'localhost';
+
+mongoose.connect(url); // connect to our mongoDB database
 
 // get all data/stuff of the body (POST) parameters
 app.use(bodyParser.json()); // parse application/json
@@ -26,7 +30,7 @@ require('./routes')(app); // pass our application into our routes
 
 // start app ===============================================
 var server = require('http').createServer(app);
-server.listen(8080, 'localhost', function () {
+server.listen(port, ip, function () {
   console.log('Express server listening on %d, in port %s', 8080, 'localhost');
 });
 

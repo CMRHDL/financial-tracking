@@ -2,15 +2,18 @@
   'use strict';
   angular.module('team.app').controller('AttributionCtrl', AttributionCtrl);
 
-  AttributionCtrl.$inject = [ 'attribution', 'resource', '$http' ];
-  function AttributionCtrl(attribution, resource, $http) {
+  AttributionCtrl.$inject = [ 'attribution', 'resource', '$http', '$scope' ];
+  function AttributionCtrl(attribution, resource, $http, $scope) {
     var attr = this;
 
     attr.resource = resource;
-    attr.all = attribution.get();
+    attr.currentlyRenaming = false;
 
     attr.add = add;
+    attr.cancelRenaming = cancelRenaming;
     attr.check = check;
+    attr.finishRenaming = finishRenaming;
+    attr.renameAttribution = renameAttribution;
 
     attr.all = [];
     attribution.get().then(function(response) {
@@ -41,6 +44,10 @@
       }
     }
 
+    function cancelRenaming() {
+      initRenaming();
+    }
+
     function check() {
       var type = attr.new.val.substring(0, 1) === '-' ? 'out' : attr.new.val.substring(0, 1) === '+' ? 'in' : null;
       attr.new.displayName = attr.new.val.substring(1, attr.new.val.length);
@@ -61,6 +68,37 @@
       }
     }
 
+    function finishRenaming() {
+      if(attr.newDisplayName) {
+        attr.renaming.newDisplayName = attr.newDisplayName;
+        $http.patch('/api/attr/', attr.renaming)
+          .then(
+            function(res){
+              attribution.get().then(function(response) {
+                attr.all = response;
+              });
+            }, 
+            function(err){
+              console.log(err);
+            }
+          )
+          .then(
+            function(res){
+              $http.patch('/api/recordset/', attr.renaming).then(function(res){
+                initRenaming();
+              });
+            }
+          );
+      } else {
+        // show hint
+      }
+    }
+
+    function renameAttribution(attribtuion) {
+      attr.renaming = attribtuion;
+      attr.currentlyRenaming = true;
+    }
+
     function reset() {
       init(false);
     }
@@ -69,11 +107,14 @@
       init(true);
     }
 
-
+    function initRenaming() {
+      attr.newDisplayName = null
+      attr.renaming = null;
+      attr.currentlyRenaming = false;
+    }
 
 
     attr.dbClear = dbClear;
-
 
     function dbClear() {
       $http.delete('/api/attr').then(function(res){

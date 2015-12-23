@@ -10,6 +10,7 @@
 'use strict';
 
 var Attr = require('./attribution.model');
+var _ = require('lodash');
 
 // Get list of attributions, ordered
 exports.index = function(req, res) {
@@ -47,4 +48,29 @@ exports.deleteAll = function(req, res) {
     }
     res.json('All well and gone');
   });
+};
+
+// Update by Name
+exports.update = function(req, res) {
+  if(req.body._id) { delete req.body._id; }
+  Attr.find({}).
+    where('name').equals(req.body.name).
+    exec(function (err, attr) {
+      if (err) {
+        res.send(err);
+      }
+      if(!attr) { return res.status(404).send('Not Found'); }
+      if(attr.length > 1) { return res.status(404).send('Too many found'); }
+      var renamed = {
+        name: req.body.newDisplayName + "_" + req.body.type,
+        displayName: req.body.newDisplayName,
+        type: req.body.type,
+        group: req.body.group,
+      }
+      var updated = _.merge(attr[0], renamed);
+      updated.save(function (err) {
+        if (err) { return handleError(res, err); }
+        return res.status(200).json(attr[0]);
+      });
+    });
 };
