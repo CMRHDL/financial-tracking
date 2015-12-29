@@ -41,6 +41,7 @@
     service.patch = function(recordset) {
       return $http.patch('/api/recordset', recordset).then(function(res){
         console.log(res);
+        alert('Neuer Wert gespeichert');
       },
       function(err){
         console.log(err);
@@ -58,7 +59,7 @@
 
     service.getCleanRecordsetFromRowobject = function(rowObject) {
       return {
-        amount: rowObject.amount,
+        amount: rowObject.gains || rowObject.expenses,
         attribution: rowObject.attribution,
         code: rowObject.code,
         date: rowObject.unformattedDate,
