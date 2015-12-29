@@ -29,21 +29,21 @@ exports.create = function(req, res) {
     if (err) {
       res.send(err);
     }
-    res.json('All well and done');
+    res.json('Created new Recordset');
   });
 };
 
-// Delete all attributions
+// Delete all recordsets
 exports.deleteAll = function(req, res) {
   Recordset.find({}).remove(function (err) {
     if (err) {
       res.send(err);
     }
-    res.json('All well and gone');
+    res.json('Deleted all Recordsets');
   });
 };
 
-// patch attributions where needed
+// patch attribution where needed when changing Attribution
 exports.patchAttribution = function(req, res) {
   var renamed = {
     name: req.body.newDisplayName + "_" + req.body.type,
@@ -58,11 +58,11 @@ exports.patchAttribution = function(req, res) {
     if (err) {
       res.send(err);
     }
-    res.json('something was updated');
+    res.json('Updated all Recordsets where attribution.name = ' + req.body.name );
   });
 };
 
-// update recordset
+// update recordset by Code
 exports.update = function(req, res) {
   var conditions = { 'code': req.body.code };
   var update = { $set: req.body }

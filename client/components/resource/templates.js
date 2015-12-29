@@ -16,7 +16,10 @@
     );
 
     $templateCache.put('attribution-dialog.html',
-      "<div style=\"margin: 50px\"><settings-attribution></settings-attribution><br><br><button class=\"btn btn-success\" type=\"button\" ng-click=\"close()\">Ansicht verlassen</button></div>"
+      "<div style=\"margin: 50px\">" +
+      "    <settings-attribution></settings-attribution><br><br>" +
+      "    <button class=\"btn btn-success\" type=\"button\" ng-click=\"close()\">Ansicht verlassen</button>" +
+      "</div>"
     );
   });
 })();

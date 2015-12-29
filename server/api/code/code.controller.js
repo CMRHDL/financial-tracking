@@ -21,7 +21,7 @@ exports.index = function(req, res) {
   });
 };
 
-// Get highest code
+// Get highest code for code-directive
 exports.max = function(req, res) {
   Code.findOne()
     .where({})
@@ -34,14 +34,14 @@ exports.max = function(req, res) {
   });
 };
 
-// Creates a new code
+// Create new code
 exports.create = function(req, res) {
   var code = new Code(req.body);
   code.save(function (err) {
     if (err) {
       res.send(err);
     }
-    res.json('All well and done');
+    res.json('Created new Code');
   });
 };
 
@@ -51,6 +51,6 @@ exports.deleteAll = function(req, res) {
     if (err) {
       res.send(err);
     }
-    res.json('All well and gone');
+    res.json('Deleted all codes);
   });
 };

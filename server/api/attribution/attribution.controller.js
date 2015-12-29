@@ -12,7 +12,7 @@
 var Attr = require('./attribution.model');
 var _ = require('lodash');
 
-// Get list of attributions, ordered
+// Get list of attributions, ordered by type and displayname
 exports.index = function(req, res) {
   Attr.find({})
     .sort({ type: 1, displayName: 1 })
@@ -24,7 +24,7 @@ exports.index = function(req, res) {
     });
 };
 
-// Creates a new attribution
+// Create new attribution
 exports.create = function(req, res) {
   var attr = new Attr({
     name: req.body.name,
@@ -46,7 +46,7 @@ exports.deleteAll = function(req, res) {
     if (err) {
       res.send(err);
     }
-    res.json('All well and gone');
+    res.json('Deleted all Attributions');
   });
 };
 

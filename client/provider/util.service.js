@@ -16,7 +16,7 @@
     };
 
     service.currency = function (value) {
-      // if value contains anything but digits
+      // if value contains anything but digits or digit.digit
       if(!/^[0-9]+(\.[0-9]{1,2})?$/.test(value)) {
         return '';
       } else {
