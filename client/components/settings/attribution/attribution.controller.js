@@ -84,7 +84,7 @@
           )
           .then(
             function(res){
-              $http.patch('/api/recordset/', attr.renaming).then(function(res){
+              $http.patch('/api/recordset/attribution', attr.renaming).then(function(res){
                 initRenaming();
               });
             }

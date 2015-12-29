@@ -10,6 +10,7 @@ router.get('/lastAddedDate', controller.lastAddedDate);
 router.post('/', controller.create);
 router.delete('/', controller.deleteAll);
 router.patch('/', controller.update);
+router.patch('/attribution', controller.patchAttribution);
 /*
 router.get('/:id', controller.show);
 router.put('/:id', controller.update);

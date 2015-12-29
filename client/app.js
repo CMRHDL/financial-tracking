@@ -38,7 +38,7 @@
     });
   }
 
-  angular.module('team.app',['ngRoute', 'ui.grid', 'ui.grid.resizeColumns', 'ui.grid.exporter', 'ui.bootstrap']);
+  angular.module('team.app',['ngRoute', 'ui.grid', 'ui.grid.resizeColumns', 'ui.grid.exporter', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav', 'ui.bootstrap']);
   angular.module('team.app').config(config);
 
 }());

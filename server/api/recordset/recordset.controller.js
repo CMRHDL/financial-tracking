@@ -43,8 +43,8 @@ exports.deleteAll = function(req, res) {
   });
 };
 
-// Delete all attributions
-exports.update = function(req, res) {
+// patch attributions where needed
+exports.patchAttribution = function(req, res) {
   var renamed = {
     name: req.body.newDisplayName + "_" + req.body.type,
     displayName: req.body.newDisplayName,
@@ -59,6 +59,19 @@ exports.update = function(req, res) {
       res.send(err);
     }
     res.json('something was updated');
+  });
+};
+
+// update recordset
+exports.update = function(req, res) {
+  var conditions = { 'code': req.body.code };
+  var update = { $set: req.body }
+  var options = { multi: false };
+  Recordset.update(conditions, update, options, function (err) {
+    if (err) {
+      res.send(err);
+    }
+    res.json('recordset for ' + req.body.code + ' was updated');
   });
 };
 

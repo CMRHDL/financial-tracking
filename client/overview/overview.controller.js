@@ -2,13 +2,13 @@
   'use strict';
   angular.module('team.app').controller('OverviewCtrl', OverviewCtrl);
 
-  OverviewCtrl.$inject = [ '$filter', 'uiGridConstants','attribution', 'recordset', 'resource', 'util' ];
-  function OverviewCtrl($filter, uiGridConstants, attribution, recordset, resource, util) {
+  OverviewCtrl.$inject = [ '$filter', '$scope', 'uiGridConstants','attribution', 'recordset', 'resource', 'util' ];
+  function OverviewCtrl($filter, $scope, uiGridConstants, attribution, recordset, resource, util) {
     var vm = this;
     vm.gridOptions = {
       data: 'vm.data',
       columnDefs: [
-        { field: 'code', name: 'Code', enableColumnMenu: false, width: 150 },
+        { field: 'code', name: 'Code', enableColumnMenu: false, width: 150, enableCellEdit: false },
         { field: 'date', name: 'Datum', enableColumnMenu: false, width: 150 },
         { field: 'description', name: 'Text', enableColumnMenu: false, width: 150 },
         { field: 'gains', name: 'Einnahmen', enableColumnMenu: false, width: 100, aggregationType: uiGridConstants.aggregationTypes.sum , cellTemplate: resource.templates.table_cell_number},
@@ -25,7 +25,16 @@
         formatCurrency : function(cellValue) {
           return util.currency(cellValue);
         },
-      }
+      },
+    };
+
+    vm.gridOptions.onRegisterApi = function(gridApi){
+      $scope.gridApi = gridApi;
+      gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
+    };
+
+    $scope.saveRow = function(rowEntity) {
+      $scope.gridApi.rowEdit.setSavePromise( rowEntity, recordset.patch(recordset.getCleanRecordsetFromRowobject(rowEntity)) );
     };
 
     init();
@@ -38,6 +47,7 @@
           vm.data = response;
           vm.data.forEach(function(entry){
             // util.formatAllNumbers(entry);
+            entry.unformattedDate = entry.date;
             entry.date = util.formatDate(entry.date);
             vm.attributions.forEach(function(attr){
               entry[attr.name] = entry.attribution.name === attr.name ? entry.amount : '';
@@ -50,7 +60,7 @@
 
     function buildColDefs() {
       var colDefs = [
-        { field: 'code', name: 'Code', enableColumnMenu: false, width: 150 },
+        { field: 'code', name: 'Code', enableColumnMenu: false, width: 150, enableCellEdit: false },
         { field: 'date', name: 'Datum', enableColumnMenu: false, width: 150, }, // cellTemplate: resource.templates.table_cell_date },
         { field: 'description', name: 'Beschreibung', enableColumnMenu: false, width: 150 },
         { field: 'gains', name: 'Einnahmen', enableColumnMenu: false, width: 100, aggregationType: uiGridConstants.aggregationTypes.sum, cellTemplate: resource.templates.table_cell_currency },
@@ -58,9 +68,9 @@
       ];
       vm.attributions.forEach(function(entry){
         if(entry.type === 'in') {
-          colDefs.push({ field: entry.name, name: entry.displayName + " (E)", enableColumnMenu: false, width: 120, aggregationType: uiGridConstants.aggregationTypes.sum, cellTemplate: resource.templates.table_cell_currency });
+          colDefs.push({ field: entry.name, name: entry.displayName + " (E)", enableColumnMenu: false, width: 120, aggregationType: uiGridConstants.aggregationTypes.sum, cellTemplate: resource.templates.table_cell_currency, enableCellEdit: false });
         } else {
-          colDefs.push({ field: entry.name, name: entry.displayName + " (A)", enableColumnMenu: false, width: 120, aggregationType: uiGridConstants.aggregationTypes.sum, cellTemplate: resource.templates.table_cell_currency });
+          colDefs.push({ field: entry.name, name: entry.displayName + " (A)", enableColumnMenu: false, width: 120, aggregationType: uiGridConstants.aggregationTypes.sum, cellTemplate: resource.templates.table_cell_currency, enableCellEdit: false });
         }
       });
       vm.gridOptions.columnDefs = colDefs;

@@ -38,6 +38,15 @@
       });
     };
 
+    service.patch = function(recordset) {
+      return $http.patch('/api/recordset', recordset).then(function(res){
+        console.log(res);
+      },
+      function(err){
+        console.log(err);
+      });
+    };
+
     service.delete = function() {
       $http.delete('/api/recordset').then(function(res){
         console.log(res);
@@ -45,6 +54,18 @@
       function(err){
         console.log(err);
       });
+    };
+
+    service.getCleanRecordsetFromRowobject = function(rowObject) {
+      return {
+        amount: rowObject.amount,
+        attribution: rowObject.attribution,
+        code: rowObject.code,
+        date: rowObject.unformattedDate,
+        description: rowObject.description,
+        gains: rowObject.gains,
+        expenses: rowObject.expenses,
+      };
     };
   }
 })();
