@@ -12,7 +12,7 @@
 var Recordset = require('./recordset.model');
 var _ = require('lodash');
 
-// Get list of attributions
+// Get all recordsets
 exports.index = function(req, res) {
   Recordset.find(function(err, recordset) {
     if (err) {
@@ -22,7 +22,7 @@ exports.index = function(req, res) {
   });
 };
 
-// Creates a new attribution
+// Create new recordset
 exports.create = function(req, res) {
   var recordset = new Recordset(req.body);
   recordset.save(function (err) {
@@ -60,4 +60,16 @@ exports.update = function(req, res) {
     }
     res.json('something was updated');
   });
+};
+
+// Get last added Date
+exports.lastAddedDate = function(req, res) {
+  Recordset.findOne({})
+    .sort({ date: -1 })
+    .exec(function(err, date) {
+      if (err) {
+        res.send(err);
+      }
+      res.json(date);
+    });
 };

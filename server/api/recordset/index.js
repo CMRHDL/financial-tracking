@@ -6,6 +6,7 @@ var controller = require('./recordset.controller');
 var router = express.Router();
 
 router.get('/', controller.index);
+router.get('/lastAddedDate', controller.lastAddedDate);
 router.post('/', controller.create);
 router.delete('/', controller.deleteAll);
 router.patch('/', controller.update);

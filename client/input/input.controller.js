@@ -14,9 +14,28 @@
       vm.delegates = response;
     });
 
+    vm.openNewAttributionDialog = openNewAttributionDialog;
     vm.saveAll = saveAll;
     vm.saveDataSet = saveDataSet;
 
+    function openNewAttributionDialog() {
+      var attributionDialog = $uibModal.open({
+        animation: false,
+        templateUrl: 'attribution-dialog.html',
+        controller: 'AttributionDialogCtrl',
+        size: 'lm',
+      });
+
+      attributionDialog.result.then(function () {
+        attribution.get().then(function(response) {
+          vm.delegates = response;
+        });
+      }, function () {
+        attribution.get().then(function(response) {
+          vm.delegates = response;
+        });
+      });
+    }
 
     function saveAll() {
       if(vm.data.length > 0){
@@ -96,6 +115,9 @@
       description: { value: null, tracked: false },
     };
 
+    recordset.getLastAddedDate().then(function(res) {
+      vm.params.date.value = res.date;
+    });
 
     $scope.$watch('vm.params', parseParams, true);
 
@@ -125,6 +147,12 @@
     };
     $scope.overview = function () {
       window.location = '/#/overview';
+      $uibModalInstance.close();
+    };
+  });
+
+  angular.module('team.app').controller('AttributionDialogCtrl', function ($scope, $uibModalInstance) {
+    $scope.close = function () {
       $uibModalInstance.close();
     };
   });

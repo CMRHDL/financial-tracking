@@ -7,6 +7,7 @@
       settings_attribution_delete: 'Zuordnung anklicken um sie zu löschen. Es wird ein Bestätigungsdialog die Wahl verifizieren.',
       settings_attribution_edit: 'Zuordnung anklicken um sie umzubenennen.',
       settings_attribution_header: 'Ausgaben und Einnahmen können verschiedenen Arten zugeordnet werden.',
+      settings_attribution_new: 'Neue Zuordnung hinzufügen.',
     },
     placeholder: {
       settings_attribution_add: 'Name der Zuordnung',

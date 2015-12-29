@@ -18,6 +18,15 @@
       });
     };
 
+    service.getLastAddedDate = function() {
+      return $http.get('/api/recordset/lastAddedDate').then(function(res){
+        return res.data;
+      },
+      function(err){
+        console.log(err);
+      });
+    };
+
     service.add = function(recordset) {
       recordset.forEach(function(entry){
         $http.post('/api/recordset', entry).then(function(res){
