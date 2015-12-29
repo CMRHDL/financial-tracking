@@ -11,7 +11,7 @@
   <div class="col-xs-3 my-medium">
     <div class="input-heading">
       Kontoauszug<br>
-      <span ng-bind="code.codes.number"></span> 
+      <span ng-bind="code.codes.number"></span>
       <button type="submit" class="btn btn-default small" ng-click="code.increase('number');">+</button>
       <button type="submit" class="btn btn-default small" ng-click="code.decrease('number');">-</button>
     </div>
@@ -45,11 +45,11 @@
   <div class="col-xs-3 my-medium">
     <div class="input-heading">
       Kontoauszug<br>
-      <span ng-bind="code.codes.number"></span> 
-      <button 
-        type="submit" 
-        class="btn btn-default small" 
-        ng-click="code.increase('number'); code.set('page', 1); code.set('position', 1)" 
+      <span ng-bind="code.codes.number"></span>
+      <button
+        type="submit"
+        class="btn btn-default small"
+        ng-click="code.increase('number'); code.set('page', 1); code.set('position', 1)"
         ng-if="code.codes.position > 1"
       >+</button>
     </div>
@@ -59,9 +59,9 @@
       Blatt<br>
       <span ng-bind="code.codes.page"></span>
       <button
-        type="submit" 
-        class="btn btn-default small" 
-        ng-click="code.increase('page'); code.set('position', 1)" 
+        type="submit"
+        class="btn btn-default small"
+        ng-click="code.increase('page'); code.set('position', 1)"
         ng-if="code.codes.position > 1"
       >+</button>
     </div>

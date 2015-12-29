@@ -77,7 +77,7 @@
               attribution.get().then(function(response) {
                 attr.all = response;
               });
-            }, 
+            },
             function(err){
               console.log(err);
             }

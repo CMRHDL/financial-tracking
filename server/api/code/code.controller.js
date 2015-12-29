@@ -14,7 +14,7 @@ var Code = require('./code.model');
 // Get list of codes
 exports.index = function(req, res) {
   Code.find(function(err, codes) {
-    if (err) { 
+    if (err) {
       res.send(err);
     }
     res.json(codes);
@@ -27,7 +27,7 @@ exports.max = function(req, res) {
     .where({})
     .sort('-code')
     .exec(function(err, maxCode) {
-    if (err) { 
+    if (err) {
       res.send(err);
     }
     res.json(maxCode);
