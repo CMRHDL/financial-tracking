@@ -58,7 +58,9 @@
     };
 
     service.getCleanRecordsetFromRowobject = function(rowObject) {
+      console.log(rowObject);
       return {
+        _id: rowObject._id,
         amount: rowObject.gains || rowObject.expenses,
         attribution: rowObject.attribution,
         code: rowObject.code,

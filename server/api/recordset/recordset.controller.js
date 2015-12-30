@@ -64,14 +64,14 @@ exports.patchAttribution = function(req, res) {
 
 // update recordset by Code
 exports.update = function(req, res) {
-  var conditions = { 'code': req.body.code };
+  var conditions = { '_id': req.body._id };
   var update = { $set: req.body }
   var options = { multi: false };
   Recordset.update(conditions, update, options, function (err) {
     if (err) {
       res.send(err);
     }
-    res.json('recordset for ' + req.body.code + ' was updated');
+    res.json('recordset for ' + req.body._id + ' was updated');
   });
 };
 

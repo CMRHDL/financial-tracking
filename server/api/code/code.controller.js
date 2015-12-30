@@ -51,6 +51,6 @@ exports.deleteAll = function(req, res) {
     if (err) {
       res.send(err);
     }
-    res.json('Deleted all codes);
+    res.json('Deleted all codes');
   });
 };

@@ -35,7 +35,8 @@
     "mongoose" : "*",
     "body-parser" : "*",
     "method-override" : "*",
-    "mongodb": "*"
+    "mongodb": "*",
+    "lodash": "*"
   },
   "engines": {
     "node": ">=0.10.0"

@@ -62,8 +62,8 @@
 */
 
 .grid {
-  width: 900px;
-  height: 250px;
+/*  width: 900px;
+  height: 250px;*/
 }
 
 .row.my-border {
@@ -80,6 +80,12 @@
 
 .my-medium {
   min-width: 150px;
+}
+
+.my-small {
+  min-width: 75px;
+  width: 75px;
+  display: inline;
 }
 
 .grid-cell {

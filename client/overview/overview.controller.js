@@ -2,8 +2,8 @@
   'use strict';
   angular.module('team.app').controller('OverviewCtrl', OverviewCtrl);
 
-  OverviewCtrl.$inject = [ '$filter', '$scope', 'uiGridConstants','attribution', 'recordset', 'resource', 'util' ];
-  function OverviewCtrl($filter, $scope, uiGridConstants, attribution, recordset, resource, util) {
+  OverviewCtrl.$inject = [ '$filter', '$route', '$scope', 'uiGridConstants','attribution', 'recordset', 'resource', 'util', 'gridSettings' ];
+  function OverviewCtrl($filter, $route, $scope, uiGridConstants, attribution, recordset, resource, util, gridSettings) {
     var vm = this;
     vm.gridOptions = {
       data: 'vm.data',
@@ -36,24 +36,29 @@
     $scope.saveRow = function(rowEntity) {
       $scope.gridApi.rowEdit.setSavePromise( rowEntity, recordset.patch(recordset.getCleanRecordsetFromRowobject(rowEntity)) );
     };
-
     init();
     function init() {
-      window.scrollTo(0, 0);
-      attribution.get().then(function(response) {
-        vm.attributions = response;
+      gridSettings.getById('grid2').then(function(res) {
+        vm.tableWidth = res[0].width;
+        vm.tableHeight = res[0].height;
+        vm.desiredTableWidth = res[0].width;
+        vm.desiredTableHeight = res[0].height;
       }).then(function() {
-        recordset.get().then(function(response) {
-          vm.data = response;
-          vm.data.forEach(function(entry){
-            // util.formatAllNumbers(entry);
-            entry.unformattedDate = entry.date;
-            entry.date = util.formatDate(entry.date);
-            vm.attributions.forEach(function(attr){
-              entry[attr.name] = entry.attribution.name === attr.name ? entry.amount : '';
+        attribution.get().then(function(response) {
+          vm.attributions = response;
+        }).then(function() {
+          recordset.get().then(function(response) {
+            vm.data = response;
+            vm.data.forEach(function(entry){
+              // util.formatAllNumbers(entry);
+              entry.unformattedDate = entry.date;
+              entry.date = util.formatDate(entry.date);
+              vm.attributions.forEach(function(attr){
+                entry[attr.name] = entry.attribution.name === attr.name ? entry.amount : '';
+              });
             });
+            buildColDefs();
           });
-          buildColDefs();
         });
       });
     }
@@ -87,5 +92,20 @@
       });
     }
 
+    vm.resizeGrid = resizeGrid;
+    function resizeGrid() {
+      var tableSetting = {
+        id: 'grid2',
+        width: vm.tableWidth,
+        height: vm.tableHeight,
+      };
+      gridSettings.setById(tableSetting).then(function(res) {     
+          $route.reload();
+        },
+        function(err) {     
+          console.log(err);
+        }
+      );
+    }
   }
 })();
