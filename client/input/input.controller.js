@@ -15,6 +15,7 @@
     });
 
     vm.openNewAttributionDialog = openNewAttributionDialog;
+    vm.refeshPage = refeshPage;
     vm.saveAll = saveAll;
     vm.saveDataSet = saveDataSet;
 
@@ -35,6 +36,10 @@
           vm.delegates = response;
         });
       });
+    }
+
+    function refeshPage() {
+      location.reload();
     }
 
     function saveAll() {
