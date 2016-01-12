@@ -99,10 +99,10 @@
         width: vm.tableWidth,
         height: vm.tableHeight,
       };
-      gridSettings.setById(tableSetting).then(function(res) {     
+      gridSettings.setById(tableSetting).then(function(res) {
           $route.reload();
         },
-        function(err) {     
+        function(err) {
           console.log(err);
         }
       );

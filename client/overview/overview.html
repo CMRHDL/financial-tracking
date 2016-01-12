@@ -1,13 +1,21 @@
 Zelle doppelklicken zum Bearbeiten. Herausklicken/Enter drücken zum Abschließen, Vorgang dauert dann einen kurzen Moment. Um die neuen Werte bei den Zuordnungen zu sehen, Seite neu laden (F5).<br>
-Höhe der Tabelle in Pixel: 
-<input 
+Höhe der Tabelle in Pixel:
+<input
   type="text"
   class="form-control my-small"
-  ng-model="vm.tableHeight"> 
-Breite der Tabelle in Pixel: 
-<input 
+  ng-model="vm.tableHeight">
+Breite der Tabelle in Pixel:
+<input
   type="text"
   class="form-control my-small"
   ng-model="vm.tableWidth"> - <button type="submit" class="btn btn-default" ng-click="vm.resizeGrid();">Größe anpassen</button>
-<div id="grid2" ui-grid="vm.gridOptions" ui-grid-exporter ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize
-  style="height: {{vm.desiredTableHeight + 'px'}}; width: {{vm.desiredTableWidth + 'px'}};"></div>
+<div id="grid2"
+ ui-grid="vm.gridOptions"
+ ui-grid-auto-resize
+ ui-grid-edit
+ ui-grid-cellNav
+ ui-grid-exporter
+ ui-grid-move-columns
+ ui-grid-resize-columns
+ ui-grid-row-edit
+ style="height: {{vm.desiredTableHeight + 'px'}}; width: {{vm.desiredTableWidth + 'px'}};"></div>
