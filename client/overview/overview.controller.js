@@ -2,8 +2,8 @@
   'use strict';
   angular.module('team.app').controller('OverviewCtrl', OverviewCtrl);
 
-  OverviewCtrl.$inject = [ '$filter', '$route', '$scope', 'uiGridConstants','attribution', 'recordset', 'resource', 'util', 'gridSettings' ];
-  function OverviewCtrl($filter, $route, $scope, uiGridConstants, attribution, recordset, resource, util, gridSettings) {
+  OverviewCtrl.$inject = [ '$http', '$filter', '$route', '$scope', 'uiGridConstants','attribution', 'recordset', 'resource', 'util', 'gridSettings' ];
+  function OverviewCtrl($http, $filter, $route, $scope, uiGridConstants, attribution, recordset, resource, util, gridSettings) {
     var vm = this;
     vm.gridOptions = {
       data: 'vm.data',
@@ -60,8 +60,23 @@
               vm.attributions.forEach(function(attr){
                 entry[attr.name] = entry.attribution.name === attr.name ? entry.amount : '';
               });
+              
             });
             buildColDefs();
+            $http.get('/api/setting/')
+              .then(
+                function(res){
+                  vm.initialAmount = res.data[res.data.length-1].initialAmount;
+                  vm.currentAmount = vm.initialAmount;
+                  vm.data.forEach(function(entry){
+                    vm.currentAmount += entry.gains;
+                    vm.currentAmount -= entry.expenses;
+                  });
+                },
+                function(err){
+                  console.log(err);
+                }
+              );
           });
         });
       });
@@ -111,5 +126,7 @@
         }
       );
     }
+
+    vm.currentAmount = 0;
   }
 })();

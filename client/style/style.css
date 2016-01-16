@@ -118,3 +118,14 @@
   text-align: center;
   white-space: nowrap;
 }
+
+.settings-nav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.settings-nav li {
+  display: inline;
+}

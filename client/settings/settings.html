@@ -1,1 +1,12 @@
-<settings-attribution></settings-attribution>
+<div ng-controller="SettingsCtrl as vm">
+  <ul class="settings-nav">
+    <li><a ng-click="vm.set('attribution')">Zuordnungen</a></li> | 
+    <li><a ng-click="vm.set('initial')">Initialwerte</a></li>
+  </ul>
+  <div ng-show="vm.show === 'attribution'">
+    <settings-attribution></settings-attribution>
+  </div>
+  <div ng-show="vm.show === 'initial'">
+    <my-initial></my-initial>
+  </div>
+</div>

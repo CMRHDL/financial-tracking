@@ -1,0 +1,18 @@
+<form class="form-inline">
+  <p>
+    <h1>
+      Initiale Werte einstellen<br>
+    </h1>
+  </p>
+  <div class="row my-border">
+    <div class="col-xs-3">
+      Ausgangswert vor erstem Beleg
+    </div>
+    <div class="col-xs-9">
+      <p>
+        <input type="text" ng-model="vm.initialAmount" class="form-control" >
+        <button type="submit" ng-click="vm.saveInitialAmount();" class="btn btn-default">Speichern</button>
+      </p>
+    </div>
+  </div>
+</form>

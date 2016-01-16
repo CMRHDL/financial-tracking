@@ -8,7 +8,8 @@ Breite der Tabelle in Pixel:
 <input
   type="text"
   class="form-control my-small"
-  ng-model="vm.tableWidth"> - <button type="submit" class="btn btn-default" ng-click="vm.resizeGrid();">Größe anpassen</button>
+  ng-model="vm.tableWidth"> - <button type="submit" class="btn btn-default" ng-click="vm.resizeGrid();">Größe anpassen</button><br><br>
+Ausgangswert: {{vm.initialAmount}}, aktueller Endwert: {{vm.currentAmount}}
 <div id="grid2"
  ui-grid="vm.gridOptions"
  ui-grid-auto-resize

@@ -5,5 +5,9 @@
   SettingsCtrl.$inject = [ ];
   function SettingsCtrl() {
     var vm = this;
+    vm.set = set;
+    function set(show) {
+      vm.show = show;
+    }
   }
 })();
