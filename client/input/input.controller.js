@@ -97,7 +97,7 @@
         },
         { field: 'attribution.displayName', name:'Zuordnung', enableColumnMenu: false, enableSorting: false},
         { field: 'attribution.group', name:'Art', enableColumnMenu: false, enableSorting: false},
-        { field: 'x', name:'X', enableColumnMenu: false, enableSorting: false, width: '5%', cellTemplate: deleteCell},
+        //{ field: 'x', name:'X', enableColumnMenu: false, enableSorting: false, width: '5%', cellTemplate: deleteCell},
       ],
       appScopeProvider: {
         delete : function(row) {

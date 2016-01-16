@@ -34,6 +34,10 @@
     };
 
     $scope.saveRow = function(rowEntity) {
+      var arr = rowEntity.date.split('.');
+      arr[0] = arr[0][0] === '0' ? '0' + (parseInt(arr[0], 10) - 1) : parseInt(arr[0], 10) - 1;
+      var newDate = arr[2] + '-' + arr[1] + '-' + arr[0] + 'T23:00:00.000Z';
+      rowEntity.unformattedDate = newDate;
       $scope.gridApi.rowEdit.setSavePromise( rowEntity, recordset.patch(recordset.getCleanRecordsetFromRowobject(rowEntity)) );
     };
     init();
@@ -65,7 +69,7 @@
 
     function buildColDefs() {
       var colDefs = [
-        { field: 'code', name: 'Code', enableColumnMenu: false, width: 150, enableCellEdit: false },
+        { field: 'code', name: 'Code', enableColumnMenu: false, width: 150 },
         { field: 'date', name: 'Datum', enableColumnMenu: false, width: 150, }, // cellTemplate: resource.templates.table_cell_date },
         { field: 'description', name: 'Beschreibung', enableColumnMenu: false, width: 150 },
         { field: 'gains', name: 'Einnahmen', enableColumnMenu: false, width: 100, aggregationType: uiGridConstants.aggregationTypes.sum, cellTemplate: resource.templates.table_cell_currency },
