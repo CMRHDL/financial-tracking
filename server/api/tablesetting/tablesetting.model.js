@@ -7,6 +7,7 @@ var TableSettingSchema = new Schema({
     id: String,
     height: Number,
     width: Number,
+    layout: Object,
 });
 
 module.exports = mongoose.model('TableSetting', TableSettingSchema);

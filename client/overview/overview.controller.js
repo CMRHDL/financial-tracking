@@ -26,10 +26,12 @@
           return util.currency(cellValue);
         },
       },
+      saveSort: false,
+      saveFilter: false,
     };
 
     vm.gridOptions.onRegisterApi = function(gridApi){
-      $scope.gridApi = gridApi;
+      vm.gridApi = gridApi;
       gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
     };
 
@@ -38,7 +40,7 @@
       arr[0] = arr[0][0] === '0' ? '0' + (parseInt(arr[0], 10) - 1) : parseInt(arr[0], 10) - 1;
       var newDate = arr[2] + '-' + arr[1] + '-' + arr[0] + 'T23:00:00.000Z';
       rowEntity.unformattedDate = newDate;
-      $scope.gridApi.rowEdit.setSavePromise( rowEntity, recordset.patch(recordset.getCleanRecordsetFromRowobject(rowEntity)) );
+      vm.gridApi.rowEdit.setSavePromise( rowEntity, recordset.patch(recordset.getCleanRecordsetFromRowobject(rowEntity)) );
     };
     init();
     function init() {
@@ -47,6 +49,7 @@
         vm.tableHeight = res[0].height;
         vm.desiredTableWidth = res[0].width;
         vm.desiredTableHeight = res[0].height;
+        vm.tableLayout = res[0].layout;
       }).then(function() {
         attribution.get().then(function(response) {
           vm.attributions = response;
@@ -60,13 +63,11 @@
               vm.attributions.forEach(function(attr){
                 entry[attr.name] = entry.attribution.name === attr.name ? entry.amount : '';
               });
-              
             });
             buildColDefs();
             $http.get('/api/setting/')
               .then(
                 function(res){
-                  console.log(res);
                   if(res.data.length > 0) {
                     vm.initialAmount = res.data[res.data.length-1].initialAmount;
                     vm.currentAmount = vm.initialAmount;
@@ -81,7 +82,9 @@
                 function(err){
                   console.log(err);
                 }
-              );
+              ).then(function() {
+                vm.gridApi.saveState.restore( $scope, vm.tableLayout );
+              });
           });
         });
       });
@@ -116,12 +119,14 @@
       });
     }
 
-    vm.resizeGrid = resizeGrid;
-    function resizeGrid() {
+    vm.saveTableLayout = saveTableLayout;
+    function saveTableLayout() {
+
       var tableSetting = {
         id: 'grid2',
         width: vm.tableWidth,
         height: vm.tableHeight,
+        layout: vm.gridApi.saveState.save(),
       };
       gridSettings.setById(tableSetting).then(function(res) {
           $route.reload();
@@ -131,7 +136,5 @@
         }
       );
     }
-
-    vm.currentAmount = 0;
   }
 })();
