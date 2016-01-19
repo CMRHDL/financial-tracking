@@ -45,6 +45,7 @@
     'ui.grid.edit',
     'ui.grid.exporter',
     'ui.grid.moveColumns',
+    'ui.grid.saveState',
     'ui.grid.resizeColumns',
     'ui.grid.rowEdit',
   ]);

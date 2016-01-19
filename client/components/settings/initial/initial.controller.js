@@ -12,7 +12,11 @@
       .then(
         function(res){
           console.log(res);
-          vm.initialAmount = res.data[res.data.length-1].initialAmount;
+          if(res.data.length > 0) {
+            vm.initialAmount = res.data[res.data.length-1].initialAmount;
+          } else {
+            vm.initialAmount = 0;
+          }
         },
         function(err){
           console.log(err);

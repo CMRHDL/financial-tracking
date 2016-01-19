@@ -66,12 +66,17 @@
             $http.get('/api/setting/')
               .then(
                 function(res){
-                  vm.initialAmount = res.data[res.data.length-1].initialAmount;
-                  vm.currentAmount = vm.initialAmount;
-                  vm.data.forEach(function(entry){
-                    vm.currentAmount += entry.gains;
-                    vm.currentAmount -= entry.expenses;
-                  });
+                  console.log(res);
+                  if(res.data.length > 0) {
+                    vm.initialAmount = res.data[res.data.length-1].initialAmount;
+                    vm.currentAmount = vm.initialAmount;
+                    vm.data.forEach(function(entry){
+                      vm.currentAmount += entry.gains;
+                      vm.currentAmount -= entry.expenses;
+                    });
+                  } else {
+                    alert('Bitte Initialwerte setzen (Einstellungen -> Initialwerte)');
+                  }
                 },
                 function(err){
                   console.log(err);

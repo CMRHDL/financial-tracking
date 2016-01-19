@@ -2,7 +2,7 @@ o datum edit
 o* eingabe löschen?
 * zuordnung in overview edit
 o code edit
-* ausgangswert
+o ausgangswert
 * jahr wählen bestimmt das höchste datum relativ in dem jahr
 * resize+move column speichern
 
