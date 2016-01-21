@@ -14,6 +14,10 @@
       code.codes = response;
     });
 
+    codeService.getHighestCodeByYear(2014).then(function(response) {
+      console.log(response);
+    });
+
     code.resource = resource;
     code.secureMode = true;
 

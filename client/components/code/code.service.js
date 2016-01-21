@@ -29,6 +29,15 @@
       });
     };
 
+    service.getHighestCodeByYear = function(year) {
+      return $http.post('/api/code/maxByYear', { year: year}).then(function(res){
+        return res;
+      },
+      function(err){
+        console.log(err);
+      });
+    };
+
     service.getCode = function() {
       return service.codes.code;
     };

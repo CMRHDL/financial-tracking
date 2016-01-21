@@ -4,6 +4,6 @@ o* eingabe löschen?
 o code edit
 o ausgangswert
 * jahr wählen bestimmt das höchste datum relativ in dem jahr
-* resize+move column speichern
+o* resize+move column speichern
 
 ** export sum in table

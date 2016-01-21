@@ -10,6 +10,7 @@
 'use strict';
 
 var Code = require('./code.model');
+var _ = require('lodash');
 
 // Get list of codes
 exports.index = function(req, res) {
@@ -18,6 +19,22 @@ exports.index = function(req, res) {
       res.send(err);
     }
     res.json(codes);
+  });
+};
+
+// Get highest code by year
+exports.maxByYear = function(req, res) {
+  Code.find(function(err, codes) {
+    if (err) {
+      res.send(err);
+    }
+    var highestCodeByYear = { code: req.body.year + '0010101' };
+    codes.forEach(function(entry) {
+      if(_.startsWith(entry.code, req.body.year)) {
+        highestCodeByYear = parseInt(highestCodeByYear.code, 10) > parseInt(entry.code, 10) ? highestCodeByYear.code : entry;
+      }
+    });
+    res.json(highestCodeByYear);
   });
 };
 

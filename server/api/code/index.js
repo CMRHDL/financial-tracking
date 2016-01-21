@@ -7,6 +7,7 @@ var router = express.Router();
 
 router.get('/', controller.index);
 router.get('/max', controller.max);
+router.post('/maxByYear', controller.maxByYear);
 router.post('/', controller.create);
 router.delete('/', controller.deleteAll);
 /*
