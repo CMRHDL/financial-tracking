@@ -27,6 +27,7 @@
 
     function saveInitialAmount() {
       console.log('name');
+      vm.initialAmount = vm.initialAmount.replace(/,/, '.');
       $http.post('/api/setting', { initialAmount: vm.initialAmount})
         .then(
           function(res){

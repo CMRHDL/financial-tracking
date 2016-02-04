@@ -15,7 +15,7 @@
     templates: {
       table_cell_currency: '<div class="grid-cell currency">{{grid.appScope.formatCurrency(row.entity[col.field])}}</div>',
       table_cell_date: '<div class="grid-cell date">{{row.entity[col.field] | date : "dd.MM.yyyy" : "CET"}}</div>',
-      // table_cell_date: '<div class="grid-cell date">{{row.entity[col.field]}}</div>',
+      table_cell_attributin_picker: '<select class="dropdown" ng-options="entry.displayName group by entry.group for entry in col.colDef.editableCellValues" ng-model="selectedAtrribution" ng-change="grid.appScope.selectedAttribution(selectedAtrribution, row.entity)"></select>',
     }
   });
 })();

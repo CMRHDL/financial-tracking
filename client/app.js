@@ -38,7 +38,8 @@
     });
   }
 
-  angular.module('team.app',['ngRoute',
+  angular.module('team.app',[
+    'ngRoute',
     'ui.bootstrap',
     'ui.grid',
     'ui.grid.cellNav',

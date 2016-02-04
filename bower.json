@@ -13,7 +13,8 @@
     "angular-bootstrap": "*",
     "angular-ui-grid": "*",
     "angular-i18n": "*",
-    "lodash": "*"
+    "lodash": "*",
+    "angular-ui-select": "*"
   },
   "devDependencies": {
     "angular-mocks": "*"

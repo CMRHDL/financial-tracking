@@ -2,18 +2,12 @@
   'use strict';
   angular.module('team.app').controller('OverviewCtrl', OverviewCtrl);
 
-  OverviewCtrl.$inject = [ '$http', '$filter', '$route', '$scope', 'uiGridConstants','attribution', 'recordset', 'resource', 'util', 'gridSettings' ];
-  function OverviewCtrl($http, $filter, $route, $scope, uiGridConstants, attribution, recordset, resource, util, gridSettings) {
+  OverviewCtrl.$inject = [ '$http', '$filter', '$route', '$scope', 'uiGridConstants','uiGridEditConstants', 'attribution', 'recordset', 'resource', 'util', 'gridSettings' ];
+  function OverviewCtrl($http, $filter, $route, $scope, uiGridConstants, uiGridEditConstants, attribution, recordset, resource, util, gridSettings) {
     var vm = this;
+
     vm.gridOptions = {
       data: 'vm.data',
-      columnDefs: [
-        { field: 'code', name: 'Code', enableColumnMenu: false, width: 150, enableCellEdit: false },
-        { field: 'date', name: 'Datum', enableColumnMenu: false, width: 150 },
-        { field: 'description', name: 'Text', enableColumnMenu: false, width: 150 },
-        { field: 'gains', name: 'Einnahmen', enableColumnMenu: false, width: 100, aggregationType: uiGridConstants.aggregationTypes.sum , cellTemplate: resource.templates.table_cell_number},
-        { field: 'expenses', name: 'Ausgaben', enableColumnMenu: false, width: 100, aggregationType: uiGridConstants.aggregationTypes.sum , cellTemplate: resource.templates.table_cell_number},
-      ],
       enableGridMenu: true,
       exporterMenuPdf: false,
       gridFooterTemplate: '<div>pink floyd</div>',
@@ -24,6 +18,10 @@
       appScopeProvider: {
         formatCurrency : function(cellValue) {
           return util.currency(cellValue);
+        },
+        selectedAttribution : function(attribution, rowObject) {
+          vm.data[_.findIndex(vm.data, function(o) { return o['_id'] == rowObject['_id']; })].attribution = attribution;
+          $scope.$broadcast(uiGridEditConstants.events.END_CELL_EDIT);
         },
       },
       saveSort: false,
@@ -97,6 +95,13 @@
         { field: 'description', name: 'Beschreibung', enableColumnMenu: false, width: 150 },
         { field: 'gains', name: 'Einnahmen', enableColumnMenu: false, width: 100, aggregationType: uiGridConstants.aggregationTypes.sum, cellTemplate: resource.templates.table_cell_currency },
         { field: 'expenses', name: 'Ausgaben', enableColumnMenu: false, width: 100, aggregationType: uiGridConstants.aggregationTypes.sum, cellTemplate: resource.templates.table_cell_currency },
+        {
+          field: 'attribution.displayName',
+          name: 'Zuordnung',
+          enableColumnMenu: false,
+          width: 150,
+          editableCellTemplate: resource.templates.table_cell_attributin_picker,
+        },
       ];
       vm.attributions.forEach(function(entry){
         if(entry.type === 'in') {
@@ -105,7 +110,10 @@
           colDefs.push({ field: entry.name, name: entry.displayName + " (A)", enableColumnMenu: false, width: 120, aggregationType: uiGridConstants.aggregationTypes.sum, cellTemplate: resource.templates.table_cell_currency, enableCellEdit: false });
         }
       });
-      vm.gridOptions.columnDefs = colDefs;
+      attribution.get().then(function(response) {
+        colDefs[5].editableCellValues = response;
+        vm.gridOptions.columnDefs = colDefs;
+      });
     }
 
     vm.deleteAll = deleteAll;
