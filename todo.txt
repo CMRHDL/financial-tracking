@@ -1,6 +1,6 @@
 o datum edit
 o* eingabe löschen?
-* zuordnung in overview edit
+o  zuordnung in overview edit
 o code edit
 o ausgangswert
 * jahr wählen bestimmt das höchste datum relativ in dem jahr
