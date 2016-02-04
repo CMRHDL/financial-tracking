@@ -7,3 +7,5 @@ o ausgangswert
 o* resize+move column speichern
 
 ** export sum in table
+
+** import/export data
