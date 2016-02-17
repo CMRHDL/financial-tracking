@@ -5,6 +5,7 @@ o code edit
 o ausgangswert
 * jahr wählen bestimmt das höchste datum relativ in dem jahr
 o* resize+move column speichern
+* rundung
 
 ** export sum in table
 

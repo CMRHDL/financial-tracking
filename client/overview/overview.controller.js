@@ -13,6 +13,13 @@
       gridFooterTemplate: '<div>pink floyd</div>',
       showColumnFooter: true,
       exporterCsvFilename: 'myFile.csv',
+      exporterFieldCallback: function ( grid, row, col, value ){
+        if(col.colDef.type === 'number' && value) {
+          value = value.toFixed(2);
+          return value.toString().replace(/\./, ',');
+        }
+        return value;
+      },
       exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
       //exporterCsvFooter: true,
       appScopeProvider: {
@@ -22,6 +29,9 @@
         selectedAttribution : function(attribution, rowObject) {
           vm.data[_.findIndex(vm.data, function(o) { return o['_id'] == rowObject['_id']; })].attribution = attribution;
           $scope.$broadcast(uiGridEditConstants.events.END_CELL_EDIT);
+        },
+        adjustSum: function(col) {
+          return col.aggregationValue.toFixed(2);
         },
       },
       saveSort: false,
@@ -93,8 +103,8 @@
         { field: 'code', name: 'Code', enableColumnMenu: false, width: 150 },
         { field: 'date', name: 'Datum', enableColumnMenu: false, width: 150, }, // cellTemplate: resource.templates.table_cell_date },
         { field: 'description', name: 'Beschreibung', enableColumnMenu: false, width: 150 },
-        { field: 'gains', name: 'Einnahmen', enableColumnMenu: false, width: 100, aggregationType: uiGridConstants.aggregationTypes.sum, cellTemplate: resource.templates.table_cell_currency },
-        { field: 'expenses', name: 'Ausgaben', enableColumnMenu: false, width: 100, aggregationType: uiGridConstants.aggregationTypes.sum, cellTemplate: resource.templates.table_cell_currency },
+        { field: 'gains', name: 'Einnahmen', enableColumnMenu: false, width: 100, aggregationType: uiGridConstants.aggregationTypes.sum, footerCellTemplate: '<div>total: {{grid.appScope.adjustSum(col)}}</div>', cellTemplate: resource.templates.table_cell_currency, type: 'number' },
+        { field: 'expenses', name: 'Ausgaben', enableColumnMenu: false, width: 100, aggregationType: uiGridConstants.aggregationTypes.sum, footerCellTemplate: '<div>total: {{grid.appScope.adjustSum(col)}}</div>',cellTemplate: resource.templates.table_cell_currency, type: 'number' },
         {
           field: 'attribution.displayName',
           name: 'Zuordnung',
@@ -105,9 +115,16 @@
       ];
       vm.attributions.forEach(function(entry){
         if(entry.type === 'in') {
-          colDefs.push({ field: entry.name, name: entry.displayName + " (E)", enableColumnMenu: false, width: 120, aggregationType: uiGridConstants.aggregationTypes.sum, cellTemplate: resource.templates.table_cell_currency, enableCellEdit: false });
+          colDefs.push({ field: entry.name, name: entry.displayName + " (E)", enableColumnMenu: false, type: 'number', width: 120,
+            aggregationType: uiGridConstants.aggregationTypes.sum,
+            footerCellTemplate: '<div>total: {{grid.appScope.adjustSum(col)}}</div>',
+
+            cellTemplate: resource.templates.table_cell_currency, enableCellEdit: false });
         } else {
-          colDefs.push({ field: entry.name, name: entry.displayName + " (A)", enableColumnMenu: false, width: 120, aggregationType: uiGridConstants.aggregationTypes.sum, cellTemplate: resource.templates.table_cell_currency, enableCellEdit: false });
+          colDefs.push({ field: entry.name, name: entry.displayName + " (A)", enableColumnMenu: false, type: 'number', width: 120,
+            aggregationType: uiGridConstants.aggregationTypes.sum,
+            footerCellTemplate: '<div>total: {{grid.appScope.adjustSum(col)}}</div>',
+            cellTemplate: resource.templates.table_cell_currency, enableCellEdit: false });
         }
       });
       attribution.get().then(function(response) {

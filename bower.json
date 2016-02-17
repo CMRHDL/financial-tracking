@@ -11,7 +11,7 @@
     "angular-sanitize": "*",
     "angular-touch": "*",
     "angular-bootstrap": "*",
-    "angular-ui-grid": "*",
+    "angular-ui-grid": "3.1.1",
     "angular-i18n": "*",
     "lodash": "*",
     "angular-ui-select": "*"
