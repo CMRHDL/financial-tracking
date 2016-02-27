@@ -9,7 +9,7 @@ Breite der Tabelle in Pixel:
   type="text"
   class="form-control my-small"
   ng-model="vm.tableWidth"> - <button type="submit" class="btn btn-default" ng-click="vm.saveTableLayout();">Tabellenlayout anpassen</button><br><br>
-Ausgangswert: {{vm.initialAmount}}, aktueller Endwert: {{vm.currentAmount}}
+Ausgangswert: {{vm.initialAmount.toFixed(2)}}, aktueller Endwert: {{vm.currentAmount.toFixed(2)}}
 <div id="grid2"
  ui-grid="vm.gridOptions"
  ui-grid-auto-resize
