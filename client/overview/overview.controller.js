@@ -63,36 +63,7 @@
           vm.attributions = response;
         }).then(function() {
           recordset.get().then(function(response) {
-            vm.data = response;
-            vm.data.forEach(function(entry){
-              // util.formatAllNumbers(entry);
-              entry.unformattedDate = entry.date;
-              entry.date = util.formatDate(entry.date);
-              vm.attributions.forEach(function(attr){
-                entry[attr.name] = entry.attribution.name === attr.name ? entry.amount : '';
-              });
-            });
-            buildColDefs();
-            $http.get('/api/setting/')
-              .then(
-                function(res){
-                  if(res.data.length > 0) {
-                    vm.initialAmount = res.data[res.data.length-1].initialAmount;
-                    vm.currentAmount = vm.initialAmount;
-                    vm.data.forEach(function(entry){
-                      vm.currentAmount += entry.gains;
-                      vm.currentAmount -= entry.expenses;
-                    });
-                  } else {
-                    alert('Bitte Initialwerte setzen (Einstellungen -> Initialwerte)');
-                  }
-                },
-                function(err){
-                  console.log(err);
-                }
-              ).then(function() {
-                vm.gridApi.saveState.restore( $scope, vm.tableLayout );
-              });
+            buildDataset(response);
           });
         });
       });
@@ -160,6 +131,76 @@
           console.log(err);
         }
       );
+    }
+
+    attribution.get().then(function(response) {
+      vm.allAttributions = response;
+    });
+
+    vm.attributionsToFilter = [];
+    vm.addAttributiontoFilter = addAttributiontoFilter;
+    function addAttributiontoFilter() {
+      console.log(vm.filterAttribution);
+      vm.attributionsToFilter.push(vm.filterAttribution);
+      vm.allAttributions.splice(vm.allAttributions.indexOf(vm.filterAttribution), 1);
+      vm.filterAttribution = null;
+    }
+
+    vm.applyFliter = applyFliter;
+    function applyFliter() {
+
+      var attributionIds = vm.attributionsToFilter.reduce(function(prev, curr) {
+        prev.push(curr._id);
+        return prev;
+      }, []);
+
+      $http.post('/api/recordset/filterByAttribution', { attributionIds: attributionIds }).then(function(res){
+        buildDataset(res.data);
+      },
+      function(err){
+        console.log(err);
+      });
+
+    }
+
+    vm.removeFilter = removeFilter;
+    function removeFilter(index) {
+      console.log(vm.attributionsToFilter[index]);
+      vm.allAttributions.push(vm.attributionsToFilter[index]);
+      vm.attributionsToFilter.splice(index, 1);
+    }
+
+    function buildDataset(res) {
+      vm.data = res;
+      vm.data.forEach(function(entry){
+        // util.formatAllNumbers(entry);
+        entry.unformattedDate = entry.date;
+        entry.date = util.formatDate(entry.date);
+        vm.attributions.forEach(function(attr){
+          entry[attr.name] = entry.attribution.name === attr.name ? entry.amount : '';
+        });
+      });
+      buildColDefs();
+      $http.get('/api/setting/')
+        .then(
+          function(res){
+            if(res.data.length > 0) {
+              vm.initialAmount = res.data[res.data.length-1].initialAmount;
+              vm.currentAmount = vm.initialAmount;
+              vm.data.forEach(function(entry){
+                vm.currentAmount += entry.gains;
+                vm.currentAmount -= entry.expenses;
+              });
+            } else {
+              alert('Bitte Initialwerte setzen (Einstellungen -> Initialwerte)');
+            }
+          },
+          function(err){
+            console.log(err);
+          }
+        ).then(function() {
+          vm.gridApi.saveState.restore( $scope, vm.tableLayout );
+        });
     }
   }
 })();

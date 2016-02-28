@@ -86,3 +86,16 @@ exports.lastAddedDate = function(req, res) {
       res.json(date);
     });
 };
+
+// Get last added Date
+exports.filterByAttribution = function(req, res) {
+  Recordset
+    .find({})
+    .where('attribution._id').in(req.body.attributionIds)
+    .exec(function(err, date) {
+      if (err) {
+        res.send(err);
+      }
+      res.json(date);
+    });
+};
