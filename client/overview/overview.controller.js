@@ -140,7 +140,6 @@
     vm.attributionsToFilter = [];
     vm.addAttributiontoFilter = addAttributiontoFilter;
     function addAttributiontoFilter() {
-      console.log(vm.filterAttribution);
       vm.attributionsToFilter.push(vm.filterAttribution);
       vm.allAttributions.splice(vm.allAttributions.indexOf(vm.filterAttribution), 1);
       vm.filterAttribution = null;
@@ -165,7 +164,6 @@
 
     vm.removeFilter = removeFilter;
     function removeFilter(index) {
-      console.log(vm.attributionsToFilter[index]);
       vm.allAttributions.push(vm.attributionsToFilter[index]);
       vm.attributionsToFilter.splice(index, 1);
     }
