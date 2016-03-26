@@ -2,17 +2,16 @@
   'use strict';
   angular.module('team.app').controller('OverviewCtrl', OverviewCtrl);
 
-  OverviewCtrl.$inject = [ '$http', '$filter', '$route', '$scope', 'uiGridConstants','uiGridEditConstants', 'attribution', 'recordset', 'resource', 'util', 'gridSettings' ];
-  function OverviewCtrl($http, $filter, $route, $scope, uiGridConstants, uiGridEditConstants, attribution, recordset, resource, util, gridSettings) {
+  OverviewCtrl.$inject = [ '$http', '$filter', '$route', '$scope', 'uiGridConstants','uiGridEditConstants', 'attribution', 'recordset', 'resource', 'util', 'gridSettings', 'uiGridExporterService', 'uiGridExporterConstants' ];
+  function OverviewCtrl($http, $filter, $route, $scope, uiGridConstants, uiGridEditConstants, attribution, recordset, resource, util, gridSettings, uiGridExporterService, uiGridExporterConstants) {
     var vm = this;
 
     vm.gridOptions = {
       data: 'vm.data',
       enableGridMenu: true,
       exporterMenuPdf: false,
-      gridFooterTemplate: '<div>pink floyd</div>',
       showColumnFooter: true,
-      exporterCsvFilename: 'finanzen.csv',
+      exporterCsvFilename: 'finanzen_' + $filter('date')(new Date(), 'dd.MM.yyyy HH:mm', 'CET') + '.csv',
       exporterFieldCallback: function ( grid, row, col, value ){
         if(col.colDef.kindof === 'number' && value) {
           value = value.toFixed(2);
@@ -67,9 +66,19 @@
           });
         });
       });
+      /* manually adding footer on export later on
+      console.log(uiGridExporterService);
+      setTimeout(function(){
+        console.log(uiGridExporterService.formatAsCsv(
+          uiGridExporterService.getColumnHeaders(vm.gridApi.grid, uiGridExporterConstants.ALL),
+          uiGridExporterService.getData(vm.gridApi.grid, uiGridExporterConstants.ALL, uiGridExporterConstants.ALL, false)
+          )
+        );
+      }, 1000);
+      */
     }
 
-    function buildColDefs() {
+    function buildColDefs(attributionsWithValue) {
       var colDefs = [
         { field: 'code', name: 'Code', enableColumnMenu: false, width: 150 },
         { field: 'date', name: 'Datum', enableColumnMenu: false, width: 150, }, // cellTemplate: resource.templates.table_cell_date },
@@ -85,17 +94,19 @@
         },
       ];
       vm.attributions.forEach(function(entry){
-        if(entry.type === 'in') {
-          colDefs.push({ field: entry.name, name: entry.displayName + " (E)", enableColumnMenu: false, kindof: 'number', width: 120,
-            aggregationType: uiGridConstants.aggregationTypes.sum,
-            footerCellTemplate: '<div>total: {{grid.appScope.adjustSum(col)}}</div>',
+        if(_.indexOf(attributionsWithValue, entry.name) > -1) {
+          if(entry.type === 'in') {
+            colDefs.push({ field: entry.name, name: entry.displayName + " (E)", enableColumnMenu: false, kindof: 'number', width: 120,
+              aggregationType: uiGridConstants.aggregationTypes.sum,
+              footerCellTemplate: '<div>total: {{grid.appScope.adjustSum(col)}}</div>',
 
-            cellTemplate: resource.templates.table_cell_currency, enableCellEdit: false });
-        } else {
-          colDefs.push({ field: entry.name, name: entry.displayName + " (A)", enableColumnMenu: false, kindof: 'number', width: 120,
-            aggregationType: uiGridConstants.aggregationTypes.sum,
-            footerCellTemplate: '<div>total: {{grid.appScope.adjustSum(col)}}</div>',
-            cellTemplate: resource.templates.table_cell_currency, enableCellEdit: false });
+              cellTemplate: resource.templates.table_cell_currency, enableCellEdit: false });
+          } else {
+            colDefs.push({ field: entry.name, name: entry.displayName + " (A)", enableColumnMenu: false, kindof: 'number', width: 120,
+              aggregationType: uiGridConstants.aggregationTypes.sum,
+              footerCellTemplate: '<div>total: {{grid.appScope.adjustSum(col)}}</div>',
+              cellTemplate: resource.templates.table_cell_currency, enableCellEdit: false });
+          }
         }
       });
       attribution.get().then(function(response) {
@@ -153,12 +164,19 @@
         return prev;
       }, []);
 
-      $http.post('/api/recordset/filterByAttribution', { attributionIds: attributionIds }).then(function(res){
-        buildDataset(res.data);
-      },
-      function(err){
-        console.log(err);
-      });
+      if(attributionIds.length > 0) {
+        $http.post('/api/recordset/filterByAttribution', { attributionIds: attributionIds }).then(function(res){
+          buildDataset(res.data);
+        },
+        function(err){
+          console.log(err);
+        });
+      } else {
+        recordset.get().then(function(response) {
+          buildDataset(response);
+        });
+      }
+
 
     }
 
@@ -170,15 +188,17 @@
 
     function buildDataset(res) {
       vm.data = res;
+      var attributionsWithValue = [];
       vm.data.forEach(function(entry){
         // util.formatAllNumbers(entry);
         entry.unformattedDate = entry.date;
         entry.date = util.formatDate(entry.date);
+        attributionsWithValue.push(entry.attribution.name);
         vm.attributions.forEach(function(attr){
           entry[attr.name] = entry.attribution.name === attr.name ? entry.amount : '';
         });
       });
-      buildColDefs();
+      buildColDefs(attributionsWithValue);
       $http.get('/api/setting/')
         .then(
           function(res){

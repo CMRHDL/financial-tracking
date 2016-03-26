@@ -12,7 +12,7 @@
       {visibleName: 'Login', name: 'home', title: 'Home', css: 'glyphicon-home'},
       {visibleName: 'Eingabe', name: 'input', title: 'Eingabe', css: 'glyphicon-pencil'},
       {visibleName: 'Übersicht', name: 'overview', title: 'Übersicht', css: 'glyphicon-list-alt'},
-      {visibleName: 'Details', name: 'details', title: 'Details', css: 'glyphicon-zoom-in'},
+      //{visibleName: 'Details', name: 'details', title: 'Details', css: 'glyphicon-zoom-in'},
       {visibleName: 'Einstellungen', name: 'settings', title: 'Einstellungen', css: 'glyphicon-cog'},
     ];
 
