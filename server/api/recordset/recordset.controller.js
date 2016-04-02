@@ -87,15 +87,22 @@ exports.lastAddedDate = function(req, res) {
     });
 };
 
-// Get last added Date
-exports.filterByAttribution = function(req, res) {
-  Recordset
-    .find({})
-    .where('attribution._id').in(req.body.attributionIds)
-    .exec(function(err, date) {
-      if (err) {
-        res.send(err);
-      }
-      res.json(date);
-    });
+// Filter
+exports.filter = function(req, res) {
+  var query = Recordset.find({});
+  if (req.body.attributionIds.length > 0) {
+    query = query.where('attribution._id').in(req.body.attributionIds);
+  }
+  if (req.body.minDate) {
+    query = query.where('date').gt(new Date(req.body.minDate));
+  }
+  if (req.body.maxDate) {
+    query = query.where('date').lt(new Date(req.body.maxDate));
+  }
+  query.exec(function(err, recordset) {
+    if (err) {
+      res.send(err);
+    }
+    res.json(recordset);
+  });
 };

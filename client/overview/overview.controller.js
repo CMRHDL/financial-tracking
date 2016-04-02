@@ -164,8 +164,14 @@
         return prev;
       }, []);
 
-      if(attributionIds.length > 0) {
-        $http.post('/api/recordset/filterByAttribution', { attributionIds: attributionIds }).then(function(res){
+      var filter = {
+        attributionIds: attributionIds,
+        minDate: vm.minDate,
+        maxDate: vm.maxDate,
+      }
+
+      if(attributionIds.length > 0 || vm.minDate || vm.maxDate) {
+        $http.post('/api/recordset/filter', filter).then(function(res){
           buildDataset(res.data);
         },
         function(err){

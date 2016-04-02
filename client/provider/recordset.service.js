@@ -28,6 +28,7 @@
     };
 
     service.add = function(recordset) {
+      console.log(recordset);
       recordset.forEach(function(entry){
         $http.post('/api/recordset', entry).then(function(res){
           console.log(res);
