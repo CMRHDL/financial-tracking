@@ -1,5 +1,6 @@
 Zelle doppelklicken zum Bearbeiten. Herausklicken/Enter drücken zum Abschließen, Vorgang dauert dann einen kurzen Moment. Um die neuen Werte bei den Zuordnungen zu sehen, Seite neu laden (F5).<br>
-<button type="submit" class="btn btn-default" ng-init="vm.showTableOptions = false" ng-click="vm.showTableOptions = !vm.showTableOptions">Tabellenoptionen {{vm.showTableOptions ? 'ausblenden' : 'anzeigen'}}</button><br>
+<button type="submit" class="btn btn-default" ng-init="vm.showTableOptions = false" ng-click="vm.showTableOptions = !vm.showTableOptions">Tabellenoptionen {{vm.showTableOptions ? 'ausblenden' : 'anzeigen'}}</button>
+<button type="submit" class="btn btn-default" ng-init="vm.showTableFilter = false" ng-click="vm.showTableFilter = !vm.showTableFilter">Tabellenfilter {{vm.showTableFilter ? 'ausblenden' : 'anzeigen'}}</button><br>
 <div ng-show="vm.showTableOptions">
 Höhe der Tabelle in Pixel:
 <input
@@ -12,7 +13,6 @@ Breite der Tabelle in Pixel:
   class="form-control my-small"
   ng-model="vm.tableWidth"> - <button type="submit" class="btn btn-default" ng-click="vm.saveTableLayout();">Tabellenlayout anpassen</button><br>
 </div>
-<button type="submit" class="btn btn-default" ng-init="vm.showTableFilter = false" ng-click="vm.showTableFilter = !vm.showTableFilter">Tabellenfilter {{vm.showTableFilter ? 'ausblenden' : 'anzeigen'}}</button><br>
 <div ng-show="vm.showTableFilter">
 Nur diese Spalten verwenden: <select
   class="dropdown"
