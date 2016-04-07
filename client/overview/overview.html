@@ -1,48 +1,66 @@
-Zelle doppelklicken zum Bearbeiten. Herausklicken/Enter drücken zum Abschließen, Vorgang dauert dann einen kurzen Moment. Um die neuen Werte bei den Zuordnungen zu sehen, Seite neu laden (F5).<br>
-<button type="submit" class="btn btn-default" ng-init="vm.showTableOptions = false" ng-click="vm.showTableOptions = !vm.showTableOptions">Tabellenoptionen {{vm.showTableOptions ? 'ausblenden' : 'anzeigen'}}</button>
-<button type="submit" class="btn btn-default" ng-init="vm.showTableFilter = false" ng-click="vm.showTableFilter = !vm.showTableFilter">Tabellenfilter {{vm.showTableFilter ? 'ausblenden' : 'anzeigen'}}</button><br>
+<div>
+  <span>
+    Zelle doppelklicken zum Bearbeiten. Herausklicken/Enter drücken zum Abschließen, Vorgang dauert dann einen kurzen Moment. Um die neuen Werte bei den Zuordnungen zu sehen, Seite neu laden (F5).<br>
+  <span>
+  <button type="submit" class="btn btn-default" ng-init="vm.showTableOptions = false" ng-click="vm.showTableOptions = !vm.showTableOptions">
+    Tabellenoptionen {{vm.showTableOptions ? 'ausblenden' : 'anzeigen'}}
+  </button>
+  <button type="submit" class="btn btn-default" ng-init="vm.showTableFilter = false" ng-click="vm.showTableFilter = !vm.showTableFilter">
+    Tabellenfilter {{vm.showTableFilter ? 'ausblenden' : 'anzeigen'}}
+  </button><br>
+<div>
 <div ng-show="vm.showTableOptions">
-Höhe der Tabelle in Pixel:
-<input
-  type="text"
-  class="form-control my-small"
-  ng-model="vm.tableHeight">
-Breite der Tabelle in Pixel:
-<input
-  type="text"
-  class="form-control my-small"
-  ng-model="vm.tableWidth"> - <button type="submit" class="btn btn-default" ng-click="vm.saveTableLayout();">Tabellenlayout anpassen</button><br>
+  <span>
+    Höhe der Tabelle in Pixel:
+  </span>
+  <input type="text" class="form-control my-small" ng-model="vm.tableHeight">
+  <span>
+    Breite der Tabelle in Pixel:
+  </span>
+  <input type="text" class="form-control my-small" ng-model="vm.tableWidth">
+  <span> - </span>
+  <button type="submit" class="btn btn-default" ng-click="vm.saveTableLayout();">
+    Tabellenlayout anpassen
+  </button><br>
 </div>
 <div ng-show="vm.showTableFilter">
-Nur diese Spalten verwenden: <select
-  class="dropdown"
-  ng-options="entry.displayName group by entry.group for entry in vm.allAttributions"
-  ng-model="vm.filterAttribution"
-  ng-change="vm.addAttributiontoFilter()">
-</select>  - ausgewählte Filterung: <span ng-repeat="entry in vm.attributionsToFilter">{{entry.displayName + (entry.type === 'in' ? ' (E)' : ' (A)')}} 
-<span style="cursor: pointer;" ng-click="vm.removeFilter($index)">[x], </span></span>
-<br>Datum von:
-<div class="input-group" style="width: 150px">
-  <input type="text" class="form-control" uib-datepicker-popup="dd.MM.yyyy" ng-model="vm.minDate" is-open="vm.showDatePickerMinDate" ng-required="true" close-text="Close"/>
-  <div class="input-group-addon" ng-click="vm.showDatePickerMinDate = true"><i class="glyphicon glyphicon-calendar"></i></div>
-</div>
-<br>Datum bis:
-<div class="input-group" style="width: 150px">
-  <input type="text" class="form-control" uib-datepicker-popup="dd.MM.yyyy" ng-model="vm.maxDate" is-open="vm.showDatePickerMaxDate" ng-required="true" close-text="Close"/>
-  <div class="input-group-addon" ng-click="vm.showDatePickerMaxDate = true"><i class="glyphicon glyphicon-calendar"></i></div>
-</div>
-<br>
-<br>
-<button type="submit" class="btn btn-default" ng-click="vm.applyFliter();">Filterung anwenden</button></div><br><br>
-Ausgangswert: {{vm.initialAmount.toFixed(2)}}, aktueller Endwert: {{vm.currentAmount.toFixed(2)}}
+  <span>
+    Nur diese Spalten verwenden:
+  </span>
+  <select class="dropdown"
+    ng-options="entry.displayName group by entry.group for entry in vm.allAttributions"
+    ng-model="vm.filterAttribution"
+    ng-change="vm.addAttributiontoFilter()">
+  </select>
+  <span>  - ausgewählte Filterung: </span>
+  <span ng-repeat="entry in vm.attributionsToFilter">
+    {{entry.displayName + (entry.type === 'in' ? ' (E)' : ' (A)')}}
+    <span style="cursor: pointer;" ng-click="vm.removeFilter($index)">
+      [x],
+    </span>
+  </span><br>
+  <span>Datum von:</span>
+  <div class="input-group" style="width: 150px">
+    <input type="text" class="form-control" uib-datepicker-popup="dd.MM.yyyy" ng-model="vm.minDate" is-open="vm.showDatePickerMinDate" ng-required="true" close-text="Close"/>
+    <div class="input-group-addon" ng-click="vm.showDatePickerMinDate = true"><i class="glyphicon glyphicon-calendar"></i></div>
+  </div><br>
+  <span>Datum bis:</span>
+  <div class="input-group" style="width: 150px">
+    <input type="text" class="form-control" uib-datepicker-popup="dd.MM.yyyy" ng-model="vm.maxDate" is-open="vm.showDatePickerMaxDate" ng-required="true" close-text="Close"/>
+    <div class="input-group-addon" ng-click="vm.showDatePickerMaxDate = true"><i class="glyphicon glyphicon-calendar"></i></div>
+  </div><br><br>
+  <button type="submit" class="btn btn-default" ng-click="vm.applyFliter();">Filterung anwenden</button>
+</div><br><br>
+<span>Ausgangswert: {{vm.initialAmount.toFixed(2)}}, aktueller Endwert: {{vm.currentAmount.toFixed(2)}}</span>
 <div id="grid2"
- ui-grid="vm.gridOptions"
- ui-grid-auto-resize
- ui-grid-edit
- ui-grid-cellNav
- ui-grid-exporter
- ui-grid-move-columns
- ui-grid-save-state
- ui-grid-resize-columns
- ui-grid-row-edit
- style="height: {{vm.desiredTableHeight + 'px'}}; width: {{vm.desiredTableWidth + 'px'}};"></div>
+  ui-grid="vm.gridOptions"
+  ui-grid-auto-resize
+  ui-grid-edit
+  ui-grid-cellNav
+  ui-grid-exporter
+  ui-grid-move-columns
+  ui-grid-save-state
+  ui-grid-resize-columns
+  ui-grid-row-edit
+  style="height: {{vm.desiredTableHeight + 'px'}}; width: {{vm.desiredTableWidth + 'px'}};">
+</div>
