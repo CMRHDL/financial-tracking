@@ -2,9 +2,20 @@
   'use strict';
   angular.module('team.app').controller('OverviewCtrl', OverviewCtrl);
 
-  OverviewCtrl.$inject = [ '$filter', '$http', '$route', '$scope', 'attribution', 'gridSettings', 'recordset', 'resource', 'uiGridConstants', 'uiGridEditConstants', 'uiGridExporterConstants', 'uiGridExporterService', 'util' ];
-  function OverviewCtrl($filter, $http, $route, $scope, attribution, gridSettings, recordset, resource, uiGridConstants, uiGridEditConstants, uiGridExporterConstants, uiGridExporterService, util) {
+  OverviewCtrl.$inject = [ '$filter', '$http', '$scope', 'attribution', 'gridSettings', 'overview', 'recordset', 'uiGridEditConstants', 'uiGridExporterConstants', 'uiGridExporterService', 'util' ];
+  function OverviewCtrl($filter, $http, $scope, attribution, gridSettings, overview, recordset, uiGridEditConstants, uiGridExporterConstants, uiGridExporterService, util) {
     var vm = this;
+
+    vm.attributionsToFilter = [];
+
+    vm.applyFliter = applyFliter;
+    vm.addAttributiontoFilter = addAttributiontoFilter;
+    vm.removeFilter = removeFilter;
+    vm.saveTableLayout = saveTableLayout;
+
+    attribution.get().then(function(response) {
+      vm.allAttributions = response;
+    });
 
     vm.gridOptions = {
       data: 'vm.data',
@@ -35,11 +46,10 @@
       },
       saveSort: false,
       saveFilter: false,
-    };
-
-    vm.gridOptions.onRegisterApi = function(gridApi){
-      vm.gridApi = gridApi;
-      gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
+      onRegisterApi: function(gridApi){
+        vm.gridApi = gridApi;
+        gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
+      },
     };
 
     $scope.saveRow = function(rowEntity) {
@@ -49,6 +59,7 @@
       rowEntity.unformattedDate = newDate;
       vm.gridApi.rowEdit.setSavePromise( rowEntity, recordset.patch(recordset.getCleanRecordsetFromRowobject(rowEntity)) );
     };
+
     init();
     function init() {
       gridSettings.getById('grid2').then(function(res) {
@@ -79,98 +90,21 @@
     }
 
     function buildColDefs(attributionsWithValue) {
-      var colDefs = [
-        { field: 'code', name: 'Code', enableColumnMenu: false, width: 150 },
-        { field: 'date', name: 'Datum', enableColumnMenu: false, width: 150, }, // cellTemplate: resource.templates.table_cell_date },
-        { field: 'description', name: 'Beschreibung', enableColumnMenu: false, width: 150 },
-        { field: 'gains', name: 'Einnahmen', enableColumnMenu: false, width: 100, aggregationType: uiGridConstants.aggregationTypes.sum, footerCellTemplate: '<div>total: {{grid.appScope.adjustSum(col)}}</div>', cellTemplate: resource.templates.table_cell_currency, kindof: 'number' },
-        { field: 'expenses', name: 'Ausgaben', enableColumnMenu: false, width: 100, aggregationType: uiGridConstants.aggregationTypes.sum, footerCellTemplate: '<div>total: {{grid.appScope.adjustSum(col)}}</div>',cellTemplate: resource.templates.table_cell_currency, kindof: 'number' },
-        {
-          field: 'attribution.displayName',
-          name: 'Zuordnung',
-          enableColumnMenu: false,
-          width: 150,
-          editableCellTemplate: resource.templates.table_cell_attributin_picker,
-        },
-      ];
-      vm.attributions.forEach(function(entry){
-        if(_.indexOf(attributionsWithValue, entry.name) > -1) {
-          if(entry.type === 'in') {
-            colDefs.push({ field: entry.name, name: entry.displayName + " (E)", enableColumnMenu: false, kindof: 'number', width: 120,
-              aggregationType: uiGridConstants.aggregationTypes.sum,
-              footerCellTemplate: '<div>total: {{grid.appScope.adjustSum(col)}}</div>',
-
-              cellTemplate: resource.templates.table_cell_currency, enableCellEdit: false });
-          } else {
-            colDefs.push({ field: entry.name, name: entry.displayName + " (A)", enableColumnMenu: false, kindof: 'number', width: 120,
-              aggregationType: uiGridConstants.aggregationTypes.sum,
-              footerCellTemplate: '<div>total: {{grid.appScope.adjustSum(col)}}</div>',
-              cellTemplate: resource.templates.table_cell_currency, enableCellEdit: false });
-          }
-        }
+      overview.buildColDefs(attributionsWithValue).then(function(data){
+        vm.gridOptions.columnDefs = data;
       });
-      attribution.get().then(function(response) {
-        colDefs[5].editableCellValues = response;
-        vm.gridOptions.columnDefs = colDefs;
-      });
-    }
+    };
 
-    vm.deleteAll = deleteAll;
-
-    function deleteAll() {
-      recordset.delete().then(function(response){
-        init();
-      },
-      function(error){
-        console.log(error);
-      });
-    }
-
-    vm.saveTableLayout = saveTableLayout;
-    function saveTableLayout() {
-
-      var tableSetting = {
-        id: 'grid2',
-        width: vm.tableWidth,
-        height: vm.tableHeight,
-        layout: vm.gridApi.saveState.save(),
-      };
-      gridSettings.setById(tableSetting).then(function(res) {
-          $route.reload();
-        },
-        function(err) {
-          console.log(err);
-        }
-      );
-    }
-
-    attribution.get().then(function(response) {
-      vm.allAttributions = response;
-    });
-
-    vm.attributionsToFilter = [];
-    vm.addAttributiontoFilter = addAttributiontoFilter;
     function addAttributiontoFilter() {
       vm.attributionsToFilter.push(vm.filterAttribution);
       vm.allAttributions.splice(vm.allAttributions.indexOf(vm.filterAttribution), 1);
       vm.filterAttribution = null;
     }
 
-    vm.applyFliter = applyFliter;
     function applyFliter() {
+      var filter = overview.createFilterObject(vm.attributionsToFilter, vm.minDate, vm.maxDate);
 
-      var attributionIds = vm.attributionsToFilter.reduce(function(prev, curr) {
-        prev.push(curr._id);
-        return prev;
-      }, []);
-
-      var filter = {
-        attributionIds: attributionIds,
-        minDate: vm.minDate,
-        maxDate: vm.maxDate,
-      }
-
-      if(attributionIds.length > 0 || vm.minDate || vm.maxDate) {
+      if(filter.attributionIds.length > 0 || filter.minDate || filter.maxDate) {
         $http.post('/api/recordset/filter', filter).then(function(res){
           buildDataset(res.data);
         },
@@ -182,11 +116,8 @@
           buildDataset(response);
         });
       }
-
-
     }
 
-    vm.removeFilter = removeFilter;
     function removeFilter(index) {
       vm.allAttributions.push(vm.attributionsToFilter[index]);
       vm.attributionsToFilter.splice(index, 1);
@@ -210,11 +141,7 @@
           function(res){
             if(res.data.length > 0) {
               vm.initialAmount = res.data[res.data.length-1].initialAmount;
-              vm.currentAmount = vm.initialAmount;
-              vm.data.forEach(function(entry){
-                vm.currentAmount += entry.gains;
-                vm.currentAmount -= entry.expenses;
-              });
+              vm.currentAmount = overview.getCurrentAmount(vm.initialAmount, vm.data);
             } else {
               alert('Bitte Initialwerte setzen (Einstellungen -> Initialwerte)');
             }
@@ -225,6 +152,13 @@
         ).then(function() {
           vm.gridApi.saveState.restore( $scope, vm.tableLayout );
         });
+    }
+
+    /*
+     * Helper Functions
+     */
+    function saveTableLayout() {
+      overview.saveTableLayout(vm.tableWidth, vm.tableHeight, vm.gridApi.saveState.save());
     }
   }
 })();
