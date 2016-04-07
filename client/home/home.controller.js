@@ -6,13 +6,12 @@
   function HomeCtrl() {
     var vm = this;
 
-    // variables
-    vm.var = '';
+    vm.login = login;
 
-    // public functions
-    vm.someFunctionOne = someFunctionOne;
-
-    function someFunctionOne() {
+    function login() {
+      if(vm.input.username === 'komm' && vm.input.password === 'ev') {
+        window.location = '/#/input';
+      }
     }
 
   }
