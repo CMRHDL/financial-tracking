@@ -160,5 +160,10 @@
     function saveTableLayout() {
       overview.saveTableLayout(vm.tableWidth, vm.tableHeight, vm.gridApi.saveState.save());
     }
+
+    vm.exportData = exportData;
+    function exportData() {
+      overview.exportData(vm.gridApi);
+    }
   }
 })();

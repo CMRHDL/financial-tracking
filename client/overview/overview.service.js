@@ -3,11 +3,11 @@
 
   angular.module('team.app').service('overview', overview);
 
-  overview.$inject = [ '$route', 'attribution', 'gridSettings', 'resource', 'uiGridConstants' ];
-  function overview($route, attribution, gridSettings, resource, uiGridConstants) {
+  overview.$inject = [ 'uiGridExporterConstants', 'uiGridExporterService', '$route', 'attribution', 'gridSettings', 'resource', 'uiGridConstants' ];
+  function overview(uiGridExporterConstants, uiGridExporterService, $route, attribution, gridSettings, resource, uiGridConstants) {
     var service = this; // jshint ignore:line
 
-    service.saveTableLayout = function(width, height, layout){
+    service.saveTableLayout = function(width, height, layout) {
       var tableSetting = {
         id: 'grid2',
         width: width,
@@ -23,14 +23,16 @@
       );
     };
 
+    var total, initial;
     service.getCurrentAmount = function(initial, data) {
+      initial = initial;
       var total = initial;
       data.forEach(function(entry){
         total += entry.gains;
         total -= entry.expenses;
       });
       return total;
-    }
+    };
 
     service.buildColDefs = function(attributionsWithValue) {
       var colDefs = [
@@ -69,7 +71,7 @@
       }).then(function(response) {
         return colDefs;
       });
-    }
+    };
 
     service.createFilterObject = function(attributionsToFilter, minDate, maxDate) {
       var attributionIds = attributionsToFilter.reduce(function(prev, curr) {
@@ -84,6 +86,69 @@
       };
 
       return filter;
+    };
+
+    service.exportData = function(gridApi) {
+      var colHeader = uiGridExporterService.getColumnHeaders(gridApi.grid, uiGridExporterConstants.VISIBLE);
+      var gridData = uiGridExporterService.getData(gridApi.grid, uiGridExporterConstants.VISIBLE, uiGridExporterConstants.VISIBLE, false);
+      var csv = uiGridExporterService.formatAsCsv(
+        uiGridExporterService.getColumnHeaders(gridApi.grid, uiGridExporterConstants.VISIBLE),
+        uiGridExporterService.getData(gridApi.grid, uiGridExporterConstants.VISIBLE, uiGridExporterConstants.VISIBLE, false)
+      );
+      //var finalData = '"Ausgangswert",' + initial + ',"Endwert",' + total + '\n\n' + csv + '\n\n'
+      buildCsvFooter(colHeader, gridData);
+    };
+
+    function buildCsvFooter(colHeader, gridData) {
+      var csvFooter = "";
+
+      var sums = {};
+
+      colHeader.forEach(function(entry, index) {
+        sums[index] = {
+          index: index,
+          name: entry.displayName,
+          sum: 0,
+        };
+      });
+
+      sums = gridData.reduce(function(previous, current) {
+        current.forEach(function(entry, index) {
+          var currentValue;
+
+          if (typeof entry.value === 'string') {
+            currentValue = parseFloat(entry.value.replace(',', '.'));
+          }
+          if (typeof currentValue === 'number' && currentValue) {
+            previous[index].sum += currentValue;
+          }
+        });
+        return previous;
+      }, sums);
+
+      setTimeout(function(){
+            console.log(sums);
+      }, 100);
+
+      for (var i = 0, len = colHeader.length; i < len; i++) {
+        switch (colHeader[i].displayName) {
+          case "Code":
+          case "Datum":
+          case "Beschreibung":
+          case "Zuordnung":
+            csvFooter += '"",'
+            break;
+          case "Einnahmen":
+
+          case "Ausgaben":
+            break;
+          default:
+            // csvFooter +=
+            break;
+        }
+      }
+
+      return csvFooter;
     }
   }
 })();
