@@ -3,7 +3,7 @@
 
   angular.module('team.app').service('dataexport', dataexport);
 
-  //dataexport.$inject = [''];
+  //dataexport.$inject = [ '' ];
   function dataexport() {
     var service = this; // jshint ignore:line
   }

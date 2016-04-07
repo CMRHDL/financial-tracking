@@ -2,8 +2,8 @@
   'use strict';
   angular.module('team.app').controller('CodeCtrl', CodeCtrl);
 
-  CodeCtrl.$inject = [ 'codeService', 'resource' ];
-  function CodeCtrl(codeService, resource) {
+  CodeCtrl.$inject = [ 'codeService' ];
+  function CodeCtrl(codeService) {
     var code = this;
 
     code.decrease = decrease;

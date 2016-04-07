@@ -2,8 +2,8 @@
   'use strict';
   angular.module('team.app').controller('InputCtrl', InputCtrl);
 
-  InputCtrl.$inject = [ '$filter', '$rootScope', '$scope', '$uibModal', 'attribution', 'recordset', 'resource', 'codeService', 'util' ];
-  function InputCtrl($filter, $rootScope, $scope, $uibModal, attribution, recordset, resource, codeService, util) {
+  InputCtrl.$inject = [ '$filter', '$scope', '$uibModal', 'attribution', 'codeService', 'recordset', 'resource', 'util' ];
+  function InputCtrl($filter, $scope, $uibModal, attribution, codeService, recordset, resource, util) {
     var vm = this;
 
     vm.codes = [];

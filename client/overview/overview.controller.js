@@ -2,8 +2,8 @@
   'use strict';
   angular.module('team.app').controller('OverviewCtrl', OverviewCtrl);
 
-  OverviewCtrl.$inject = [ '$http', '$filter', '$route', '$scope', 'uiGridConstants','uiGridEditConstants', 'attribution', 'recordset', 'resource', 'util', 'gridSettings', 'uiGridExporterService', 'uiGridExporterConstants', 'overview' ];
-  function OverviewCtrl($http, $filter, $route, $scope, uiGridConstants, uiGridEditConstants, attribution, recordset, resource, util, gridSettings, uiGridExporterService, uiGridExporterConstants, overview) {
+  OverviewCtrl.$inject = [ '$filter', '$http', '$route', '$scope', 'attribution', 'gridSettings', 'recordset', 'resource', 'uiGridConstants', 'uiGridEditConstants', 'uiGridExporterConstants', 'uiGridExporterService', 'util' ];
+  function OverviewCtrl($filter, $http, $route, $scope, attribution, gridSettings, recordset, resource, uiGridConstants, uiGridEditConstants, uiGridExporterConstants, uiGridExporterService, util) {
     var vm = this;
 
     vm.gridOptions = {

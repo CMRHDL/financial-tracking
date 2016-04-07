@@ -2,8 +2,8 @@
   'use strict';
   angular.module('team.app').controller('AttributionCtrl', AttributionCtrl);
 
-  AttributionCtrl.$inject = [ 'attribution', 'resource', '$http', '$scope' ];
-  function AttributionCtrl(attribution, resource, $http, $scope) {
+  AttributionCtrl.$inject = [ '$http', 'attribution' ];
+  function AttributionCtrl($http, attribution) {
     var attr = this;
 
     attr.resource = resource;

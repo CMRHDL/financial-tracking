@@ -2,8 +2,8 @@
   'use strict';
   angular.module('team.app').controller('DataexportCtrl', DataexportCtrl);
 
-  DataexportCtrl.$inject = [ 'dataexport' ];
-  function DataexportCtrl(dataexport) {
+  DataexportCtrl.$inject = [ ];
+  function DataexportCtrl() {
     var vm = this;
   }
 })();

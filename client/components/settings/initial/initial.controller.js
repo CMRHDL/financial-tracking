@@ -2,8 +2,8 @@
   'use strict';
   angular.module('team.app').controller('InitialCtrl', InitialCtrl);
 
-  InitialCtrl.$inject = [ 'initial', '$http' ];
-  function InitialCtrl(initial, $http) {
+  InitialCtrl.$inject = [ '$http' ];
+  function InitialCtrl($http) {
     var vm = this;
 
     vm.initialAmount = 0;

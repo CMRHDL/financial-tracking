@@ -3,7 +3,7 @@
 
   angular.module('team.app').service('gridSettings', gridSettings);
 
-  gridSettings.$inject = ['$http'];
+  gridSettings.$inject = [ '$http' ];
   function gridSettings($http) {
 
     var service = this; // jshint ignore:line
