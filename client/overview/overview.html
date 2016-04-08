@@ -7,9 +7,13 @@
   </button>
   <button type="submit" class="btn btn-default" ng-init="vm.showTableFilter = false" ng-click="vm.showTableFilter = !vm.showTableFilter">
     Tabellenfilter {{vm.showTableFilter ? 'ausblenden' : 'anzeigen'}}
+  </button>
+  <button type="submit" class="btn btn-default" ng-init="vm.showExportData = false" ng-click="vm.showExportData = !vm.showExportData">
+    Tabelleninhalt exportieren {{vm.showExportData ? 'ausblenden' : 'anzeigen'}}
   </button><br>
 <div>
 <div ng-show="vm.showTableOptions">
+  <br>
   <span>
     Höhe der Tabelle in Pixel:
   </span>
@@ -21,9 +25,17 @@
   <span> - </span>
   <button type="submit" class="btn btn-default" ng-click="vm.saveTableLayout();">
     Tabellenlayout anpassen
-  </button><br>
+  </button>
+</div>
+<div ng-show="vm.showExportData">
+  <br>
+  <input type="text" class="form-control"  style="width: 250px; display: inline" ng-model="vm.exportDataFileName"><span>.csv</span>
+  <button type="submit" class="btn btn-default" ng-click="vm.exportData();">
+    sichtbare Daten exportieren
+  </button>
 </div>
 <div ng-show="vm.showTableFilter">
+  <br>
   <span>
     Nur diese Spalten verwenden:
   </span>
@@ -64,8 +76,3 @@
   ui-grid-row-edit
   style="height: {{vm.desiredTableHeight + 'px'}}; width: {{vm.desiredTableWidth + 'px'}};">
 </div>
-<br>
-<br>
-<button type="submit" class="btn btn-default" ng-click="vm.exportData();">
-  Daten exportieren
-</button>

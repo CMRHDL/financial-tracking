@@ -17,6 +17,8 @@
       vm.allAttributions = response;
     });
 
+    vm.exportDataFileName = 'finanzen_' + $filter('date')(new Date(), 'dd.MM.yyyy HH:mm', 'CET');
+
     vm.gridOptions = {
       data: 'vm.data',
       enableGridMenu: true,
@@ -163,7 +165,7 @@
 
     vm.exportData = exportData;
     function exportData() {
-      overview.exportData(vm.gridApi);
+      overview.exportData(vm.gridApi, vm.exportDataFileName);
     }
   }
 })();

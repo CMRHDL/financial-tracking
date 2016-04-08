@@ -23,14 +23,16 @@
       );
     };
 
-    var total, initial;
+    service.total = 0;
+    service.initial = 0;
     service.getCurrentAmount = function(initial, data) {
-      initial = initial;
+      service.initial = initial;
       var total = initial;
       data.forEach(function(entry){
         total += entry.gains;
         total -= entry.expenses;
       });
+      service.total = total;
       return total;
     };
 
@@ -88,67 +90,47 @@
       return filter;
     };
 
-    service.exportData = function(gridApi) {
+    service.exportData = function(gridApi, exportDataFileName) {
       var colHeader = uiGridExporterService.getColumnHeaders(gridApi.grid, uiGridExporterConstants.VISIBLE);
       var gridData = uiGridExporterService.getData(gridApi.grid, uiGridExporterConstants.VISIBLE, uiGridExporterConstants.VISIBLE, false);
       var csv = uiGridExporterService.formatAsCsv(
         uiGridExporterService.getColumnHeaders(gridApi.grid, uiGridExporterConstants.VISIBLE),
         uiGridExporterService.getData(gridApi.grid, uiGridExporterConstants.VISIBLE, uiGridExporterConstants.VISIBLE, false)
       );
-      //var finalData = '"Ausgangswert",' + initial + ',"Endwert",' + total + '\n\n' + csv + '\n\n'
-      buildCsvFooter(colHeader, gridData);
+      var finalData = '"Ausgangswert",' + service.initial + ',"Endwert",' + service.total + '\n\n' + csv + '\n\n' + buildLastCsvRow(colHeader, gridData);
+      uiGridExporterService.downloadFile(exportDataFileName + '.csv', finalData, true);
     };
 
-    function buildCsvFooter(colHeader, gridData) {
-      var csvFooter = "";
-
-      var sums = {};
-
-      colHeader.forEach(function(entry, index) {
-        sums[index] = {
-          index: index,
-          name: entry.displayName,
-          sum: 0,
-        };
-      });
-
-      sums = gridData.reduce(function(previous, current) {
+    function buildLastCsvRow(colHeader, gridData) {
+      var sum = gridData.reduce(function(previous, current) {
         current.forEach(function(entry, index) {
-          var currentValue;
-
-          if (typeof entry.value === 'string') {
-            currentValue = parseFloat(entry.value.replace(',', '.'));
-          }
-          if (typeof currentValue === 'number' && currentValue) {
-            previous[index].sum += currentValue;
+          if(isNumberColumn(index, colHeader) && entry.value) {
+            var adjustedNumber = parseFloat(entry.value.replace(',', '.'));
+            previous[index] = previous[index] ? previous[index] + adjustedNumber : adjustedNumber;
           }
         });
         return previous;
-      }, sums);
+      }, {});
 
-      setTimeout(function(){
-            console.log(sums);
-      }, 100);
-
+      var lastRow = '';
       for (var i = 0, len = colHeader.length; i < len; i++) {
-        switch (colHeader[i].displayName) {
-          case "Code":
-          case "Datum":
-          case "Beschreibung":
-          case "Zuordnung":
-            csvFooter += '"",'
-            break;
-          case "Einnahmen":
-
-          case "Ausgaben":
-            break;
-          default:
-            // csvFooter +=
-            break;
+        lastRow += isNumberColumn(i, colHeader) ? '"' + sum[i].toFixed(2).replace('.', ',') + '", ' : '"",';
+        // trim last ', '
+        if (i === len-1) {
+          lastRow = lastRow.substring(0, lastRow.length-2);
         }
       }
+      return lastRow;
+    }
 
-      return csvFooter;
+    function isNumberColumn(index, colHeader) {
+      var numberColumns = [];
+      colHeader.forEach(function(entry, index) {
+        if (!/Code|Datum|Beschreibung|Zuordnung/.test(entry.displayName)) {
+          numberColumns.push(index);
+        }
+      });
+      return _.includes(numberColumns, index);
     }
   }
 })();
