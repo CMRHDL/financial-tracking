@@ -43,7 +43,10 @@
           name: 'Funktionen',
           enableColumnMenu: false,
           width: 150,
-          cellTemplate: '<div class="glyphicon glyphicon-trash tableicon" title="Datensatz löschen" ng-click="grid.appScope.deleteRow(row.entity)"></div>'
+          cellTemplate:
+          '<div class="glyphicon glyphicon-trash tableicon" title="Datensatz löschen" ng-click="grid.appScope.deleteRow(row.entity)"></div>' +
+          '<div class="glyphicon glyphicon-floppy-save tableicon" title="Sicherung erstellen" ng-click="grid.appScope.createBackup()"></div>'
+
         },
         { field: 'code', name: 'Code', enableColumnMenu: false, width: 150 },
         { field: 'date', name: 'Datum', enableColumnMenu: false, width: 150, }, // cellTemplate: resource.templates.table_cell_date },

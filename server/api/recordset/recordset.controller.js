@@ -23,6 +23,23 @@ exports.index = function(req, res) {
   });
 };
 
+// Backup Recordset
+exports.backup = function(req, res) {
+  var dir = __dirname + '/backup/' + +new Date();
+  backup({
+    uri: 'mongodb://127.0.0.1:27017/team',
+    root: dir,
+    callback: function(err) {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log('backed up');
+        res.json(dir);
+      }
+    }
+  });
+};
+
 // Create new recordset
 exports.create = function(req, res) {
   var recordset = new Recordset(req.body);

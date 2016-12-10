@@ -50,6 +50,11 @@
             console.log(response);
           });
         },
+        createBackup: function(row) {
+          recordset.backup().then(function(response) {
+            console.log(response);
+          });
+        },
       },
       saveSort: false,
       saveFilter: false,

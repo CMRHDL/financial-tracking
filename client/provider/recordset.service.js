@@ -28,7 +28,6 @@
     };
 
     service.add = function(recordset) {
-      console.log(recordset);
       recordset.forEach(function(entry){
         $http.post('/api/recordset', entry).then(function(res){
           console.log(res);
@@ -36,6 +35,16 @@
         function(err){
           console.log(err);
         });
+      });
+    };
+
+    service.backup = function(recordset) {
+      return $http.post('/api/recordset/backup').then(function(res){
+        alert('Sicherung wurde erstellt im Verzeichnis: ' + res.data);
+        return res;
+      },
+      function(err){
+        console.log(err);
       });
     };
 

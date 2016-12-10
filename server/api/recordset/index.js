@@ -8,6 +8,7 @@ var router = express.Router();
 router.get('/', controller.index);
 router.get('/lastAddedDate', controller.lastAddedDate);
 router.post('/', controller.create);
+router.post('/backup', controller.backup);
 router.post('/filter', controller.filter);
 router.delete('/', controller.deleteAll);
 router.delete('/:id', controller.deleteById);
