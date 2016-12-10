@@ -11,7 +11,7 @@
 
 var Recordset = require('./recordset.model');
 var _ = require('lodash');
-var backup = require('mongodb-backup'); // use require('mongodb-backup') instead
+var backup = require('mongodb-backup');
 
 // Get all recordsets
 exports.index = function(req, res) {
@@ -89,13 +89,10 @@ exports.update = function(req, res) {
   var conditions = { '_id': req.body._id };
   var update = { $set: req.body }
   var options = { multi: false };
-  console.log(req.body);
   Recordset.update(conditions, update, options, function (err) {
     if (err) {
-      console.log(err);
       res.send(err);
     }
-    console.log('cool');
     res.json('recordset for ' + req.body._id + ' was updated');
   });
 };
