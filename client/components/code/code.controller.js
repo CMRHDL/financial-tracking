@@ -15,7 +15,7 @@
     });
 
     codeService.getHighestCodeByYear(2014).then(function(response) {
-      console.log(response);
+      // console.log(response);
     });
 
     code.resource = resource;

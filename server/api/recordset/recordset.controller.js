@@ -11,6 +11,7 @@
 
 var Recordset = require('./recordset.model');
 var _ = require('lodash');
+var backup = require('mongodb-backup'); // use require('mongodb-backup') instead
 
 // Get all recordsets
 exports.index = function(req, res) {
@@ -43,6 +44,27 @@ exports.deleteAll = function(req, res) {
   });
 };
 
+// Delete recordset by id
+exports.deleteById = function(req, res) {
+  backup({
+    uri: 'mongodb://127.0.0.1:27017/team',
+    root: __dirname + '/backup/' + +new Date(),
+    callback: function(err) {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log('backed up');
+        Recordset.findOne({ _id: req.params.id }).remove(function (err) {
+          if (err) {
+            res.send(err);
+          }
+          res.json('Deleted Recordset for id' + req.params.id);
+        });
+      }
+    }
+  });
+};
+
 // patch attribution where needed when changing Attribution
 exports.patchAttribution = function(req, res) {
   var renamed = {
@@ -67,10 +89,13 @@ exports.update = function(req, res) {
   var conditions = { '_id': req.body._id };
   var update = { $set: req.body }
   var options = { multi: false };
+  console.log(req.body);
   Recordset.update(conditions, update, options, function (err) {
     if (err) {
+      console.log(err);
       res.send(err);
     }
+    console.log('cool');
     res.json('recordset for ' + req.body._id + ' was updated');
   });
 };

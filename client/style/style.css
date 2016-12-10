@@ -129,3 +129,9 @@
 .settings-nav li {
   display: inline;
 }
+
+.tableicon {
+  margin-left: 25px;
+  margin-top: 7px;
+  cursor: pointer;
+}

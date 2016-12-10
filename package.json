@@ -30,11 +30,10 @@
     "karma-jasmine": "*",
     "karma-phantomjs-launcher": "*",
     "time-grunt": "^1.0.0",
-
-    "express" : "*",
-    "mongoose" : "*",
-    "body-parser" : "*",
-    "method-override" : "*",
+    "express": "*",
+    "mongoose": "*",
+    "body-parser": "*",
+    "method-override": "*",
     "mongodb": "*",
     "lodash": "*"
   },
@@ -43,5 +42,8 @@
   },
   "scripts": {
     "test": "grunt test"
+  },
+  "dependencies": {
+    "mongodb-backup": "^1.6.8"
   }
 }

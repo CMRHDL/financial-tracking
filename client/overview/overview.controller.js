@@ -45,6 +45,11 @@
         adjustSum: function(col) {
           return col.aggregationValue.toFixed(2);
         },
+        deleteRow: function(row) {
+          recordset.deleteById(row._id).then(function(response) {
+            console.log(response);
+          });
+        },
       },
       saveSort: false,
       saveFilter: false,
@@ -65,11 +70,13 @@
     init();
     function init() {
       gridSettings.getById('grid2').then(function(res) {
-        vm.tableWidth = res[0].width;
-        vm.tableHeight = res[0].height;
-        vm.desiredTableWidth = res[0].width;
-        vm.desiredTableHeight = res[0].height;
-        vm.tableLayout = res[0].layout;
+        if (res) {
+          vm.tableWidth = res[0].width;
+          vm.tableHeight = res[0].height;
+          vm.desiredTableWidth = res[0].width;
+          vm.desiredTableHeight = res[0].height;
+          vm.tableLayout = res[0].layout;
+        }
       }).then(function() {
         attribution.get().then(function(response) {
           vm.attributions = response;

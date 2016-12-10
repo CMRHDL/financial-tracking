@@ -38,6 +38,13 @@
 
     service.buildColDefs = function(attributionsWithValue) {
       var colDefs = [
+        {
+          field: 'aaa',
+          name: 'Funktionen',
+          enableColumnMenu: false,
+          width: 150,
+          cellTemplate: '<div class="glyphicon glyphicon-trash tableicon" title="Datensatz löschen" ng-click="grid.appScope.deleteRow(row.entity)"></div>'
+        },
         { field: 'code', name: 'Code', enableColumnMenu: false, width: 150 },
         { field: 'date', name: 'Datum', enableColumnMenu: false, width: 150, }, // cellTemplate: resource.templates.table_cell_date },
         { field: 'description', name: 'Beschreibung', enableColumnMenu: false, width: 150 },
@@ -69,7 +76,7 @@
             }
           }
         });
-        colDefs[5].editableCellValues = response;
+        colDefs[6].editableCellValues = response;
       }).then(function(response) {
         return colDefs;
       });

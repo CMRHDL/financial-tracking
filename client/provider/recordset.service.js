@@ -58,6 +58,15 @@
       });
     };
 
+    service.deleteById = function(id) {
+      return $http.delete('/api/recordset/' + id).then(function(res){
+        return res;
+      },
+      function(err){
+        console.log(err);
+      });
+    };
+
     service.getCleanRecordsetFromRowobject = function(rowObject) {
       return {
         _id: rowObject._id,

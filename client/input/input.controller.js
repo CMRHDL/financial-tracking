@@ -121,7 +121,7 @@
     };
 
     recordset.getLastAddedDate().then(function(res) {
-      vm.params.date.value = res.date;
+      vm.params.date.value = res && res.date || '';
     });
 
     $scope.$watch('vm.params', parseParams, true);
