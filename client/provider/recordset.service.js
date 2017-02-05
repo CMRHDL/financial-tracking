@@ -18,6 +18,8 @@
       });
     };
 
+    service.getRx = () => Rx.Observable.fromPromise($http.get('/api/recordset'));
+
     service.getLastAddedDate = function() {
       return $http.get('/api/recordset/lastAddedDate').then(function(res){
         return res.data;

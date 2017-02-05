@@ -37,9 +37,7 @@
       controllerAs : 'vm',
     })
     .when('/details', {
-      templateUrl: 'details/details.html',
-      controller : 'DetailsCtrl',
-      controllerAs : 'vm',
+      template: '<details-graph></details-graph>',
     })
     .when('/settings', {
       templateUrl: 'settings/settings.html',
