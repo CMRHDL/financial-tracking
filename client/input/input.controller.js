@@ -61,22 +61,22 @@
 
     function saveDataSet() {
       if(vm.progressBarValue === 100) {
-        var income = vm.params.selectedDelegate.value.group === 'Einnahmearten' ? true : false;
-        // var amount = $filter('currency')(vm.params.amount.value.replace(/,/, '.'));
-        var amount = parseFloat(vm.params.amount.value.replace(/,/, '.')).toFixed(2);
+        var income = vm.params.selectedDelegate.model.group === 'Einnahmearten' ? true : false;
+        // var amount = $filter('currency')(vm.params.amount.model.replace(/,/, '.'));
+        var amount = parseFloat(vm.params.amount.model.replace(/,/, '.')).toFixed(2);
         vm.data.push({
           amount: amount,
-          attribution: vm.params.selectedDelegate.value,
-          date: vm.params.date.value,
-          description: vm.params.description.value,
+          attribution: vm.params.selectedDelegate.model,
+          date: vm.params.date.model,
+          description: vm.params.description.model,
           gains: income ? amount : '',
           expenses: income ? '' : amount,
           code: codeService.getCode(),
         });
         vm.codes.push(codeService.getCode());
-        vm.params.amount.value = undefined;
-        vm.params.description.value = undefined;
-        vm.params.selectedDelegate.value = null;
+        vm.params.amount.model = undefined;
+        vm.params.description.model = undefined;
+        vm.params.selectedDelegate.model = null;
         codeService.increase('position');
       }
     }
@@ -114,25 +114,25 @@
     vm.progressBarType = 'info';
 
     vm.params = {
-      date: { value: null, tracked: false },
-      amount: { value: null, tracked: false },
-      selectedDelegate: { value: null, tracked: false },
-      description: { value: null, tracked: false },
+      date: { model: null, tracked: false },
+      amount: { model: null, tracked: false },
+      selectedDelegate: { model: null, tracked: false },
+      description: { model: null, tracked: false },
     };
 
     recordset.getLastAddedDate().then(function(res) {
-      vm.params.date.value = res && res.date || '';
+      vm.params.date.model = res && res.date && moment(res.date).toDate() || '';
     });
 
     $scope.$watch('vm.params', parseParams, true);
 
     function parseParams() {
       for(var key in vm.params) {
-        if(vm.params[key].value && !vm.params[key].tracked) {
+        if(vm.params[key].model && !vm.params[key].tracked) {
           vm.progressBarValue += 25;
           vm.params[key].tracked = true;
         }
-        if(!vm.params[key].value && vm.params[key].tracked) {
+        if(!vm.params[key].model && vm.params[key].tracked) {
           vm.progressBarValue -= 25;
           vm.params[key].tracked = false;
         }

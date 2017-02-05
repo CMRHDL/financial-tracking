@@ -1,19 +1,14 @@
 (function() {
-    'use strict';
-    angular.module('team.app').controller('DetailsCtrl', DetailsCtrl);
+  'use strict';
+  angular.module('team.app').controller('DetailsCtrl', DetailsCtrl);
 
-    //DetailsCtrl.$inject = [ '' ];
-    function DetailsCtrl() {
-        var vm = this;
+  DetailsCtrl.$inject = [ 'recordset' ];
+  function DetailsCtrl(recordset) {
+    var vm = this;
 
-        // variables
-        vm.var = '';
+    recordset.get().then(function(response) {
+      console.log(response);
+    });
 
-        // public functions
-        vm.someFunctionOne = someFunctionOne;
-
-        function someFunctionOne() {
-        }
-
-    }
+  }
 })();

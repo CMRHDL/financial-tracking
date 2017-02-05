@@ -1,7 +1,20 @@
 (function() {
 
   'use strict';
-  function config($routeProvider){
+  function config($mdDateLocaleProvider, $routeProvider){
+
+    moment.locale('de');
+
+    $mdDateLocaleProvider.parseDate = function(dateString) {
+      var m = moment(dateString, 'L', true);
+      return m.isValid() ? m.toDate() : new Date(NaN);
+    };
+
+    $mdDateLocaleProvider.formatDate = function(date) {
+      var m = moment(date);
+      return m.isValid() ? m.format('L') : '';
+    };
+
     $routeProvider
     .when('/', {
       templateUrl: 'home/home.html',
@@ -39,6 +52,8 @@
   }
 
   angular.module('team.app',[
+    'chart.js',
+    'ngMaterial',
     'ngRoute',
     'ui.bootstrap',
     'ui.grid',

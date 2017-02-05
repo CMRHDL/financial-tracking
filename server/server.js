@@ -24,6 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // parse application/x-www-f
 app.use(methodOverride('X-HTTP-Method-Override')); // override with the X-HTTP-Method-Override header in the request. simulate DELETE/PUT
 app.use(express.static(path.resolve('client'))); // set the static files location /client
 app.use('/bower_components', express.static(path.resolve('bower_components'))); // set the static files location /bower_components
+app.use('/node_modules', express.static(path.resolve('node_modules'))); // set the static files location /bower_components
 
 // routes ==================================================
 require('./routes')(app); // pass our application into our routes

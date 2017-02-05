@@ -1,26 +1,48 @@
 <my-code></my-code>
 <br>
-<div class="row">
-  <div class="col-xs-3 my-medium">
-    <label>Datum</label><br>
-    <div class="input-group">
-      <input type="text" class="form-control" uib-datepicker-popup="dd.MM.yyyy" ng-model="vm.params.date.value" is-open="vm.showDatePicker" ng-required="true" close-text="Close"/>
-      <div class="input-group-addon" ng-click="vm.showDatePicker = true"><i class="glyphicon glyphicon-calendar"></i></div>
-    </div>
+
+<md-content layout-padding>
+
+  <div layout-gt-xs="row">
+
+    <md-input-container class="md-block" flex-gt-xs>
+      <label>Datum</label>
+      <md-datepicker ng-model="vm.params.date.model"></md-datepicker>
+    </md-input-container>
+
+    <md-input-container class="md-block" flex-gt-xs>
+      <label>Betrag</label>
+      <input ng-model="vm.params.amount.model">
+    </md-input-container>
+
+    <md-input-container class="md-block" flex-gt-xs>
+      <label>Beschreibung</label>
+      <input ng-model="vm.params.description.model">
+    </md-input-container>
+
+
+
+    <md-input-container class="md-block" flex-gt-xs>
+      <label>Zuordnung</label>
+
+      <md-select ng-model="vm.params.selectedDelegate.model">
+        <md-optgroup label="Einnahmearten">
+          <md-option ng-value="delegate" ng-repeat="delegate in vm.delegates | filter: {group: 'Einnahmearten' }">{{delegate.displayName}}</md-option>
+        </md-optgroup>
+
+        <md-optgroup label="Ausgabearten">
+          <md-option ng-value="delegate" ng-repeat="delegate in vm.delegates | filter: {group: 'Ausgabearten' }">{{delegate.displayName}}</md-option>
+        </md-optgroup>
+      </md-select>
+
+    </md-input-container>
+
+    <button type="submit" class="btn btn-default small" ng-attr-title="{{::attr.resource.help.settings_attribution_new}}" ng-click="vm.openNewAttributionDialog();">+</button>
+
   </div>
-  <div class="col-xs-3 my-medium">
-    <label>Betrag</label><br>
-    <input type="text" class="form-control" placeholder="in €" ng-model="vm.params.amount.value">
-  </div>
-  <div class="col-xs-3 my-medium">
-    <label>Beschreibung</label><br>
-    <input type="text" class="form-control" placeholder="Beschreibung" ng-model="vm.params.description.value">
-  </div>
-  <div class="col-xs-3 my-medium">
-    <label>Zuordnung</label> <button type="submit" class="btn btn-default small" ng-attr-title="{{::attr.resource.help.settings_attribution_new}}" ng-click="vm.openNewAttributionDialog();">+</button><br>
-    <select class="dropdown" ng-options="entry.displayName group by entry.group for entry in vm.delegates" ng-model="vm.params.selectedDelegate.value"></select>
-  </div>
-</div>
+
+</md-content>
+
 <br>
 <uib-progressbar
   class="progress-striped active"
