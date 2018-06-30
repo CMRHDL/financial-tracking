@@ -136,7 +136,7 @@
     function isNumberColumn(index, colHeader) {
       var numberColumns = [];
       colHeader.forEach(function(entry, index) {
-        if (!/Code|Datum|Beschreibung|Zuordnung/.test(entry.displayName)) {
+        if (!/Funktionen|Code|Datum|Beschreibung|Zuordnung/.test(entry.displayName)) {
           numberColumns.push(index);
         }
       });
